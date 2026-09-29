@@ -309,12 +309,13 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-block:22px 42px;
   <details class="panel" id="freadyPanel"><summary><span id="freadyTitle"></span><svg class="chev2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary><div class="pbody" id="freadyBody"></div></details>
 
   <details class="panel" id="facPanel"><summary><span id="facTitle"></span><svg class="chev2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></summary><div class="pbody">
-    <div class="flabel" id="asmLabel"></div><p class="subexpl" id="asmExpl"></p><div id="asmBody"></div>
+    <div class="flabel" id="asmLabel"></div><div id="asmBody"></div>
     <div class="flabel appr-h" id="certLabel"></div><div id="certBody"></div>
     <div class="flabel appr-h" id="enrLabel"></div><p class="subexpl" id="enrExpl" style="color:var(--teal)"></p><div id="enrBody"></div>
     <div class="flabel appr-h" id="prevLabel"></div><p class="subexpl" id="prevExpl"></p><div id="prevBody"></div>
   </div></details>
 
+  <p class="stdidx-intro" id="stdSectionIntro" style="margin:24px 0 0"></p>
   <div class="tabbar" role="tablist">
     <button class="tabbtn" id="tabBtnProg" role="tab" aria-selected="true"></button>
     <button class="tabbtn" id="tabBtnStd" role="tab" aria-selected="false"></button>
@@ -411,7 +412,7 @@ const PABBR={'Explore: Threadbare':'Explore: TB','Explore: Godot':'Explore: Godo
 function stdIndex(){
   const fw=selFw.length?selFw:['ms','hs','gmd','iste_students','iste_ct'];
   const groups=[['ms',t('csta68')],['hs',t('csta912')],['gmd',t('gmd')],['iste_students',t('isteS')],['iste_ct',t('isteCT')]].filter(g=>fw.includes(g[0]));
-  let html=`<p class="stdidx-intro">${t('stdIndexIntro')}</p>`;
+  let html='';
   html+=`<div class="stdcorenote">${ital(t('stdCorePending'))}</div>`;
   let any=false;
   groups.forEach(([field,label])=>{
@@ -497,7 +498,7 @@ function render(){
   $('#jrnGrid').innerHTML=`<div class="jhero"><img src="data:image/png;base64,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" alt="Threadbare StoryWeaver"></div><div class="jstages">${jstages}</div>`;
   $('#progTitle').textContent=t('programsTitle');
   $('#facTitle').textContent=t('facTitle');
-  $('#asmLabel').textContent=t('assessTitle');$('#asmExpl').innerHTML=ital(t('assessExpl'));$('#asmBody').innerHTML=facAssessment();
+  $('#asmLabel').textContent=t('assessTitle');$('#asmBody').innerHTML=facAssessment();
   $('#certLabel').textContent=I.facMc.title[lang];$('#certBody').innerHTML=facCert();
   $('#enrLabel').textContent=t('enrollTitle');$('#enrExpl').innerHTML=ital(t('enrollExpl'));
   $('#enrBody').innerHTML=`<div class="enrollstack">`+
@@ -505,7 +506,7 @@ function render(){
     `<div class="enrollbox dev"><span>${t('setupCore')}</span><span class="status st-dev">${t('statusDev')}</span></div>`+
     `<div class="enrollbox dev"><span>${t('setupMore')}</span><span class="status st-dev">${t('statusDev')}</span></div>`+
     `</div>`;
-  $('#prevLabel').textContent=t('prevLabel');$('#prevExpl').innerHTML=ital(t('prevExpl'));$('#prevBody').innerHTML=`<p class="subexpl" style="margin-top:0">${lang==='es'?'Escríbenos a ':'Email '}<a class="faclink" href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a>${lang==='es'?' para obtener un código de vista previa, luego ingrésalo en la plataforma para explorar.':' for a preview code, then enter it on the platform to look around.'}</p><div class="prevgif-ph">${lang==='es'?'Video guía próximamente':'Walkthrough GIF coming soon'}</div>`;$('#tabBtnProg').textContent=t('tabByProgram');$('#tabBtnStd').textContent=t('tabByStandard');
+  $('#prevLabel').textContent=t('prevLabel');$('#prevExpl').innerHTML=ital(t('prevExpl'));$('#prevBody').innerHTML=`<p class="subexpl" style="margin-top:0">${lang==='es'?'Escríbenos a ':'Email '}<a class="faclink" href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a>${lang==='es'?' para obtener un código de vista previa, luego ingrésalo en la plataforma para explorar.':' for a preview code, then enter it on the platform to look around.'}</p><div class="prevgif-ph">${lang==='es'?'Video guía próximamente':'Walkthrough GIF coming soon'}</div>`;$('#tabBtnProg').textContent=t('tabByProgram');$('#tabBtnStd').textContent=t('tabByStandard');$('#stdSectionIntro').textContent=t('stdIndexIntro');
   $('#search').placeholder=t('search');$('#clearBtn').textContent=t('clear');$('#footerTxt').textContent=t('footer');
   $('#lang-en').setAttribute('aria-pressed',lang==='en');$('#lang-es').setAttribute('aria-pressed',lang==='es');
   progStrip();buildFilters();
