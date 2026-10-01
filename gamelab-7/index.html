@@ -497,7 +497,7 @@ function renderPanel(){
     </div>
     <div class="tile">
       <h3>${t.team} ${g.n}</h3>
-      <ul class="team">${g.team.map(([n,r])=>{const other=GROUPS.filter(x=>x.n!==g.n&&x.team.some(([m])=>m===n)).map(x=>x.n);return `<li><span class="avatar" aria-hidden="true">${esc(initials(n))}</span><span><span class="name">${esc(n)}${other.length?`<span class="also">${t.also} ${t.group} ${other.join(", ")}</span>`:""}</span><span class="t-role">${esc(roleT(r,LANG))}</span></span></li>`;}).join("")}</ul>
+      <ul class="team">${g.team.map(([n,r])=>`<li><span class="avatar" aria-hidden="true">${esc(initials(n))}</span><span><span class="name">${esc(n)}</span><span class="t-role">${esc(roleT(r,LANG))}</span></span></li>`).join("")}</ul>
       <p class="muted-note">${t.trainees}</p>
     </div>
     <div class="cohort">
