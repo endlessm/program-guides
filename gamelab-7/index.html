@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guía GameLab 7.0</title>
+<script>try{var l=localStorage.getItem("gl7-lang");if(l==="en"||l==="es"){document.documentElement.dataset.lang=l;document.documentElement.lang=l;}}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  /* Endless Studios tokens */
+  --primary:#ff6900; --primary-50:#fff7ed; --primary-100:#ffedd4; --primary-600:#f54a00; --primary-900:#7e2a0c;
+  --secondary:#6556f0; --secondary-50:#e7e5fc; --secondary-700:#322b78;
+  --warning-50:#fff8eb; --warning-700:#8a4500; --warning:#e07100;
+  --bg:#f8fafc; --surface:#ffffff; --elevated:#f1f5f9;
+  --text:#1d293d; --toned:#314158; --muted:#45556c; --dimmed:#62748e; --highlighted:#020618;
+  --border:#dcdce9; --border-muted:#e2e8f0;
+  --on-primary:#020618;
+  --shadow-card:0 25px 50px -12px rgba(0,0,0,.08);
+  --shadow-hover:0 10px 19px 7px rgb(156 161 165 / 15%);
+  --shadow-menu:0 4px 16px rgba(15,23,43,.12);
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-2xl:24px; --r-3xl:32px; --pill:100px;
+  --fast:.15s; --base:.25s; --ease:cubic-bezier(.25,1,.5,1);
+  --heading:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --sans:"Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --primary-50:rgba(255,105,0,.14); --primary-100:rgba(255,105,0,.22); --primary-900:#ffb86a;
+    --secondary-50:rgba(101,86,240,.2); --secondary-700:#c4bfff; --secondary:#8f84ff;
+    --warning-50:rgba(224,113,0,.16); --warning-700:#ffc98a;
+    --bg:#01070a; --surface:#0b1620; --elevated:#12212d;
+    --text:#e2e8f0; --toned:#cad5e2; --muted:#a3b3c6; --dimmed:#8697ab; --highlighted:#ffffff;
+    --border:#1f3140; --border-muted:#172834;
+    --shadow-card:0 25px 50px -12px rgba(0,0,0,.5); --shadow-hover:0 10px 24px 4px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --primary-50:rgba(255,105,0,.14); --primary-100:rgba(255,105,0,.22); --primary-900:#ffb86a;
+  --secondary-50:rgba(101,86,240,.2); --secondary-700:#c4bfff; --secondary:#8f84ff;
+  --warning-50:rgba(224,113,0,.16); --warning-700:#ffc98a;
+  --bg:#01070a; --surface:#0b1620; --elevated:#12212d;
+  --text:#e2e8f0; --toned:#cad5e2; --muted:#a3b3c6; --dimmed:#8697ab; --highlighted:#ffffff;
+  --border:#1f3140; --border-muted:#172834;
+  --shadow-card:0 25px 50px -12px rgba(0,0,0,.5); --shadow-hover:0 10px 24px 4px rgba(0,0,0,.45);
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--secondary);font-weight:600;text-underline-offset:3px}
+img{max-width:100%}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:var(--r-sm)}
+.container{max-width:1080px;margin:0 auto;padding:0 16px}
+@media (min-width:640px){.container{padding:0 24px}}
+@media (min-width:1024px){.container{padding:0 32px}}
+h1,h2,h3,h4{font-family:var(--heading);font-weight:700;color:var(--highlighted);margin:0}
+
+/* Top bar */
+.topbar{position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top,0px);margin-top:calc(-1 * env(safe-area-inset-top,0px));background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--border)}
+.topbar .container{display:flex;align-items:center;gap:20px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--highlighted);flex-shrink:0}
+.brand img{width:40px;height:auto;display:block}
+.brand span{font-family:var(--heading);font-weight:700;font-size:16px;letter-spacing:-.3px}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border-radius:var(--pill);white-space:nowrap;transition:background var(--fast),color var(--fast)}
+.nav a:hover{background:var(--elevated);color:var(--highlighted)}
+.nav a.active{background:var(--primary-50);color:var(--primary-900)}
+@media (max-width:640px){.brand span{display:none}.topbar .container{gap:6px}.nav a{padding:8px 10px;font-size:13px}}
+
+/* Hero */
+.hero{padding:56px 0 32px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--primary-50);color:var(--primary-900);font-weight:600;font-size:13px;padding:4px 12px;border-radius:var(--r-sm);margin-bottom:16px}
+.hero h1{font-size:clamp(36px,6vw,56px);line-height:1;letter-spacing:-1.5px;margin-bottom:16px}
+.hero p{color:var(--muted);font-size:17px;max-width:56ch;margin:0}
+.hero-mark{width:clamp(120px,18vw,200px);opacity:.95}
+@media (max-width:640px){.hero{grid-template-columns:1fr;padding-top:36px}.hero-mark{display:none}}
+
+/* Card */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-3xl);padding:28px}
+@media (max-width:640px){.card{padding:20px;border-radius:var(--r-2xl)}}
+.section{padding:28px 0}
+.section-head{margin-bottom:18px}
+.section-head h2{font-size:24px;line-height:32px}
+.section-head p{color:var(--muted);margin:4px 0 0}
+
+/* Timeline */
+.tl{position:relative;margin-top:6px}
+.tl-track{position:absolute;left:7px;right:7px;top:0;height:4px;background:var(--elevated);border-radius:var(--pill);overflow:hidden}
+.tl-fill{position:absolute;inset:0;background:var(--primary);border-radius:var(--pill);transform-origin:left center;transform:scaleX(0);transition:transform .9s var(--ease)}
+.timeline{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);position:relative}
+.timeline li{padding:22px 16px 0 0;position:relative}
+.timeline li::before{content:"";position:absolute;top:-6px;left:0;width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--border)}
+.timeline li.done::before{background:var(--primary);border-color:var(--primary)}
+.timeline li.next::before{border-color:var(--primary);box-shadow:0 0 0 5px var(--primary-50)}
+.t-date{font-family:var(--heading);font-weight:700;font-size:20px;color:var(--highlighted);display:block;line-height:1.2}
+.timeline li:not(.done):not(.next) .t-date{color:var(--dimmed)}
+.t-what{font-weight:600;color:var(--toned)}
+.t-note{display:block;font-size:13px;color:var(--dimmed);margin-top:2px;max-width:30ch}
+.tl-status{display:inline-flex;align-items:center;gap:8px;margin:24px 0 0;background:var(--primary-50);color:var(--primary-900);font-weight:600;font-size:14px;padding:6px 14px;border-radius:var(--pill)}
+.tl-status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--primary)}
+@media (max-width:640px){
+  .tl{padding-left:0}
+  .tl-track{left:6px;right:auto;top:6px;bottom:6px;width:4px;height:auto}
+  .tl-fill{transform-origin:center top;transform:scaleY(0)}
+  .timeline{grid-template-columns:1fr}
+  .timeline li{padding:0 0 20px 32px}
+  .timeline li:last-child{padding-bottom:0}
+  .timeline li::before{top:3px;left:0}
+}
+
+/* Group tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab{appearance:none;font:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:10px;background:var(--surface);color:var(--toned);border:1px solid var(--border);border-radius:var(--pill);padding:8px 18px 8px 8px;font-weight:600;font-size:14px;transition:background var(--fast),border-color var(--fast),box-shadow var(--base)}
+.tab .n{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--elevated);font-family:var(--heading);font-weight:800;font-size:16px;color:var(--highlighted);transition:background var(--fast),color var(--fast)}
+.tab:hover{box-shadow:var(--shadow-hover)}
+.tab[aria-selected="true"]{background:var(--primary-50);border-color:var(--primary);color:var(--primary-900)}
+.tab[aria-selected="true"] .n{background:var(--primary);color:var(--on-primary)}
+.tab:active{transform:scale(.97);transition:transform var(--fast)}
+
+.group-empty{display:flex;align-items:center;gap:16px;color:var(--muted);background:var(--elevated);border-radius:var(--r-2xl);padding:22px 24px}
+.group-empty img{width:44px;opacity:.9}
+.group-empty p{margin:0}
+.group{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+@media (max-width:760px){.group{grid-template-columns:minmax(0,1fr)}}
+.tile{background:var(--elevated);border-radius:var(--r-2xl);padding:22px}
+.tile h3{font-size:18px;line-height:28px;letter-spacing:-.5px;margin-bottom:12px}
+.times{display:flex;flex-wrap:wrap;gap:10px 24px;list-style:none;padding:0;margin:0 0 18px}
+.times li{display:flex;flex-direction:column}
+.times b{font-family:var(--heading);font-weight:800;font-size:28px;line-height:1.1;color:var(--highlighted)}
+.times span{font-size:13px;color:var(--dimmed)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--on-primary);text-decoration:none;font-weight:700;font-size:15px;padding:10px 18px;border-radius:var(--pill);transition:box-shadow var(--base),background var(--fast)}
+.btn:hover{box-shadow:var(--shadow-hover);background:var(--primary-600)}
+.btn svg{width:18px;height:18px}
+.meet-url{display:block;font-size:13px;color:var(--dimmed);margin-top:10px;word-break:break-all}
+.team{list-style:none;margin:0;padding:0}
+.team li{display:flex;align-items:center;gap:12px;padding:8px 0}
+.avatar{flex-shrink:0;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--surface);border:1px solid var(--border);font-family:var(--heading);font-weight:700;font-size:14px;color:var(--highlighted)}
+.team .name{font-weight:600;color:var(--highlighted);display:block;line-height:1.3}
+.team .t-role{font-size:13px;color:var(--dimmed)}
+.muted-note{font-size:13px;color:var(--dimmed);margin:10px 0 0}
+.access{grid-column:1/-1;display:flex;gap:14px;align-items:flex-start;border:1px solid var(--border);border-radius:var(--r-2xl);padding:18px 22px}
+.access .ico{flex-shrink:0;display:grid;place-items:center;width:36px;height:36px;border-radius:var(--r-md);background:var(--secondary-50);color:var(--secondary-700)}
+.access .ico svg{width:18px;height:18px}
+.access p{margin:0}
+.access p+p{margin-top:4px;color:var(--muted)}
+.access strong{color:var(--highlighted)}
+
+/* Accordions */
+.acc{border-top:1px solid var(--border-muted)}
+
+.acc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-family:var(--heading);font-weight:700;font-size:17px;letter-spacing:-.3px;color:var(--highlighted)}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .chev{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--elevated);transition:transform var(--base) var(--ease),background var(--fast)}
+.acc summary .chev svg{width:16px;height:16px}
+.acc[open] summary .chev{transform:rotate(180deg);background:var(--primary-50);color:var(--primary-900)}
+.acc summary:hover .chev{background:var(--primary-50)}
+.answer{padding:0 0 20px;max-width:70ch;color:var(--toned)}
+.answer p{margin:0 0 12px}
+.answer p:last-child{margin-bottom:0}
+.answer ul,.answer ol{margin:0 0 12px;padding-left:20px}
+.answer li{margin-bottom:6px}
+.answer strong{color:var(--highlighted)}
+.answer a{overflow-wrap:anywhere}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--secondary-50);color:var(--secondary-700);text-decoration:none;font-weight:600;font-size:14px;padding:6px 14px;border-radius:var(--pill);transition:box-shadow var(--base)}
+.chip:hover{box-shadow:var(--shadow-hover)}
+.chip svg{width:14px;height:14px}
+.callout{border-radius:var(--r-lg);padding:14px 16px;margin:0 0 12px;font-size:14px}
+.callout b{display:block;font-family:var(--heading);font-size:15px;margin-bottom:2px}
+.callout.warn{background:var(--warning-50);color:var(--warning-700)}
+.callout.warn b{color:var(--warning-700)}
+.callout.tip{background:var(--primary-50);color:var(--primary-900)}
+.callout.tip b{color:var(--primary-900)}
+
+/* Steps (real sequences) */
+.answer .steps{list-style:none;padding:0;margin:0 0 12px;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:0 0 12px 40px;margin:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--primary-50);color:var(--primary-900);font-family:var(--heading);font-weight:800;font-size:13px;display:grid;place-items:center}
+
+/* Role switch */
+.roles{display:inline-flex;background:var(--elevated);border-radius:var(--pill);padding:4px;gap:2px;margin-bottom:20px;max-width:100%;overflow-x:auto}
+.role{appearance:none;font:inherit;border:0;background:transparent;cursor:pointer;padding:8px 18px;border-radius:var(--pill);font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap;transition:background var(--fast),color var(--fast)}
+.role[aria-selected="true"]{background:var(--surface);color:var(--highlighted);box-shadow:var(--shadow-menu)}
+.role-intro{display:flex;gap:16px;align-items:flex-start;margin-bottom:8px}
+.role-intro p{margin:0;color:var(--muted)}
+.badge{display:inline-block;background:var(--secondary-50);color:var(--secondary-700);font-size:12px;font-weight:600;padding:2px 10px;border-radius:var(--r-sm);margin-bottom:6px}
+.can{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px;padding:0;list-style:none}
+.can li{background:var(--elevated);border-radius:var(--r-sm);padding:4px 10px;font-size:13px;color:var(--toned)}
+.programs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 12px}
+@media (max-width:640px){.programs{grid-template-columns:1fr}}
+.program{background:var(--elevated);border-radius:var(--r-lg);padding:16px}
+.program h4{font-size:16px;margin-bottom:4px}
+.program p{margin:0;font-size:14px}
+.help{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+@media (max-width:640px){.help{grid-template-columns:1fr}}
+.help a.help-tile{display:block;text-decoration:none;background:var(--elevated);border-radius:var(--r-2xl);padding:18px 20px;color:var(--text);font-weight:400;transition:box-shadow var(--base)}
+.help a.help-tile:hover{box-shadow:var(--shadow-hover)}
+.help-tile b{display:block;font-family:var(--heading);font-size:16px;color:var(--highlighted)}
+.help-tile span{font-size:14px;color:var(--muted)}
+.source{font-size:13px;color:var(--dimmed);margin:16px 0 0}
+
+
+/* Search */
+.search{position:relative;margin-top:28px;max-width:640px}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--pill);padding:0 8px 0 18px;height:56px;transition:border-color var(--fast),box-shadow var(--base)}
+.search-box:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-50)}
+.search-box svg{width:20px;height:20px;color:var(--dimmed);flex-shrink:0}
+.search-box input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:16px;color:var(--highlighted);height:100%;outline:none}
+.search-box input::-webkit-search-cancel-button{display:none;-webkit-appearance:none}
+.search-box input::placeholder{color:var(--dimmed)}
+.kbd{font-size:12px;font-weight:600;color:var(--dimmed);border:1px solid var(--border);border-radius:6px;padding:2px 8px;margin-right:8px}
+.clear{appearance:none;border:0;background:var(--elevated);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;display:none;place-items:center;font-size:18px;line-height:1}
+.search.has-q .clear{display:grid}
+.search.has-q .kbd{display:none}
+@media (hover:none){.kbd{display:none}}
+.suggest{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+.suggest span{font-size:13px;color:var(--dimmed);margin-right:2px}
+.suggest button{appearance:none;font:inherit;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--toned);border-radius:var(--pill);padding:4px 12px;transition:border-color var(--fast)}
+.suggest button:hover{border-color:var(--primary)}
+.results{position:absolute;z-index:20;left:0;right:0;top:64px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);box-shadow:var(--shadow-menu);padding:8px;max-height:min(60vh,480px);overflow-y:auto;list-style:none;margin:0}
+.results[hidden]{display:none}
+.res{display:block;border-radius:var(--r-lg);padding:10px 14px;cursor:pointer}
+.res[aria-selected="true"],.res:hover{background:var(--elevated)}
+.res-top{display:flex;align-items:center;gap:4px 8px;margin-bottom:2px;flex-wrap:wrap}
+@media (max-width:640px){.res-top{flex-direction:column;align-items:flex-start}}
+.res-tag{font-size:11px;font-weight:600;padding:1px 8px;border-radius:6px;background:var(--secondary-50);color:var(--secondary-700);white-space:nowrap}
+.res-tag.g{background:var(--primary-50);color:var(--primary-900)}
+.res-title{font-family:var(--heading);font-weight:700;font-size:15px;color:var(--highlighted)}
+.res-snip{font-size:13px;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis}
+.res mark{background:var(--primary-100);color:inherit;border-radius:3px;padding:0 1px}
+.res-empty{padding:14px;color:var(--muted);font-size:14px}
+.search-btn{appearance:none;border:0;background:transparent;color:var(--muted);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.search-btn:hover{background:var(--elevated);color:var(--highlighted)}
+.search-btn svg{width:18px;height:18px}
+.flash{position:relative;isolation:isolate}
+.flash::after{content:"";position:absolute;inset:-4px -14px;border-radius:var(--r-lg);background:var(--primary-50);z-index:-1;opacity:0;animation:flash 1.8s var(--ease)}
+@keyframes flash{0%{opacity:0}15%{opacity:1}70%{opacity:1}100%{opacity:0}}
+
+footer{padding:28px 0 56px;color:var(--dimmed);font-size:13px;display:flex;align-items:center;gap:10px}
+footer img{width:28px}
+
+@media (max-width:480px){.nav{display:none}.lang{margin-left:auto}}
+.logo{display:block;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 551 220'%3E%3Cpath fill='%23ff6900' d='M549.5 108.8 547.5 96.5 544.8 87 541.8 79.2 533.8 64.2 526 53.8 520 47 508.8 36.2 499.2 29 488.8 22.2 473 14 460.5 9 447.5 5 434 2 422 0.8 420.5 0 396.8 0 395.2 0.8 388.5 1 370.2 4 357.8 7 344.8 11 322.2 20 293.5 35 271.5 49 242.8 70 211.8 95.2 168.5 132 141.2 153 124.2 164 112 170.2 102.5 174 90.2 177 73.5 177 66.2 175.8 57.5 173 51 169.8 45.2 165.5 41 160.8 38 156 35.8 150.5 34.2 141.8 34.2 134 35 127.5 36.8 121 40.2 113.5 44 108.2 48.5 103.8 55.5 98.8 61.8 95.8 69.8 93 79.2 91 89 90 102.8 90 114.2 91.8 132.2 97 149 103.8 164.8 111.8 165.8 111.8 188.5 92.8 189.5 91.2 167.2 80 147.2 71.2 127.2 64.2 109 60 100.2 59 78.8 59.5 63 62 50 66 37.5 72 25.2 81 17.8 89 11.2 98.5 7 106.8 2.2 121.5 0.8 132.2 0 134 0 151 0.8 152 2 160.8 4 167.8 7 175.5 11 183.2 20 195.2 29 203.5 40.8 210.8 50.8 214.8 57.8 216.8 69.5 218.8 85.5 219.8 86 219.2 97.8 218.8 112.2 216.5 130 211.8 150.2 203.8 169.2 193.8 182.5 185.5 198 174.8 216 161 270.2 115.8 295.2 96 315.5 81.8 328.5 73.8 339.8 67.8 350.5 62.8 364 57.8 384.2 52.8 391.5 51.8 406.8 51 423.8 51.8 440 53.8 453.5 56.8 463.8 60 475.5 65.2 485 71 491.8 76.5 500.2 85.8 504 91.5 509 103.2 511 113.2 511.2 124.2 510 136 507 146 500.8 157.8 496 163.5 487.8 170.8 479.5 176 471 180 462.5 183 450.5 186 438.2 188 427.2 189 404.5 189.2 385 186.8 363.5 181 334.8 170 307.5 157 271.8 137.5 270 138.2 247.5 157.2 249.2 158.8 270.8 170.8 305.8 188.8 325.8 197.8 345.5 205.5 367.5 212.5 391.5 217.8 404.2 219 406 219.8 431.5 219.8 433 219 446.5 217.8 462 214.8 484 207.8 493.2 203.8 504.2 197.8 514.8 190.5 520.5 185.8 528.5 177.8 535.8 168.2 543.8 153 546.8 144 548.8 135 549.8 126.2Z'/%3E%3C/svg%3E") no-repeat center/contain;aspect-ratio:551/220}
+.brand .logo{width:40px}
+footer .logo{width:28px}
+.group-empty .logo{width:44px;flex-shrink:0}
+.hero-mark{width:clamp(120px,18vw,200px)}
+/* Partes de la capacitación */
+.parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:4px 0 14px}
+@media (max-width:640px){.parts{grid-template-columns:1fr}}
+.part{display:flex;align-items:center;gap:12px;text-decoration:none;background:var(--elevated);border-radius:var(--r-lg);padding:14px 16px;color:var(--text);font-weight:400;transition:box-shadow var(--base)}
+a.part:hover{box-shadow:var(--shadow-hover)}
+.part b{display:block;font-family:var(--heading);font-size:16px;color:var(--highlighted)}
+.part span span{font-size:13px;color:var(--dimmed)}
+.part-ico{flex-shrink:0;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--primary);color:var(--on-primary)}
+.part-ico svg{width:16px;height:16px}
+.part.soon{background:transparent;border:1px dashed var(--border)}
+.part.soon .part-ico{background:var(--elevated);color:var(--dimmed)}
+.part.soon b{color:var(--muted)}
+/* Buscador desplegable */
+.topbar .container{position:relative}
+.search{position:absolute;top:calc(100% + 8px);right:16px;width:min(560px,calc(100vw - 32px));margin:0;max-width:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);box-shadow:var(--shadow-menu);padding:8px}
+@media (min-width:640px){.search{right:24px}}
+@media (min-width:1024px){.search{right:32px}}
+.search[hidden]{display:none}
+.search .search-box{height:48px;border-color:transparent;background:var(--elevated)}
+.search .search-box:focus-within{background:var(--surface)}
+.search .results{position:static;border:0;box-shadow:none;padding:0;margin-top:6px;border-radius:0;max-height:min(60vh,460px)}
+.search-btn[aria-expanded="true"]{background:var(--primary-50);color:var(--primary-900)}
+/* Idioma */
+html[data-lang="es"] [data-l="en"],html[data-lang="en"] [data-l="es"]{display:none!important}
+.lang{display:inline-flex;background:var(--elevated);border-radius:var(--pill);padding:3px;flex-shrink:0}
+.lang button{appearance:none;border:0;background:transparent;font:inherit;font-size:12px;font-weight:700;color:var(--muted);padding:5px 10px;border-radius:var(--pill);cursor:pointer;transition:background var(--fast),color var(--fast)}
+.lang button[aria-pressed="true"]{background:var(--surface);color:var(--highlighted);box-shadow:var(--shadow-menu)}
+@media (max-width:640px){.lang button{padding:5px 8px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="container">
+    <a class="brand" href="#top"><span class="logo" role="img" aria-label="Endless Access"></span><span>GameLab 7.0</span></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#fechas"><span data-l="es">Fechas</span><span data-l="en">Dates</span></a>
+      <a href="#grupo"><span data-l="es">Tu grupo</span><span data-l="en">Your group</span></a>
+      <a href="#preguntas"><span data-l="es">Preguntas</span><span data-l="en">FAQ</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-set="es" aria-pressed="true" title="Español">ES</button>
+      <button type="button" data-set="en" aria-pressed="false" title="English">EN</button>
+    </div>
+    <button class="search-btn" type="button" id="search-btn" aria-label="Buscar" aria-expanded="false" aria-controls="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+    <div class="search" id="search" hidden>
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Busca un tema o tu nombre" aria-label="Buscar en la guía" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+        <button class="clear" type="button" id="clear" aria-label="Borrar búsqueda">×</button>
+      </div>
+      <ul class="results" id="results" role="listbox" hidden></ul>
+    </div>
+  </div>
+</div>
+
+<main class="container" id="top">
+  <section class="hero">
+    <div>
+      <span class="eyebrow">Endless Access</span>
+      <h1><span data-l="es">Guía GameLab 7.0</span><span data-l="en">GameLab 7.0 Guide</span></h1>
+      <p data-l="es">Todo lo que necesitas para acompañar a tu grupo: fechas, sala, equipo y trámites.</p><p data-l="en">Everything you need to support your group: dates, room, team and admin.</p>
+    </div>
+    <span class="logo hero-mark" aria-hidden="true"></span>
+  </section>
+
+  <section class="section" id="fechas" aria-labelledby="fechas-t">
+    <div class="card">
+      <div class="section-head"><h2 id="fechas-t"><span data-l="es">Fechas clave</span><span data-l="en">Key dates</span></h2></div>
+      <div class="tl">
+        <div class="tl-track" aria-hidden="true"><div class="tl-fill" id="tl-fill"></div></div>
+        <ol class="timeline" id="timeline">
+          <li><span class="t-date"><span data-l="es">Vie 2 oct</span><span data-l="en">Fri, Oct 2</span></span><span class="t-what">Kickoff</span><span class="t-note" data-l="es">Solo facilitadores invitados, opcional. 15 h Perú, 17 h Arg, 14 h Guatemala.</span><span class="t-note" data-l="en">Invited facilitators only, optional. 3 p.m. Peru, 5 p.m. Arg, 2 p.m. Guatemala.</span></li>
+          <li><span class="t-date"><span data-l="es">Lun 5 oct</span><span data-l="en">Mon, Oct 5</span></span><span class="t-what" data-l="es">Inicio del programa</span><span class="t-what" data-l="en">Program starts</span></li>
+          <li><span class="t-date"><span data-l="es">Vie 13 nov</span><span data-l="en">Fri, Nov 13</span></span><span class="t-what" data-l="es">Cierre del programa</span><span class="t-what" data-l="en">Program ends</span></li>
+        </ol>
+      </div>
+      <p class="tl-status" id="tl-status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="section" id="grupo" aria-labelledby="grupo-t">
+    <div class="card">
+      <div class="section-head"><h2 id="grupo-t"><span data-l="es">Tu grupo</span><span data-l="en">Your group</span></h2><p data-l="es">El enlace de la sesión es el mismo durante todo el programa.</p><p data-l="en">The session link stays the same for the whole program.</p></div>
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div role="tabpanel" id="panel" tabindex="0"></div>
+    </div>
+  </section>
+
+  <section class="section" id="preguntas" aria-labelledby="preguntas-t">
+    <div class="card">
+      <div class="section-head"><h2 id="preguntas-t"><span data-l="es">Preguntas frecuentes</span><span data-l="en">Frequently asked questions</span></h2><p data-l="es">Horas, facturación y capacitación. Es igual para todos los grupos.</p><p data-l="en">Hours, invoicing and training. The same for every group.</p></div>
+      <div class="acc-list">
+<details class="acc" data-l="es" data-kw="acceso acceder entrar ingresar codigo codigos clave contraseña login registro cuenta studio plataforma no funciona error problema soporte"><summary>¿Cómo accedo a la plataforma?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Cada grupo tiene dos códigos de acceso a Endless Studio: uno para el equipo de mentores y otro para los estudiantes. La coordinación te los envía por correo junto con sus enlaces de acceso rápido.</p><div class="callout warn"><b>No confundas los códigos</b>Presta atención a la diferencia entre ambos para no compartir por error el acceso del equipo docente con los estudiantes.</div><p>Si algo no funciona, escribe a <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a> o a la coordinación y lo resolvemos antes de empezar.</p></div></details>
+<details class="acc" data-l="en" data-kw="access log in login sign in enter code codes password account register studio platform not working error problem support"><summary>How do I access the platform?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Each group has two access codes for Endless Studio: one for the mentor team and one for students. The coordination team emails them to you along with their quick-access links.</p><div class="callout warn"><b>Don’t mix up the codes</b>Pay attention to the difference between them so you don’t accidentally share the teaching team’s access with students.</div><p>If something doesn’t work, email <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a> or the coordination team and we’ll sort it out before we start.</p></div></details>
+<details class="acc" data-l="es" data-kw="material capacitacion formacion training video grabacion grabaciones parte 1 2 3 primera segunda tercera presentacion diapositivas slides drive"><summary>¿Dónde encuentro el material de capacitación?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Aquí encuentras las grabaciones de la capacitación. La tercera parte se agrega en cuanto esté disponible.</p><div class="parts"><a class="part" href="https://drive.google.com/file/d/1ZfT14LojuxpM5NT1bi0UhVGLRGDt6sL9/view" target="_blank" rel="noopener"><span class="part-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5Z"/></svg></span><span><b>Parte 1</b><span>Grabación</span></span></a><a class="part" href="https://drive.google.com/file/d/1Ksnlv6CUjsCjOwZskZLPrUapFIz178IC/view" target="_blank" rel="noopener"><span class="part-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5Z"/></svg></span><span><b>Parte 2</b><span>Grabación</span></span></a><div class="part soon"><span class="part-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><b>Parte 3</b><span>Próximamente</span></span></div></div><div class="links"><a class="chip" href="https://docs.google.com/presentation/d/140C-PiFtxZzPjfkqkKKmZtDJDyr1uK8E6PPbWMq6PGM/edit?usp=sharing" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>Presentación</a></div></div></details>
+<details class="acc" data-l="en" data-kw="materials training onboarding video recording recordings part 1 2 3 first second third presentation slides deck drive"><summary>Where can I find the training materials?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Here are the training recordings. Part three will be added as soon as it’s available.</p><div class="parts"><a class="part" href="https://drive.google.com/file/d/1ZfT14LojuxpM5NT1bi0UhVGLRGDt6sL9/view" target="_blank" rel="noopener"><span class="part-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5Z"/></svg></span><span><b>Part 1</b><span>Recording</span></span></a><a class="part" href="https://drive.google.com/file/d/1Ksnlv6CUjsCjOwZskZLPrUapFIz178IC/view" target="_blank" rel="noopener"><span class="part-ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5Z"/></svg></span><span><b>Part 2</b><span>Recording</span></span></a><div class="part soon"><span class="part-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><b>Part 3</b><span>Coming soon</span></span></div></div><div class="links"><a class="chip" href="https://docs.google.com/presentation/d/140C-PiFtxZzPjfkqkKKmZtDJDyr1uK8E6PPbWMq6PGM/edit?usp=sharing" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>Slides</a></div></div></details>
+<details class="acc" data-l="es" data-kw="material sesiones clases contenido plataforma temas pestaña tab hitos programa donde"><summary>¿Dónde está el material de las sesiones?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Todo el material de las sesiones está dentro del programa en la plataforma, en la pestaña <strong>Temas</strong>, ordenado por hitos.</p></div></details>
+<details class="acc" data-l="en" data-kw="materials sessions classes content platform topics tab milestones program where"><summary>Where are the session materials?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>All session materials are inside the program on the platform, in the <strong>Topics</strong> tab, organized by milestones.</p></div></details>
+<details class="acc" data-l="es" data-kw="horas capacitacion 3 horas adicionales extra pago pagas contrato octubre facturar semana"><summary>¿Cómo se cuentan las horas de capacitación?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Además de las horas semanales de tu contrato, se contemplaron <strong>3 horas adicionales de capacitación</strong>.</p><ul><li>El tercer encuentro de capacitación se cuenta dentro de tus horas semanales habituales, no dentro de las de capacitación.</li><li>Te recomendamos usar la primera semana del programa para esto, porque normalmente no se usan todas las horas asignadas.</li><li><strong>Todas las horas son pagas.</strong></li><li>Las horas de capacitación se facturan <strong>en octubre</strong>, para mantener ordenada la facturación de cada mes.</li></ul></div></details>
+<details class="acc" data-l="en" data-kw="hours training 3 extra additional paid pay contract october invoice week"><summary>How are training hours counted?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>On top of the weekly hours in your contract, <strong>3 extra training hours</strong> were planned.</p><ul><li>The third training session counts toward your usual weekly hours, not your training hours.</li><li>We recommend using the first week of the program for this, since not all assigned hours are usually used.</li><li><strong>All hours are paid.</strong></li><li>Training hours are invoiced <strong>in October</strong>, to keep each month’s invoicing organized.</li></ul></div></details>
+<details class="acc" data-l="es" data-kw="horas registro cargar reportar formulario form viernes semanal timesheet comentarios bugs errores backstitch confidencial"><summary>¿Cómo registro mis horas cada semana?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Cada viernes, o a más tardar el día siguiente al cierre de la semana, registra las horas trabajadas en el formulario.</p><div class="links"><a class="chip" href="https://docs.google.com/forms/d/e/1FAIpQLSdq9xpzw22UKrMkQDZzfy3ULf35MQu5kNDGK61MDK6naTLZ-A/viewform?usp=dialog" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span data-l="es">Formulario de horas</span><span data-l="en">Hours form</span></a></div><p>También puedes usarlo para dejarnos comentarios sobre la plataforma, el programa o BackStitch. Nos ayuda mucho a detectar y seguir posibles bugs.</p><p>Es un espacio confidencial: puedes contarnos cualquier comentario, duda o situación que consideres importante.</p></div></details>
+<details class="acc" data-l="en" data-kw="hours log report timesheet form friday weekly feedback bugs errors backstitch confidential"><summary>How do I log my hours each week?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Every Friday, or at the latest the day after the week ends, log the hours you worked in the form.</p><div class="links"><a class="chip" href="https://docs.google.com/forms/d/e/1FAIpQLSdq9xpzw22UKrMkQDZzfy3ULf35MQu5kNDGK61MDK6naTLZ-A/viewform?usp=dialog" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span data-l="es">Formulario de horas</span><span data-l="en">Hours form</span></a></div><p>You can also use it to leave us feedback about the platform, the program or BackStitch. It really helps us spot and track possible bugs.</p><p>It’s a confidential space: you can share any comment, question or situation you think is important.</p></div></details>
+<details class="acc" data-l="es" data-kw="factura facturacion facturar pago pagos cobro cobrar honorarios invoice mes plazo 5 dias accounts payable laura correo"><summary>¿Cómo y cuándo envío mi factura?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Al terminar cada mes, prepara tu factura siguiendo la guía.</p><div class="links"><a class="chip" href="https://docs.google.com/document/d/1SK6a6VcjriJAIR9_wq8dZi1fOiLKQNCOM0bHyXp0hTk/edit?usp=sharing" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span data-l="es">Guía de facturación</span><span data-l="en">Invoicing guide</span></a></div><p>Envíala <strong>dentro de los primeros 5 días del mes siguiente</strong>:</p><ul><li>Para: <a href="mailto:accounts.payable@endlessaccess.org">accounts.payable@endlessaccess.org</a></li><li>Con copia a: <a href="mailto:laura@endlessaccess.org">laura@endlessaccess.org</a></li></ul></div></details>
+<details class="acc" data-l="en" data-kw="invoice invoicing billing bill payment pay paid get paid fees month deadline 5 days accounts payable laura email"><summary>How and when do I send my invoice?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>At the end of each month, prepare your invoice following the guide.</p><div class="links"><a class="chip" href="https://docs.google.com/document/d/1SK6a6VcjriJAIR9_wq8dZi1fOiLKQNCOM0bHyXp0hTk/edit?usp=sharing" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span data-l="es">Guía de facturación</span><span data-l="en">Invoicing guide</span></a></div><p>Send it <strong>within the first 5 days of the following month</strong>:</p><ul><li>To: <a href="mailto:accounts.payable@endlessaccess.org">accounts.payable@endlessaccess.org</a></li><li>CC: <a href="mailto:laura@endlessaccess.org">laura@endlessaccess.org</a></li></ul></div></details>
+<details class="acc" data-l="es" data-kw="mentores en formacion graduados edicion anterior nuevos"><summary>¿Quiénes son los mentores en formación?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Más adelante se van a sumar a cada grupo uno o dos mentores en formación: graduados de la edición anterior de GameLab que acompañan al equipo durante esta edición.</p></div></details>
+<details class="acc" data-l="en" data-kw="mentors in training trainee graduates previous edition new"><summary>Who are the mentors in training?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Later on, one or two mentors in training will join each group: graduates of the previous GameLab edition who support the team during this edition.</p></div></details>
+<details class="acc" data-l="es" data-kw="kickoff lanzamiento inicio reunion 2 octubre opcional invitados facilitadores"><summary>¿Tengo que ir al kickoff?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>El kickoff es solo para facilitadores invitados, y la participación es opcional. Es el viernes 2 de octubre a las 15 h Perú, 17 h Argentina y 14 h Guatemala.</p></div></details>
+<details class="acc" data-l="en" data-kw="kickoff launch start meeting october 2 optional invited facilitators"><summary>Do I have to attend the kickoff?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>The kickoff is for invited facilitators only, and attendance is optional. It’s on Friday, October 2 at 3 p.m. Peru, 5 p.m. Argentina and 2 p.m. Guatemala.</p></div></details>
+<details class="acc" data-l="es" data-kw="dudas ayuda contacto soporte correo mail email coordinacion preguntas"><summary>¿A quién le escribo si tengo dudas?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>Ante cualquier duda, antes o durante el programa, escríbele a la coordinación. Para problemas con la plataforma, escribe a <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a>.</p></div></details>
+<details class="acc" data-l="en" data-kw="questions help contact support email mail coordination"><summary>Who do I contact if I have questions?<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="answer"><p>For any question, before or during the program, write to the coordination team. For platform issues, email <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a>.</p></div></details>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="container"><footer><span class="logo" aria-hidden="true"></span><span data-l="es">¡Gracias por acompañarnos en esta nueva edición!</span><span data-l="en">Thanks for joining us for this new edition!</span></footer></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const root=document.documentElement;
+let LANG=root.dataset.lang==="en"?"en":"es";
+const T={
+  es:{group:"Grupo",sched:"Horario de las sesiones",join:"Entrar a la sesión",team:"Equipo del grupo",trainees:"Más adelante se suman uno o dos mentores en formación.",
+      codes:"<strong>Tus códigos de acceso te llegan por correo.</strong> Hay uno para mentores y otro para estudiantes; no los confundas al compartirlos.",
+      trouble:"¿Problemas para entrar? Escribe a",empty:"Elige tu grupo para ver el horario, la sala y el equipo.",
+      sessions:"Sesiones",placeholder:"Busca un tema o tu nombre",searchLabel:"Buscar en la guía",clear:"Borrar búsqueda",search:"Buscar",
+      noRes:q=>`No encontramos nada para "${q}". Prueba con otra palabra o escribe a <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a>.`,
+      tagFaq:"Preguntas frecuentes",tagPlat:"Plataforma",tagDates:"Fechas",dates:"Fechas clave",help:"Discord de educadores y soporte",
+      day:n=>n+(n===1?" día":" días"),
+      untilKick:n=>`${n.startsWith("1 ")?"Falta":"Faltan"} ${n} para el kickoff`,kickToday:"Hoy es el kickoff",untilStart:n=>`${n.startsWith("1 ")?"Falta":"Faltan"} ${n} para el inicio`,
+      week:(w,t,n)=>`Semana ${w} de ${t}, ${n.startsWith("1 ")?"falta":"faltan"} ${n} para el cierre`,endToday:"Hoy es el cierre del programa",ended:"El programa finalizó. ¡Gracias por acompañarnos!",
+      tabs:"Grupos",roles:"Roles",nav:"Secciones",results:"Resultados",
+      z:{"Perú":"Perú","Argentina":"Argentina","Guatemala":"Guatemala"}},
+  en:{group:"Group",sched:"Session schedule",join:"Join the session",team:"Group team",trainees:"One or two mentors in training will join later on.",
+      codes:"<strong>Your access codes arrive by email.</strong> There’s one for mentors and one for learners; don’t mix them up when sharing.",
+      trouble:"Trouble getting in? Email",empty:"Pick your group to see the schedule, room and team.",
+      sessions:"Sessions",placeholder:"Search a topic or your name",searchLabel:"Search the guide",clear:"Clear search",search:"Search",
+      noRes:q=>`Nothing found for "${q}". Try another word or email <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a>.`,
+      tagFaq:"FAQ",tagPlat:"Platform",tagDates:"Dates",dates:"Key dates",help:"Educator Discord and support",
+      day:n=>n+(n===1?" day":" days"),
+      untilKick:n=>`${n} until the kickoff`,kickToday:"The kickoff is today",untilStart:n=>`${n} until the program starts`,
+      week:(w,t,n)=>`Week ${w} of ${t}, ${n} until the end`,endToday:"Today is the last day of the program",ended:"The program has ended. Thanks for joining us!",
+      tabs:"Groups",roles:"Roles",nav:"Sections",results:"Results",
+      z:{"Perú":"Peru","Argentina":"Argentina","Guatemala":"Guatemala"}}
+};
+const ROLE_EN={"Facilitadora y mentora de arte":"Facilitator and art mentor","Facilitador y mentor de arte":"Facilitator and art mentor","Facilitador y mentor de código":"Facilitator and code mentor","Mentor de código":"Code mentor","Mentora de código":"Code mentor","Mentor de arte":"Art mentor","Mentora de arte":"Art mentor","Mentor de game design":"Game design mentor"};
+const roleT=(r,l)=>l==="en"?(ROLE_EN[r]||r):r;
+
+const EARLY=[{z:"Perú",t:"15:30"},{z:"Argentina",t:"17:30"},{z:"Guatemala",t:"14:30"}];
+const LATE=[{z:"Perú",t:"17:30"},{z:"Argentina",t:"19:30"},{z:"Guatemala",t:"16:30"}];
+const GROUPS=[
+ {n:1,times:EARLY,meet:"meet.google.com/ahx-pybp-hwp",team:[["Victoria","Facilitadora y mentora de arte"],["Julián","Mentor de código"],["Carlos","Mentor de código"],["Augusto","Mentor de game design"]]},
+ {n:2,times:EARLY,meet:"meet.google.com/nmx-nbvf-don",team:[["Tobías","Facilitador y mentor de código"],["Diego","Mentor de código"],["Julieta","Mentora de arte"],["Nicolás","Mentor de game design"]]},
+ {n:3,times:EARLY,meet:"meet.google.com/grk-shhp-eoj",team:[["José Andrés","Facilitador y mentor de arte"],["Marcos","Mentor de código"],["Carolina","Mentora de código"],["Gonzalo","Mentor de game design"]]},
+ {n:4,times:LATE,meet:"meet.google.com/cqd-wbgo-ejy",team:[["Victoria","Facilitadora y mentora de arte"],["Julián","Mentor de código"],["Carolina","Mentora de código"],["Augusto","Mentor de game design"]]},
+ {n:5,times:LATE,meet:"meet.google.com/dkx-dytd-qrj",team:[["Tobías","Facilitador y mentor de código"],["Diego","Mentor de código"],["Julieta","Mentora de arte"],["Nicolás","Mentor de game design"]]},
+ {n:6,times:LATE,meet:"meet.google.com/nyn-cnrm-jit",team:[["Juan Ignacio","Facilitador y mentor de código"],["Carlos","Mentor de código"],["José Andrés","Mentor de arte"],["Gonzalo","Mentor de game design"]]}
+];
+const SUPPORT="learning@endlessaccess.org";
+const tabsEl=$("#tabs"), panel=$("#panel");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const initials=n=>n.split(" ").map(w=>w[0]).slice(0,2).join("");
+const timesStr=(g,l)=>g.times.map(x=>x.t+" "+T[l].z[x.z]).join(", ");
+const ICON_VIDEO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 13 5.2 3.1a.5.5 0 0 0 .8-.4V8.3a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>';
+const ICON_KEY='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg>';
+
+function wireTabs(container,onSelect){
+  const tabs=[...container.querySelectorAll('[role="tab"]')];
+  tabs.forEach((t,i)=>{
+    t.addEventListener("click",()=>onSelect(i));
+    t.addEventListener("keydown",e=>{
+      let j=null;
+      if(e.key==="ArrowRight")j=(i+1)%tabs.length;
+      if(e.key==="ArrowLeft")j=(i-1+tabs.length)%tabs.length;
+      if(e.key==="Home")j=0; if(e.key==="End")j=tabs.length-1;
+      if(j!==null){e.preventDefault();onSelect(j);tabs[j].focus();}
+    });
+  });
+}
+
+/* ---------- Grupos ---------- */
+GROUPS.forEach(g=>{
+  const b=document.createElement("button");
+  b.className="tab"; b.type="button"; b.setAttribute("role","tab"); b.id="tab-"+g.n;
+  b.setAttribute("aria-controls","panel"); b.setAttribute("aria-selected","false");
+  b.innerHTML=`<span class="n">${g.n}</span><span class="tab-l"></span>`;
+  tabsEl.appendChild(b);
+});
+wireTabs(tabsEl,i=>selectGroup(i,true));
+let selected=-1;
+function renderPanel(){
+  const t=T[LANG];
+  [...tabsEl.children].forEach((b,k)=>{b.querySelector(".tab-l").textContent=t.group+" "+GROUPS[k].n;});
+  if(selected<0){
+    panel.removeAttribute("aria-labelledby");
+    panel.innerHTML=`<div class="group-empty"><span class="logo" aria-hidden="true"></span><p>${t.empty}</p></div>`;
+    return;
+  }
+  const g=GROUPS[selected];
+  panel.setAttribute("aria-labelledby","tab-"+g.n);
+  panel.innerHTML=`<div class="group">
+    <div class="tile">
+      <h3>${t.sched}</h3>
+      <ul class="times">${g.times.map(x=>`<li><b>${x.t}</b><span>${t.z[x.z]}</span></li>`).join("")}</ul>
+      <a class="btn" href="https://${g.meet}" target="_blank" rel="noopener">${ICON_VIDEO}${t.join}</a>
+      <span class="meet-url">${g.meet}</span>
+    </div>
+    <div class="tile">
+      <h3>${t.team} ${g.n}</h3>
+      <ul class="team">${g.team.map(([n,r])=>`<li><span class="avatar" aria-hidden="true">${esc(initials(n))}</span><span><span class="name">${esc(n)}</span><span class="t-role">${esc(roleT(r,LANG))}</span></span></li>`).join("")}</ul>
+      <p class="muted-note">${t.trainees}</p>
+    </div>
+    <div class="access">
+      <span class="ico">${ICON_KEY}</span>
+      <div><p>${t.codes}</p><p>${t.trouble} <a href="mailto:${SUPPORT}">${SUPPORT}</a>.</p></div>
+    </div></div>`;
+}
+function selectGroup(i,save){
+  selected=i;
+  [...tabsEl.children].forEach((b,k)=>{b.setAttribute("aria-selected",k===i?"true":"false");b.tabIndex=k===i?0:-1;});
+  renderPanel();
+  if(save){try{history.replaceState(null,"","#grupo-"+GROUPS[i].n);}catch(e){}}
+}
+[...tabsEl.children].forEach((b,k)=>{b.tabIndex=k===0?0:-1;});
+const hm=location.hash.match(/grupo-(\d)/);
+if(hm&&GROUPS[+hm[1]-1]) selectGroup(+hm[1]-1,false); else renderPanel();
+
+/* ---------- Línea de tiempo ---------- */
+const D=(y,m,d)=>new Date(y,m-1,d);
+const KICK=D(2026,10,2),START=D(2026,10,5),END=D(2026,11,13),DAY=864e5;
+const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+(function(){
+  const clamp=v=>Math.max(0,Math.min(1,v));
+  let seg,frac;
+  if(today<KICK){seg=0;frac=0;}
+  else if(today<START){seg=0;frac=clamp((today-KICK)/(START-KICK));}
+  else if(today<END){seg=1;frac=clamp((today-START)/(END-START));}
+  else{seg=2;frac=1;}
+  const items=[...$("#timeline").children],dates=[KICK,START,END];
+  let nextSet=false;
+  items.forEach((li,k)=>{if(today>=dates[k])li.classList.add("done");else if(!nextSet){li.classList.add("next");nextSet=true;}});
+  const fill=$("#tl-fill"),track=fill.parentElement;
+  function place(){
+    const vertical=getComputedStyle($("#timeline")).gridTemplateColumns.split(" ").length===1;
+    const tr=track.getBoundingClientRect();
+    const pos=items.map(li=>{const r=li.getBoundingClientRect();return vertical?(r.top+11-tr.top):(r.left+8-tr.left);});
+    const size=vertical?tr.height:tr.width;
+    const endPos=seg===2?size:pos[seg]+frac*(pos[seg+1]-pos[seg]);
+    const s=clamp(endPos/size);
+    fill.style.transform=vertical?`scaleY(${s})`:`scaleX(${s})`;
+  }
+  requestAnimationFrame(()=>requestAnimationFrame(place));
+  addEventListener("resize",place);
+  window.__placeTimeline=place;
+})();
+function renderStatus(){
+  const t=T[LANG], diff=d=>Math.round((d-today)/DAY), st=$("#tl-status");
+  if(today<KICK) st.textContent=t.untilKick(t.day(diff(KICK)));
+  else if(+today===+KICK) st.textContent=t.kickToday;
+  else if(today<START) st.textContent=t.untilStart(t.day(diff(START)));
+  else if(+today===+END) st.textContent=t.endToday;
+  else if(today<END){const total=Math.ceil((END-START+DAY)/(7*DAY)),w=Math.floor((today-START)/(7*DAY))+1;st.textContent=t.week(w,total,t.day(diff(END)));}
+  else st.textContent=t.ended;
+}
+
+/* ---------- Buscador ---------- */
+const norm=str=>[...str].map(c=>c.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase()).join("");
+const STOP=new Set("de del la el los las un una unos unas y o a en que como para por con mi mis tu tus su sus se me es al lo le les donde cuando cual quien hay si no the an of to how do does i my is in for and what where when who can on at it".split(" "));
+const tokens=q=>norm(q).split(/[^a-z0-9ñ]+/).filter(t=>t&&!STOP.has(t));
+const clean=t=>t.replace(/\s+/g," ").replace(/\s+([.,:;])/g,"$1").trim();
+const textOf=(el,l)=>{const c=el.cloneNode(true);if(l)c.querySelectorAll(`[data-l]:not([data-l="${l}"])`).forEach(n=>n.remove());c.querySelectorAll("p,li,div,a,b,h4,span").forEach(n=>n.append(" "));return clean(c.textContent);};
+const scrollOpts=()=>({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+function goTo(section,flashEl){
+  const target=flashEl||section;
+  section.scrollIntoView(scrollOpts());
+  target.classList.remove("flash");void target.offsetWidth;target.classList.add("flash");
+  setTimeout(()=>target.classList.remove("flash"),2000);
+}
+const idx=[];
+["es","en"].forEach(l=>{
+  const t=T[l];
+  idx.push({l,tag:t.tagDates,title:t.dates,text:textOf($("#fechas .timeline")).split(" ").length?[...$("#fechas .timeline").querySelectorAll(`[data-l="${l}"],.t-what:not([data-l])`)].map(e=>e.textContent).join(". "):"",
+    kw:l==="es"?"fechas calendario inicio comienzo empieza fin cierre termina finaliza kickoff octubre noviembre cuando duracion":"dates calendar start begins end ends finish kickoff october november when duration",
+    go:()=>goTo($("#fechas"))});
+  GROUPS.forEach((g,i)=>{
+    idx.push({l,g:true,group:g,tag:t.group,title:t.group+" "+g.n,
+      text:g.team.map(([n,r])=>n+", "+roleT(r,l)).join(". ")+". "+t.sessions+": "+timesStr(g,l)+".",
+      names:g.team.map(([n])=>n).join(" "),
+      kw:(l==="es"?"grupo horario hora horarios sesion sesiones meet sala videollamada enlace equipo mentores facilitador arte codigo game design ":"group schedule time times session sessions meet room video call link team mentors facilitator art code game design ")+g.n,
+      go:()=>{selectGroup(i,true);goTo($("#grupo"),panel);}});
+  });
+});
+document.querySelectorAll("details.acc").forEach(d=>{
+  const l=d.dataset.l, t=T[l];
+  const tag=t.tagFaq;
+  idx.push({l,tag,title:clean(d.querySelector("summary").textContent),text:textOf(d.querySelector(".answer"),l),kw:d.dataset.kw||"",
+    go:()=>{d.open=true;goTo(d);}});
+});
+idx.forEach(e=>{e.nT=norm(e.title);e.nX=norm(e.text);e.nK=norm(e.kw);e.nN=norm(e.names||"");});
+
+function search(q){
+  const ts=tokens(q); if(!ts.length) return [];
+  const out=[];
+  for(const e of idx){
+    if(e.l!==LANG) continue;
+    let score=0,ok=true;
+    for(const t of ts){
+      let s=0;
+      if(e.nN&&new RegExp("(^|\\s)"+t).test(e.nN)) s=8;
+      else if(e.nT.includes(t)) s=5;
+      else if(e.nK.includes(t)) s=4;
+      else if(e.nX.includes(t)) s=1;
+      if(!s){ok=false;break;} score+=s;
+    }
+    if(ok) out.push({e,score});
+  }
+  return out.sort((a,b)=>b.score-a.score).slice(0,8).map(x=>x.e);
+}
+function highlight(str,ts){
+  const n=norm(str),marks=[];
+  ts.forEach(t=>{let i=n.indexOf(t);while(i>-1){marks.push([i,i+t.length]);i=n.indexOf(t,i+t.length);}});
+  marks.sort((a,b)=>a[0]-b[0]);
+  let res="",pos=0;
+  for(const [a,b] of marks){if(a<pos)continue;res+=esc(str.slice(pos,a))+"<mark>"+esc(str.slice(a,b))+"</mark>";pos=b;}
+  return res+esc(str.slice(pos));
+}
+function snippet(e,ts){
+  if(e.group){
+    const hit=e.group.team.filter(([n])=>ts.some(t=>new RegExp("(^|\\s)"+t).test(norm(n))));
+    const who=hit.length?hit.map(([n,r])=>n+", "+roleT(r,LANG).toLowerCase()).join(". ")+". ":"";
+    return who+T[LANG].sessions+": "+timesStr(e.group,LANG)+".";
+  }
+  const n=e.nX; let i=-1;
+  for(const t of ts){i=n.indexOf(t);if(i>-1)break;}
+  if(i<0) return e.text.slice(0,120)+(e.text.length>120?"…":"");
+  const a=Math.max(0,i-40),b=Math.min(e.text.length,i+90);
+  return (a>0?"…":"")+e.text.slice(a,b)+(b<e.text.length?"…":"");
+}
+const box=$("#search"),q=$("#q"),list=$("#results");
+let current=[],active=-1;
+function render(){
+  const val=q.value; box.classList.toggle("has-q",!!val.trim());
+  if(!val.trim()){close();return;}
+  const ts=tokens(val); current=search(val); active=current.length?0:-1;
+  if(!current.length){
+    list.innerHTML=`<li class="res-empty">${T[LANG].noRes(esc(val))}</li>`;
+  } else {
+    list.innerHTML=current.map((e,k)=>`<li class="res" role="option" id="res-${k}" aria-selected="${k===active}"><span class="res-top"><span class="res-tag${e.g?" g":""}">${esc(e.tag)}</span><span class="res-title">${highlight(e.title,ts)}</span></span><span class="res-snip">${highlight(snippet(e,ts),ts)}</span></li>`).join("");
+    [...list.children].forEach((li,k)=>li.addEventListener("mousedown",ev=>{ev.preventDefault();choose(k);}));
+  }
+  list.hidden=false; q.setAttribute("aria-expanded","true");
+  if(active>=0) q.setAttribute("aria-activedescendant","res-0"); else q.removeAttribute("aria-activedescendant");
+}
+function setActive(k){
+  active=k;[...list.querySelectorAll(".res")].forEach((li,j)=>li.setAttribute("aria-selected",j===k?"true":"false"));
+  const el=document.getElementById("res-"+k); if(el){el.scrollIntoView({block:"nearest"});q.setAttribute("aria-activedescendant",el.id);}
+}
+function close(){list.hidden=true;q.setAttribute("aria-expanded","false");q.removeAttribute("aria-activedescendant");}
+function choose(k){const e=current[k];if(!e)return;closePop();e.go();}
+q.addEventListener("input",render);
+q.addEventListener("focus",()=>{if(q.value.trim())render();});
+const sBtn=$("#search-btn");
+function openPop(){box.hidden=false;sBtn.setAttribute("aria-expanded","true");q.focus();if(q.value.trim())render();}
+function closePop(){close();box.hidden=true;sBtn.setAttribute("aria-expanded","false");}
+q.addEventListener("keydown",e=>{
+  if(e.key==="ArrowDown"&&current.length){e.preventDefault();setActive((active+1)%current.length);}
+  else if(e.key==="ArrowUp"&&current.length){e.preventDefault();setActive((active-1+current.length)%current.length);}
+  else if(e.key==="Enter"){e.preventDefault();if(active>=0)choose(active);}
+  else if(e.key==="Escape"){if(q.value){q.value="";render();}else{closePop();sBtn.focus();}}
+});
+$("#clear").addEventListener("click",()=>{q.value="";render();q.focus();});
+sBtn.addEventListener("click",()=>{box.hidden?openPop():closePop();});
+document.addEventListener("mousedown",e=>{if(!box.hidden&&!box.contains(e.target)&&!sBtn.contains(e.target))closePop();});
+document.addEventListener("keydown",e=>{
+  const tag=(document.activeElement&&document.activeElement.tagName)||"";
+  if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(tag)){e.preventDefault();openPop();}
+});
+
+/* ---------- Idioma ---------- */
+const langBtns=[...document.querySelectorAll(".lang button")];
+function applyLang(l,save){
+  LANG=l; root.dataset.lang=l; root.lang=l;
+  const t=T[l];
+  document.title=l==="en"?"GameLab 7.0 Guide":"Guía GameLab 7.0";
+  langBtns.forEach(b=>b.setAttribute("aria-pressed",b.dataset.set===l?"true":"false"));
+  q.placeholder=t.placeholder; q.setAttribute("aria-label",t.searchLabel);
+  $("#clear").setAttribute("aria-label",t.clear); $("#search-btn").setAttribute("aria-label",t.search);
+  tabsEl.setAttribute("aria-label",t.tabs);
+  $(".nav").setAttribute("aria-label",t.nav); list.setAttribute("aria-label",t.results);
+  // mantener abiertos los mismos acordeones en el otro idioma
+  document.querySelectorAll(".acc-list").forEach(listEl=>{
+    const es=[...listEl.querySelectorAll('details.acc[data-l="es"]')], en=[...listEl.querySelectorAll('details.acc[data-l="en"]')];
+    const from=l==="en"?es:en, to=l==="en"?en:es;
+    from.forEach((d,i)=>{if(to[i])to[i].open=d.open;});
+  });
+  renderPanel(); renderStatus();
+  if(q.value.trim()) render();
+  if(window.__placeTimeline) requestAnimationFrame(window.__placeTimeline);
+  if(save){try{localStorage.setItem("gl7-lang",l);}catch(e){}}
+}
+langBtns.forEach(b=>b.addEventListener("click",()=>applyLang(b.dataset.set,true)));
+applyLang(LANG,false);
+
+/* ---------- Nav activa ---------- */
+const links=[...document.querySelectorAll(".nav a")];
+const secs=links.map(a=>document.querySelector(a.getAttribute("href")));
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target);links.forEach((l,k)=>l.classList.toggle("active",k===i));}});},{rootMargin:"-40% 0px -55% 0px"});
+secs.forEach(s=>io.observe(s));
+
+</script>
+</body>
+</html>
