@@ -242,6 +242,33 @@ figure.shot figcaption{
 @media (prefers-reduced-motion:reduce){
   *{animation:none !important; transition:none !important;}
 }
+
+.alert p, .note p{margin:12px 0 0;}
+.alert p:first-of-type, .note p:first-of-type{margin-top:10px;}
+.alert p:last-child, .note p:last-child{margin-bottom:0;}
+.faq-section{padding:0;overflow:hidden;}
+.faq-wrap > summary{cursor:pointer; list-style:none; padding:28px 60px 28px 32px; position:relative;}
+.faq-wrap > summary::-webkit-details-marker{display:none;}
+.faq-wrap > summary .fig{display:block; font-size:22px; line-height:30px; color:var(--ink-hi);}
+.faq-wrap > summary .faq-sub{display:block; margin-top:4px; font-size:15px; line-height:23px; color:var(--ink-dim);}
+.faq-wrap > summary::after{content:"+"; position:absolute; right:32px; top:32px; font-size:26px; line-height:1; color:var(--ink-dim); font-weight:600;}
+.faq-wrap[open] > summary::after{content:"\2013";}
+.faq-wrap > summary:hover .fig{color:var(--orange-600);}
+.faq-wrap > .faq{padding:0 32px 32px;}
+.faq-foot{margin-top:16px; font-size:14px; line-height:22px; color:var(--ink-dim);}
+.faq{margin-top:8px;}
+.faq details{border:1px solid var(--border-muted); border-radius:20px; background:var(--surface); margin:0 0 10px; overflow:hidden;}
+.faq details[open]{border-color:var(--border-acc); background:var(--cloud);}
+.faq summary{cursor:pointer; list-style:none; padding:16px 48px 16px 20px; position:relative; font-family:Figtree,'DejaVu Sans',sans-serif; font-weight:700; font-size:15px; line-height:22px; color:var(--ink-hi);}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:"+"; position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:20px; line-height:1; color:var(--ink-dim); font-weight:600;}
+.faq details[open] summary::after{content:"\2013";}
+.faq summary:hover{color:var(--orange-600);}
+.faq .ans{padding:0 20px 18px; color:var(--ink-muted);}
+.faq .ans p{margin:0 0 10px;}
+.faq .ans p:last-child{margin-bottom:0;}
+.faq .ans ul{margin:6px 0 10px; padding-left:20px;}
+.faq .ans li{margin:0 0 4px;}
 </style>
 </head>
 <body>
@@ -306,9 +333,9 @@ figure.shot figcaption{
 <span class="fig"><span class="t-en">Doing this on your own?</span><span class="t-es">¿Lo haces por tu cuenta?</span></span>
 <p><span class="t-en">If you are an educator running this program with your own learners, you are the Program Manager. You do not need to add facilitators - a Program Manager already has everything a facilitator has.</span><span class="t-es">Si eres un educador que dirige este programa con tus propios estudiantes, tú eres el Gestor del Programa. No necesitas añadir facilitadores: un Gestor del Programa ya tiene todo lo que tiene un facilitador.</span></p>
 </div>
-<div class="alert">
+<div class="note">
 <span class="fig"><span class="t-en">Data privacy agreements</span><span class="t-es">Acuerdos de privacidad de datos</span></span>
-<p><span class="t-en">We want to get you up and running with as little paperwork as possible! For schools or districts that require a data privacy agreement, sometimes called a DPA, we are glad to sign one with you. Email <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a> and we will work through it together.</span><span class="t-es">¡Queremos que empieces a funcionar con la menor cantidad de papeleo posible! Para las escuelas o distritos que requieran un acuerdo de privacidad de datos, a veces llamado DPA, con gusto firmaremos uno contigo. Escribe a <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a> y lo resolveremos juntos.</span></p>
+<p><span class="t-en">We want to get you up and running with as little paperwork as possible.</span><span class="t-es">Queremos que empieces a funcionar con la menor cantidad de papeleo posible.</span></p><p><span class="t-en">We are members of the <strong>Student Data Privacy Consortium (SDPC)</strong> and ready to execute the <strong>National Data Privacy Agreement (NDPA)</strong> with any school or district whose learners will use the platform. You can read the <a href="https://files.a4l.org/privacy/NDPA/NDPA_v2-2_STANDARD_WEB.pdf">standard NDPA terms published by SDPC</a>. If your school or district uses its own agreement instead, email <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a> and we will work through it together.</span><span class="t-es">Somos miembros del <strong>Student Data Privacy Consortium (SDPC)</strong> y estamos listos para firmar el <strong>National Data Privacy Agreement (NDPA)</strong> con cualquier escuela o distrito cuyos estudiantes vayan a usar la plataforma. Puedes consultar los <a href="https://files.a4l.org/privacy/NDPA/NDPA_v2-2_STANDARD_WEB.pdf">términos estándar del NDPA publicados por SDPC</a>. Si tu escuela o distrito usa su propio acuerdo, escribe a <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a> y lo resolveremos juntos.</span></p><p><span class="t-en"><strong>Running the program without learner accounts.</strong> The platform is built for learners aged 13 and over. If your learners are younger, or your school would rather not put learners on a platform at all, you can still run the program. Facilitators deliver the sessions and upload work on their learners’ behalf, and no learner accounts are created.</span><span class="t-es"><strong>Ejecutar el programa sin cuentas de estudiantes.</strong> La plataforma está diseñada para estudiantes de 13 años o más. Si tus estudiantes son menores, o tu escuela prefiere no crear cuentas para ellos, igual puedes ejecutar el programa. Los facilitadores dirigen las sesiones y suben el trabajo en nombre de sus estudiantes, sin crear cuentas de estudiantes.</span><span class="t-es"></span></p>
 </div>
 </div>
 </section>
@@ -499,6 +526,49 @@ figure.shot figcaption{
 <p><span class="t-en">Getting stuck is completely normal, by the way. Everyone who makes games spends a good part of their time stuck. Working out how to get unstuck is most of the skill.</span><span class="t-es">Por cierto, atascarse es completamente normal. Todo el que crea videojuegos pasa buena parte del tiempo atascado. Descubrir cómo desatascarse es la mayor parte de la habilidad.</span></p>
 </div>
 </section>
+<div class="card faq-section">
+<details class="faq-wrap">
+<summary>
+<span class="fig"><span class="t-en">FAQs about privacy</span><span class="t-es">Preguntas frecuentes sobre privacidad</span></span>
+<span class="faq-sub"><span class="t-en">The questions schools and districts ask us most often</span><span class="t-es">Las preguntas que escuelas y distritos nos hacen con más frecuencia</span></span>
+</summary>
+<div class="faq">
+<details>
+<summary><span class="t-en">Do we need a data privacy agreement to run this?</span><span class="t-es">&iquest;Necesitamos un acuerdo de privacidad de datos para ejecutar esto?</span></summary>
+<div class="ans"><span class="t-en"><p>An educator account is always needed, and that is yours, not a learner’s. Learner accounts are a separate question.</p><p>We would prefer your learners to have their own accounts, because they get the most from the program that way. If they do, we are members of the Student Data Privacy Consortium and ready to execute the National Data Privacy Agreement with your school or district.</p><p>If that is not possible, learners can still take part and submit their work through your educator account instead.</p></span><span class="t-es"><p>Siempre hace falta una cuenta de educador, y esa es la tuya, no la de un estudiante. Las cuentas de estudiantes son otra cuestión.</p><p>Preferimos que tus estudiantes tengan sus propias cuentas, porque así aprovechan mejor el programa. Si las tienen, somos miembros del Student Data Privacy Consortium y estamos listos para firmar el National Data Privacy Agreement con tu escuela o distrito.</p><p>Si eso no es posible, los estudiantes pueden participar igualmente y entregar su trabajo a través de tu cuenta de educador.</p></span></div>
+</details>
+<details>
+<summary><span class="t-en">How do we get an NDPA signed?</span><span class="t-es">&iquest;Cómo firmamos un NDPA?</span></summary>
+<div class="ans"><span class="t-en"><p>Start with your school or district IT department. They will know whether an agreement is already in place and who needs to sign.</p><p>If your district has its own agreement it prefers to use, send it to <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a> and we will work through it with them.</p><p>Otherwise, tell us your school or district at the same address and we will send our completed vendor exhibits, which set out the services, the student data we hold and our subprocessors, and take it from there.</p></span><span class="t-es"><p>Empieza por el departamento de TI de tu escuela o distrito. Ellos sabrán si ya existe un acuerdo y quién debe firmarlo.</p><p>Si tu distrito tiene su propio acuerdo que prefiere usar, envíalo a <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a> y lo revisaremos con ellos.</p><p>Si no, indícanos tu escuela o distrito en esa misma dirección y te enviaremos nuestros anexos completos, que detallan los servicios, los datos de estudiantes que conservamos y nuestros subprocesadores, y seguimos desde ahí.</p></span></div>
+</details>
+<details>
+<summary><span class="t-en">What student data do you hold?</span><span class="t-es">&iquest;Qué datos de estudiantes conservan?</span></summary>
+<div class="ans"><span class="t-en"><p>For learners with accounts, we hold what is needed to run the program and award credentials: the account details they sign up with, the work they submit, and their progress through the sessions. We do not sell data and we do not use it for advertising. The full list is in our NDPA exhibits, available on request.</p></span><span class="t-es"><p>Para estudiantes con cuenta, conservamos lo necesario para ejecutar el programa y otorgar credenciales: los datos con los que se registran, el trabajo que entregan y su progreso por las sesiones. No vendemos datos ni los usamos para publicidad. La lista completa está en nuestros anexos del NDPA, disponibles si los solicitas.</p></span></div>
+</details>
+<details>
+<summary><span class="t-en">What is the minimum age for a learner account?</span><span class="t-es">&iquest;Cuál es la edad mínima para una cuenta de estudiante?</span></summary>
+<div class="ans"><span class="t-en"><p>Thirteen. The platform is designed for learners aged 13 and over, which is how we approach COPPA. Younger learners can still take part in the program, with their facilitator delivering the sessions and uploading work on their behalf.</p></span><span class="t-es"><p>Trece años. La plataforma está diseñada para estudiantes de 13 años o más, que es nuestro enfoque frente a COPPA. Los estudiantes menores pueden participar igualmente, con su facilitador dirigiendo las sesiones y subiendo el trabajo en su nombre.</p></span></div>
+</details>
+<details>
+<summary><span class="t-en">Can we run the program without putting learners on the platform?</span><span class="t-es">&iquest;Podemos ejecutar el programa sin poner a los estudiantes en la plataforma?</span></summary>
+<div class="ans"><span class="t-en"><p>Yes. You access the program and deliver it to your class, and your learners never create accounts. They still do all the same activities, and they can submit their work through your educator account.</p><p>What they give up is everything that depends on having an account of their own: their profile, their XP, a certificate in their own name, and any ASU-backed microcredential the program carries.</p></span><span class="t-es"><p>Sí. Tú accedes al programa y lo impartes a tu clase, y tus estudiantes nunca crean cuentas. Hacen exactamente las mismas actividades y pueden entregar su trabajo a través de tu cuenta de educador.</p><p>Lo que se pierden es todo lo que depende de tener una cuenta propia: su perfil, sus XP, un certificado a su nombre y cualquier microcredencial respaldada por ASU que incluya el programa.</p></span></div>
+</details>
+<details>
+<summary><span class="t-en">What do learners get if they do have accounts?</span><span class="t-es">&iquest;Qué obtienen los estudiantes si sí tienen cuenta?</span></summary>
+<div class="ans"><span class="t-en"><p>Their own profile, XP for the work they complete, and a certificate of completion in their own name. On the programs that carry one, their XP also counts towards an ASU-backed microcredential. They can carry on into our other programs once the sessions finish, and their XP and credentials travel with them.</p></span><span class="t-es"><p>Su propio perfil, XP por el trabajo que completan y un certificado de finalización a su nombre. En los programas que la incluyen, sus XP también cuentan para una microcredencial respaldada por ASU. Pueden continuar en nuestros otros programas cuando terminen las sesiones, y sus XP y credenciales los acompañan.</p></span></div>
+</details>
+<details>
+<summary><span class="t-en">How do you handle FERPA requests?</span><span class="t-es">&iquest;Cómo gestionan las solicitudes bajo FERPA?</span></summary>
+<div class="ans"><span class="t-en"><p>School districts can make notice and access requests under FERPA, and we are set up to handle them. Email <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a> and we will respond directly to the district.</p></span><span class="t-es"><p>Los distritos escolares pueden hacer solicitudes de notificación y acceso bajo FERPA, y estamos preparados para gestionarlas. Escribe a <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a> y responderemos directamente al distrito.</p></span></div>
+</details>
+<details>
+<summary><span class="t-en">Who can see a learner’s work?</span><span class="t-es">&iquest;Quién puede ver el trabajo de un estudiante?</span></summary>
+<div class="ans"><span class="t-en"><p>Their facilitator and the program manager for their cohort. Nothing a learner submits is published publicly unless they and their educator choose to share it.</p><p>If you need tighter separation, cohorts can be set up so that each facilitator sees only their own learners and nobody else’s. That is an option rather than the default, so tell us if your school needs it and we will configure it when we set up your program.</p></span><span class="t-es"><p>Su facilitador y el gestor del programa de su cohorte. Nada de lo que entrega un estudiante se publica públicamente a menos que él y su educador decidan compartirlo.</p><p>Si necesitas una separación más estricta, las cohortes pueden configurarse para que cada facilitador vea solo a sus propios estudiantes. Es una opción, no el comportamiento por defecto, así que avísanos si tu escuela lo necesita y lo configuramos al preparar tu programa.</p></span></div>
+</details>
+<p class="faq-foot"><span class="t-en">Not answered here? Email <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a>.</span><span class="t-es">&iquest;No está resuelta aquí? Escribe a <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a>.</span></p>
+</div>
+</details>
+</div>
 <p class="meta"><span class="t-en">Endless Access · Platform Guide · September 2026</span><span class="t-es">Endless Access · Guía de la Plataforma · Septiembre de 2026</span></p>
 </div>
 <script>
