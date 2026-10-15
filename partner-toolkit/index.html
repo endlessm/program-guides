@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Endless Access Partner Toolkit</title>
+<meta name="description" content="Everything partners need to run an Endless Access program, from kickoff to credentials. English and Spanish.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#E76203; --orange-soft:#FFF1E6; --ink:#2F2D3C; --muted:#5A5866;
+  --line:#E4E2E8; --bg:#FFFFFF; --card:#FDFBF9; --chip:#F3F1F4;
+  --ok:#1E7A4B; --okbg:#E6F4EC; --warn:#8A6D1F; --warnbg:#FBF3DC; --code:#FFF6EF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --orange:#FF8534; --orange-soft:#3A2717; --ink:#F2F0F5; --muted:#A9A5B5;
+    --line:#3A3745; --bg:#1B1A21; --card:#232129; --chip:#2C2A34;
+    --ok:#7BD1A2; --okbg:#1E3529; --warn:#E3C878; --warnbg:#37301C; --code:#2A2430;
+  }
+}
+:root[data-theme="dark"]{
+  --orange:#FF8534; --orange-soft:#3A2717; --ink:#F2F0F5; --muted:#A9A5B5;
+  --line:#3A3745; --bg:#1B1A21; --card:#232129; --chip:#2C2A34;
+  --ok:#7BD1A2; --okbg:#1E3529; --warn:#E3C878; --warnbg:#37301C; --code:#2A2430;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:15.5px; line-height:1.65;}
+a{color:var(--orange)}
+[hidden]{display:none !important}
+.langbtn{font-family:'Figtree',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:.04em;
+  padding:7px 12px; border-radius:999px; border:1px solid var(--orange); background:transparent;
+  color:var(--orange); cursor:pointer; white-space:nowrap}
+.langbtn:hover{background:var(--orange); color:#fff}
+
+/* header */
+.top{position:sticky; top:env(safe-area-inset-top,0px); z-index:40; background:var(--bg);
+     border-bottom:1px solid var(--line); padding:12px 20px; display:flex; align-items:center; gap:14px}
+.top .brand{font-family:'Figtree',sans-serif; font-weight:800; font-size:15px; letter-spacing:-.01em; white-space:nowrap}
+.top .brand span{color:var(--orange)}
+.top select{margin-left:auto; font-family:'Inter',sans-serif; font-size:13px; padding:7px 10px;
+  border-radius:9px; border:1px solid var(--line); background:var(--card); color:var(--ink); max-width:44vw}
+
+.hero{background:#2F2D3C; color:#fff; padding:52px 24px 56px; text-align:center}
+.hero .eyebrow{font-family:'Figtree',sans-serif; font-size:12px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:#FF8534; margin-bottom:12px}
+.hero h1{font-family:'Figtree',sans-serif; font-size:40px; font-weight:800; margin:0 0 12px; letter-spacing:-.02em; color:#fff}
+.hero p{margin:0 auto; max-width:620px; color:#C9CCD8; font-size:17px}
+
+.wrap{max-width:900px; margin:0 auto; padding:0 20px 80px}
+section{padding-top:44px}
+h2{font-family:'Figtree',sans-serif; font-size:25px; font-weight:800; margin:0 0 6px; letter-spacing:-.01em}
+h3{font-family:'Figtree',sans-serif; font-size:17.5px; font-weight:700; margin:26px 0 8px}
+h4{font-family:'Figtree',sans-serif; font-size:15px; font-weight:700; margin:18px 0 6px; color:var(--orange)}
+.lede{color:var(--muted); margin:0 0 18px}
+.rule{height:3px; width:48px; background:var(--orange); border-radius:3px; margin:10px 0 18px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px; padding-left:22px}
+li{margin-bottom:7px}
+
+.card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin:16px 0}
+.card h3,.card h4{margin-top:0}
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin:16px 0}
+.note{border-left:3px solid var(--orange); background:var(--orange-soft); border-radius:10px; padding:14px 18px; margin:16px 0}
+.note p:last-child{margin-bottom:0}
+.warn{border-left:3px solid var(--warn); background:var(--warnbg); border-radius:10px; padding:14px 18px; margin:16px 0}
+.warn p:last-child{margin-bottom:0}
+
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:14px; margin:16px 0}
+table{width:100%; border-collapse:collapse; font-size:14.5px}
+th{background:var(--orange-soft); font-family:'Figtree',sans-serif; font-weight:700; font-size:13.5px;
+   text-align:left; padding:11px 14px; white-space:nowrap}
+td{padding:12px 14px; border-top:1px solid var(--line); vertical-align:top}
+td strong{font-weight:600}
+
+code{background:var(--code); border-radius:6px; padding:2px 7px; font-family:'Courier New',monospace;
+  font-size:13.5px; color:var(--orange); font-weight:700}
+.chip{display:inline-block; font-size:11.5px; font-weight:600; padding:2px 9px; border-radius:20px;
+  background:var(--chip); color:var(--muted)}
+.chip.good{background:var(--okbg); color:var(--ok)}
+.chip.hold{background:var(--warnbg); color:var(--warn)}
+.steps{counter-reset:s; list-style:none; padding:0; margin:16px 0}
+.steps li{counter-increment:s; position:relative; padding-left:42px; margin-bottom:14px}
+.steps li::before{content:counter(s); position:absolute; left:0; top:0; width:28px; height:28px;
+  background:var(--orange); color:#fff; border-radius:50%; display:flex; align-items:center;
+  justify-content:center; font-family:'Figtree',sans-serif; font-weight:700; font-size:14px}
+.q{font-weight:600; margin-bottom:4px}
+.dl{margin:12px 0 0; font-size:14px}
+.faq{border-top:1px solid var(--line); padding:16px 0}
+.faq:first-of-type{border-top:none}
+footer{border-top:1px solid var(--line); padding:28px 20px 48px; text-align:center; color:var(--muted); font-size:13.5px}
+@media (max-width:640px){
+  .hero{padding:38px 18px 42px} .hero h1{font-size:30px} .hero p{font-size:15.5px}
+  h2{font-size:21px} .wrap{padding:0 16px 60px}
+  .top{padding:10px 16px; gap:8px} .top .brand{font-size:13px}
+  .top select{flex:1 1 auto; min-width:0; max-width:none} .langbtn{padding:6px 9px; font-size:11.5px}
+}
+</style>
+</head>
+<body>
+<div id="lang-en">
+
+
+<div class="top">
+  <div class="brand">ENDLESS <span>ACCESS</span></div>
+  <select onchange="if(this.value)location.hash=this.value">
+    <option value="">Jump to…</option>
+    <option value="welcome">Who we are</option>
+    <option value="partnership">Being a partner</option>
+    <option value="programs">Your programs</option>
+    <option value="before">Before you start</option>
+    <option value="setup">Getting learners set up</option>
+    <option value="tech">Devices and IT</option>
+    <option value="people">Facilitators and mentors</option>
+    <option value="running">Running sessions</option>
+    <option value="surveys">Surveys and certificates</option>
+    <option value="credentials">Microcredentials</option>
+    <option value="adapt">What you can adapt</option>
+    <option value="tailor">Threadbare Tailor tools</option>
+    <option value="resources">Resources</option>
+    <option value="brand">Brand and co-branding</option>
+    <option value="community">Community and conduct</option>
+    <option value="safeguarding">Safeguarding and data</option>
+    <option value="help">Getting help</option>
+    <option value="faq">FAQ</option>
+    <option value="trouble">Troubleshooting</option>
+    <option value="glossary">Glossary</option>
+    <option value="contacts">Contacts</option>
+  </select>
+  <button class="langbtn" onclick="setLang('es')">ESPAÑOL</button>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">Partner Toolkit</div>
+  <h1>Everything you need to run your program</h1>
+  <p>Welcome to Endless Access. This toolkit covers how to set up, what to expect, where to find things, and how to get help, from kickoff through to your learners earning credentials.</p>
+</div>
+
+<div class="wrap">
+
+<section id="welcome">
+  <h2>Who we are</h2><div class="rule"></div>
+  <p>Endless Access is a nonprofit working to close the digital divide through game making. Everything we make is free and open source, and we never charge learners or partners for our programs.</p>
+  <p>Our programs are built around <em>Threadbare</em>, a narrative adventure game made in the Godot engine. Learners play it, then learn to make their own additions to it. By the end of a full program, some of them have contributed real work to the actual game that other people around the world play.</p>
+
+  <h3>How real is <em>Threadbare</em>?</h3>
+  <p>Genuinely real. It is a published game for players who enjoy narrative adventure puzzles, and it has been shown at game developer conferences including GodotCon. It just happens to have been built by teachers, learning designers and senior engineers, so it also works as a teaching vehicle. You can play it right now at <a href="https://play.threadbare.game/">play.threadbare.game</a>, and the full source code lives at <a href="https://github.com/endlessm/threadbare">github.com/endlessm/threadbare</a>.</p>
+
+  <div class="note">
+    <p><strong>Play it before you start.</strong> The single most useful thing you and your facilitators can do before your first session is spend twenty minutes playing <em>Threadbare</em>. Everything in the program refers back to it.</p>
+  </div>
+
+  <h3>The learner pathway</h3>
+  <p>Every program moves learners along the same path: <strong>Consumer</strong>, playing games critically, to <strong>Creator</strong>, making their own, to <strong>Contributor</strong>, submitting work to a live open source project, to <strong>Career</strong>, with credentials and a portfolio that carry forward.</p>
+</section>
+
+<section id="partnership">
+  <h2>What it means to be an Endless Access partner</h2><div class="rule"></div>
+  <p>Partnership runs both ways. Here is what each side is signing up for.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>What we provide</h4>
+      <ul>
+        <li>All curriculum, slide decks and facilitator materials, free</li>
+        <li>Platform access for every learner and facilitator</li>
+        <li>Live facilitator training before your program starts, with a certificate for each facilitator who completes it</li>
+        <li>Help sourcing facilitators and mentors if you need them</li>
+        <li>A Program Manager invite link, so you can create your cohorts and enrollment codes</li>
+        <li>A named contact on our team throughout your program</li>
+        <li>Certificates of completion, and ASU microcredentials where eligible</li>
+        <li>Community support through Discord and our help desk</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>What you provide</h4>
+      <ul>
+        <li>Named facilitators who complete our training, from your own team or sourced together with us, as agreed in your partnership agreement</li>
+        <li>A confirmed session calendar agreed before the program starts</li>
+        <li>Devices, connectivity and a suitable space</li>
+        <li>IT approval for our platform on your network</li>
+        <li>Learner enrollment on the platform, and your final learner list confirmed with us before launch</li>
+        <li>Your logo (high resolution), a few photos of your organization or learners, and a named primary contact</li>
+        <li>Pre and post survey completion</li>
+        <li>Participation in a first check-in soon after launch (usually by email), a mid-program check-in, and an end-of-program debrief</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn">
+    <p><strong>The two that most often get missed.</strong> IT approval, which can take weeks in a school district and has delayed programs by months, and survey completion, which is how your learners receive their certificates. Start both early.</p>
+  </div>
+
+  <h3>How a partnership runs</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Stage</th><th>What happens</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Agreeing</strong></td><td>An intro call, then together we choose your program and whether it is microcredential-eligible, and sign the partnership agreement.</td></tr>
+      <tr><td><strong>Getting ready</strong></td><td>You send your logo, photos and primary contact; we agree the calendar and language; you receive your Program Manager invite link and survey links in your kickoff email and create your cohorts and codes; facilitators are confirmed and trained; your learner list is confirmed.</td></tr>
+      <tr><td><strong>Running</strong></td><td>Pre-survey on day one, a first check-in soon after launch, a mid-program check-in, and the post-survey in the final session.</td></tr>
+      <tr><td><strong>Wrapping up</strong></td><td>Certificates and microcredentials are issued, optional learner stories are collected, we hold a debrief together, and we send a next-steps email, including what a second run could look like.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="programs">
+  <h2>Your programs</h2><div class="rule"></div>
+  <p>Your kickoff email from us confirms which program you are running, your dates, and how many learners and cohorts we have planned for together.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Program</th><th>Length</th><th>Ages</th><th>What learners make</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Explore: <em>Threadbare</em></strong></td><td>13 one-hour workshops</td><td>13+</td><td>Modifications and creative work across the full range of game-making roles. Workshops stand alone and work in any order.</td></tr>
+      <tr><td><strong>Explore: Godot</strong></td><td>10 hours</td><td>13+</td><td>A first playable level built in the Godot engine, inspired by the <em>Threadbare</em> world.</td></tr>
+      <tr><td><strong>Core: <em>Threadbare</em></strong></td><td>18 one-hour sessions, plus around 6 hours independent</td><td>15+</td><td>A complete StoryQuest built as a team and submitted to the live <em>Threadbare</em> repository.</td></tr>
+      <tr><td><strong>More: <em>Threadbare</em></strong></td><td>6 milestones, 12+ hours</td><td>15+</td><td>Extended work for learners who have completed Core, including game jams and LoreQuests.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><strong>A note on the word "session".</strong> For us, one session equals one hour equals one unit of content. Your classroom meeting might cover two or three of our sessions in a single block. When you report progress, tell us how many of our sessions you covered, not how many times the group met.</p>
+  </div>
+</section>
+
+<section id="before">
+  <h2>Before you start</h2><div class="rule"></div>
+  <p>Work through this in the weeks leading up to your first session. Most problems that derail a program are things on this list that got left to the last week.</p>
+
+  <ol class="steps">
+    <li><strong>Agree your calendar with us.</strong> Session dates, times and locations, worked around school breaks, exam periods and local holidays. Shorter spaced sessions work far better than long marathon blocks.</li>
+    <li><strong>Clear the platform with your IT team.</strong> See <a href="#tech">Devices and IT</a> for the specifics they will ask for. This is the step most likely to take longer than you expect.</li>
+    <li><strong>Send us your partner details.</strong> Your logo, a few photos, your primary contact's name, title and email, and the dates of any future programs you are already planning.</li>
+    <li><strong>Tell us your language needs.</strong> English, Spanish, or Arabic for some materials, so everything is ready before day one.</li>
+    <li><strong>Confirm your facilitators and mentors.</strong> Named people, with real availability for every session, not a schedule you hope to fill. If we are sourcing facilitators or mentors with you, we confirm them together before training is scheduled.</li>
+    <li><strong>Book facilitator training with us.</strong> Required for everyone facilitating, with enough time afterwards for follow-up questions.</li>
+    <li><strong>Play <em>Threadbare</em>.</strong> You and every facilitator.</li>
+    <li><strong>Set up your cohorts and codes.</strong> Use the Program Manager invite link in your kickoff email, then follow <a href="#setup">Getting learners set up</a>.</li>
+    <li><strong>Confirm your final learner list with us.</strong> How many learners are enrolled, in which cohorts, before your first session.</li>
+    <li><strong>Confirm your pre-survey plan.</strong> It has to be completed on day one and cannot be backfilled later.</li>
+    <li><strong>Check your room and kit.</strong> Devices charged, logins working, connectivity tested, screen or projector available.</li>
+  </ol>
+</section>
+
+<section id="setup">
+  <h2>Getting learners set up</h2><div class="rule"></div>
+  <p>Enrollment is the most common place for a first session to go wrong, and it is almost entirely preventable. The <a href="https://endlessm.github.io/program-guides/explore-setup/">Program Setup guide</a> walks through every step with screenshots. This is the short version.</p>
+
+  <h3>Three roles</h3>
+  <ul>
+    <li><strong>Program Manager</strong> sets up and runs the program: creates cohorts, invites learners and facilitators, and sees progress. If you are an educator running the program with your own learners, this is you, and you do not need to add facilitators.</li>
+    <li><strong>Facilitator</strong> works directly with learners in the cohorts they are assigned to. Optional, and mainly for larger teams.</li>
+    <li><strong>Learner</strong> is the game maker: joins with a link or code, works through the sessions, and uploads their work.</li>
+  </ul>
+
+  <h3>Set up your cohorts and codes</h3>
+  <ol class="steps">
+    <li><strong>Join as Program Manager</strong> using the invite link in your kickoff email.</li>
+    <li><strong>Create your cohorts.</strong> A cohort is one run of the program, with its own learners, dates, facilitators and dashboard. Name each one so you will recognize it in six months, such as "Riverside High, Grade 9, Autumn 2026" rather than "Cohort 1".</li>
+    <li><strong>Add facilitators (optional).</strong> Create an enrollment code with the role set to Facilitator, then send each facilitator the code or its invite link. Do this before training, so they can look around first.</li>
+    <li><strong>Create a learner code for each cohort.</strong> Codes are not generated automatically. Set the maximum number of users to your group size, so a code cannot travel further than you intended.</li>
+    <li><strong>Check everyone is in.</strong> Before the first session, open each cohort's Users page and confirm every learner appears. Anyone who never finished signing up cannot submit work or earn a credential.</li>
+  </ol>
+
+  <h3>How learners join</h3>
+  <ul>
+    <li><strong>A link, the easiest way.</strong> Copy the invite link next to the learner code and send it, or put it on a slide as a QR code. It signs learners up straight into the right cohort.</li>
+    <li><strong>A code.</strong> Learners go to <a href="https://studio.endlessstudios.com">studio.endlessstudios.com</a>, sign up, choose <strong>I have a code</strong> and type it in. Their program then appears under <strong>My Programs</strong>.</li>
+  </ul>
+
+  <div class="note">
+    <p><strong>Three habits that make this painless.</strong> Send the link in writing before the session. Project it or a QR code on screen rather than reading it aloud. And have learners sign in with Google or another account they already have, which skips creating another password and saves several minutes per person.</p>
+  </div>
+
+  <h3>Learners under 13, or no learner accounts</h3>
+  <p>Learner accounts are for ages 13 and over. If your learners are younger, or your school would rather not put learners on a platform at all, you can still run the program: facilitators deliver the sessions and submit learners' work through their own educator account, and no learner accounts are created. Core: <em>Threadbare</em> is recommended for ages 15 and over.</p>
+  <p>Without accounts of their own, learners do not get a profile, XP, a certificate in their own name, or a microcredential. You are very welcome to give them a certificate of your own.</p>
+  <p>Agree this in writing with us before your program starts, so nobody is improvising on the day.</p>
+</section>
+
+<section id="tech">
+  <h2>Devices and IT</h2><div class="rule"></div>
+  <h3>What learners need</h3>
+  <ul>
+    <li><strong>Explore: <em>Threadbare</em></strong> runs in a browser, so laptops and Chromebooks both work.</li>
+    <li><strong>Explore: Godot, Core and More</strong> need laptops that can install software.</li>
+    <li>Shared devices are fine and learners often pair up, but each learner signs in to their own account and submits their own work, because that is what earns XP.</li>
+    <li>An up-to-date browser.</li>
+    <li>Reliable internet connectivity.</li>
+    <li>An individual email address per learner, which is also how microcredentials are issued.</li>
+    <li>For Explore: Godot, Core and More, the ability to install the Godot engine, or to run it where your IT policy allows. Install the latest stable version from <a href="https://godotengine.org/download">godotengine.org/download</a>, not the .NET version.</li>
+  </ul>
+
+  <h3>What to ask your IT team</h3>
+  <p>Give them this list early. The questions they will come back with are predictable, so getting ahead of them saves weeks.</p>
+  <ul>
+    <li>Can learners reach <code>studio.endlessstudios.com</code> and create accounts?</li>
+    <li>Can they reach <code>github.com</code>, needed for any program involving Git?</li>
+    <li>Can the Godot engine be installed, or is there an approved route for running it?</li>
+    <li>Can the Threadbare Tailor tools be installed? See <a href="#tailor">Threadbare Tailor tools</a>.</li>
+    <li>Is file download and upload permitted, since learners submit work this way?</li>
+    <li>Does your filtering block game-related domains by category?</li>
+  </ul>
+
+  <div class="warn">
+    <p><strong>Name an owner and a deadline for IT approval.</strong> The most common cause of a delayed program is that nobody on either side owned finding the right IT contact. If you are not sure who that is at your organization, tell us and we will help you work it out.</p>
+  </div>
+</section>
+
+<section id="people">
+  <h2>Facilitators and mentors</h2><div class="rule"></div>
+  <p>Facilitators matter more to how a program lands than anything else, including the curriculum. These are the things that consistently separate a strong site from a struggling one.</p>
+
+  <h3>What a facilitator needs to be</h3>
+  <p>They do not need to be a game developer or a programmer. They need curiosity, comfort with not knowing an answer and finding it alongside learners, and a willingness to run a session hands-on rather than lecture from slides. Teachers, youth workers and community staff all do this well.</p>
+
+  <h3>Training is required</h3>
+  <p>Every facilitator completes our training before the program starts, with no exceptions. It covers the curriculum arc, the platform, and the speaker notes.</p>
+  <p>We also recommend that facilitators read through the full program before training, so they arrive with real questions rather than discovering gaps mid-delivery. Facilitators who complete training receive a certificate.</p>
+  <h3>Where facilitators come from</h3>
+  <p>Usually from your own team. If you do not have the right people, we can source facilitators or mentors with you, considering language, region and program expertise. Your partnership agreement says which model you are using.</p>
+
+  <h3>How many facilitators</h3>
+  <p>One facilitator for every 50 learners is the general guide, though smaller ratios work better for younger groups and for the more technical programs.</p>
+
+  <h3>Mentors</h3>
+  <p>Mentors are optional and valuable. They are usually industry volunteers or older learners who have been through the program. If you have them, connect them to your facilitators early and keep them aligned on where groups are up to. If you do not have them and would like them, tell us.</p>
+
+  <div class="note">
+    <p><strong>Use the speaker notes.</strong> They carry the prompts that make a session interactive. A facilitator who skips them ends up reading slides aloud for an hour, and learners tell us so afterwards.</p>
+  </div>
+</section>
+
+<section id="running">
+  <h2>Running sessions</h2><div class="rule"></div>
+  <ul>
+    <li><strong>Platform login happens on day one</strong>, not when learners first need to submit something.</li>
+    <li><strong>Work gets submitted during the session</strong>, not later. Work left on a local machine tends to stay there.</li>
+    <li><strong>Protect hands-on time.</strong> If you have to choose between finishing the slides and finishing the making, finish the making.</li>
+    <li><strong>Watch for learners going quiet.</strong> Dropping off is usually about being afraid to ask a question, not about losing interest. A check-in early is worth more than a recovery plan later.</li>
+    <li><strong>Expect Git to be the hard part</strong> in any program that includes it. Budget extra support there and schedule it once the group has some momentum.</li>
+    <li><strong>Keep sessions and meetings straight</strong> when you report progress. See the note in <a href="#programs">Your programs</a>.</li>
+  </ul>
+
+  <h3>If you are delivering online</h3>
+  <p>Learners need a working camera and microphone, and you need a way for groups to collaborate in breakouts.</p>
+  <h3>If you are delivering in person</h3>
+  <p>A comfortable space, a screen or whiteboard, and enough connectivity for everyone to be on the platform at the same time.</p>
+</section>
+
+<section id="surveys">
+  <h2>Surveys and certificates</h2><div class="rule"></div>
+  <p>Two surveys bracket every program, and they are not optional.</p>
+  <ul>
+    <li><strong>Pre-survey</strong>, completed on day one. It cannot be backfilled, and without it we cannot show what your learners gained.</li>
+    <li><strong>Post-survey</strong>, completed in the final session. <strong>This is how learners receive their certificate of completion.</strong> A learner who does not complete it does not get one.</li>
+  </ul>
+  <p><strong>Your survey links are in your kickoff email.</strong> Each cohort has its own, so always use the ones we sent you. If you cannot find them, contact your Endless contact or <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a> and we will resend them.</p>
+  <p>Some programs also have a very short reflection attached to each workshop, linked from the slide deck itself.</p>
+
+  <div class="note">
+    <p><strong>Do the surveys in the room.</strong> Every program that has tried to chase surveys by email after the final session has ended up with learners who never got their certificate.</p>
+  </div>
+
+  <h3>Co-branded certificates</h3>
+  <p>Certificates of completion are issued automatically through the platform once a learner completes the post-survey. Toward the end of your program we also confirm with you the list of learners who qualify, so nobody who earned a certificate or microcredential is missed. If you would like to issue an additional certificate carrying your own branding, you are very welcome to. Tell us during setup if you would like us to configure a co-branded version.</p>
+</section>
+
+<section id="credentials">
+  <h2>Microcredentials</h2><div class="rule"></div>
+  <p>Learners and facilitators can earn microcredentials issued in collaboration with the ASU Endless Games and Learning Lab, recognizing real, evidence-based game-making work. They are earned through XP on the platform, which is why all work needs to be submitted there.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Credential</th><th>Program</th><th>Earned at</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Intro to Game Making with Godot</strong></td><td>Explore: Godot</td><td>1500 XP</td><td>~15 hours</td></tr>
+      <tr><td><strong>Community Game Making</strong></td><td>Core: <em>Threadbare</em></td><td>2000 XP</td><td>~24 hours</td></tr>
+      <tr><td><strong>Applied Game Making: Backlog to Contribution</strong></td><td>More: <em>Threadbare</em></td><td>1000 XP</td><td>~12 hours</td></tr>
+      <tr><td><strong>Applied Game Making: Concept to Canon</strong></td><td>Lore Jam</td><td>1000 XP</td><td>~10 hours</td></tr>
+      <tr><td><strong>Intro to Game Making with AI</strong> <span class="chip hold">in draft</span></td><td>Explore: fAIrytales</td><td>1500 XP (draft)</td><td>~15 hours</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Explore: <em>Threadbare</em> does not currently carry a microcredential. Learners still receive a certificate of completion.</p>
+  <p>Your kickoff email confirms whether your cohort is microcredential-eligible. Before microcredentials are issued, we confirm the list of eligible learners with you.</p>
+  <p><strong>For Core: <em>Threadbare</em>,</strong> facilitators send us the GitHub repository link for each team's StoryQuest using a short form we share with you. That is how the team's work is counted toward XP and the Community Game Making credential, so submit every team's link.</p>
+
+  <h3>For facilitators and mentors</h3>
+  <p>Facilitators and mentors who have earned one of the learner credentials can go on to earn a matching Mentor or Facilitator credential by completing an additional training layer. These exist for Godot, AI, and Community Game Making. The process is still manual on our side, so reach out to us to get it started.</p>
+
+  <div class="warn">
+    <p>These microcredentials do not constitute academic credit or a formal ASU academic program.</p>
+  </div>
+</section>
+
+<section id="adapt">
+  <h2>What you can adapt, and what to keep</h2><div class="rule"></div>
+  <p>You know your learners better than we do, and we would rather you adapt than abandon. Some things, though, hold the program together.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>Adapt freely</h4>
+      <ul>
+        <li>Pace, and how many of our sessions you cover in one meeting</li>
+        <li>Which Explore workshops you run, and in what order</li>
+        <li>Examples and context, to make them local and relevant</li>
+        <li>Group sizes and team composition</li>
+        <li>Adding your own warm-ups, showcases or celebrations</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Please keep</h4>
+      <ul>
+        <li>The pre and post surveys, unchanged</li>
+        <li>Submission of work to the platform, which is how XP and credentials work</li>
+        <li>The hands-on making time in each session</li>
+        <li>The sequence within Core: <em>Threadbare</em>, which builds toward the StoryQuest</li>
+        <li>Facilitator training before delivery</li>
+      </ul>
+    </div>
+  </div>
+  <p>If you change something substantial, tell us. We are not checking up on you. It is so that when we look at your results together we can tell the difference between a curriculum problem and a delivery difference.</p>
+</section>
+
+<section id="tailor">
+  <h2>Threadbare Tailor tools</h2><div class="rule"></div>
+  <p>The Threadbare Tailor is a set of free creation tools built to sit alongside the programs. They let learners make game-ready assets without needing professional software, and everything they produce can be used directly in a StoryQuest or LoreQuest.</p>
+
+  <div class="note">
+    <p><strong>Downloads are linked on each tool below.</strong> They are Windows applications (.exe). Check with your IT team that they can be installed on your devices before your first session, alongside the other checks in <a href="#tech">Devices and IT</a>.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h4>PatchWorkShop</h4>
+      <p>Builds scenes and structures from pre-made art components, so learners can make polished environments without drawing from scratch.</p>
+      <ul>
+        <li>Component library: base structures, doors, windows, chimneys, decorations</li>
+        <li>Search assets by name or color</li>
+        <li>Layer management and image control</li>
+        <li>256x256 canvas, exports as game-ready PNG</li>
+      </ul>
+      <p class="dl"><a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/download/patchwork-shop-v1.0.0/Threadbare-Patchwork-Shop.exe"><strong>Download for Windows</strong></a> · <a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/tag/patchwork-shop-v1.0.0">release notes</a></p>
+    </div>
+    <div class="card">
+      <h4>Pixel Stitch</h4>
+      <p>A pixel art kit for making original assets one pixel at a time, from stills through to full animations.</p>
+      <ul>
+        <li>Canvas sizes from 8x8 to 512x512</li>
+        <li>Standard drawing tools, full color picker and palette builder</li>
+        <li>Layers, and unlimited animation frames with live preview</li>
+        <li>Exports as PNG, spritesheet or GIF</li>
+      </ul>
+      <p class="dl"><a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/download/pixelstitch-v1.0.0/Threadbare-PixelStitch.exe"><strong>Download for Windows</strong></a> · <a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/tag/pixelstitch-v1.0.0">release notes</a></p>
+    </div>
+    <div class="card">
+      <h4>Melody Loom</h4>
+      <p>Makes sound effects and music for StoryQuests, from a single effect to a full looping melody.</p>
+      <ul>
+        <li>BPM, volume and reverb controls</li>
+        <li>Full note range, plus a library of sound effects</li>
+        <li>Waveform editor with copy, paste and loop</li>
+        <li>Exports as WAV</li>
+      </ul>
+      <p class="dl"><a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/download/melody-loom-v1.0.0/Threadbare-Melody-Loom.exe"><strong>Download for Windows</strong></a> · <a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/tag/melody-loom-v1.0.0">release notes</a></p>
+    </div>
+    <div class="card">
+      <h4>Whispering Well</h4>
+      <p>A narrative starter for learners staring at a blank page. A themed randomizer sets the who, what, when and where of a story, which learners then build out.</p>
+      <ul>
+        <li>Story-starter prompts for StoryQuest ideation</li>
+        <li>A <em>Threadbare</em>-themed mode for LoreQuest world building</li>
+        <li>Works well as a warm-up at the start of a session</li>
+      </ul>
+      <p class="dl"><a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/download/whispering-well-v1.0.0/Threadbare-Whispering-Well.exe"><strong>Download for Windows</strong></a> · <a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/tag/whispering-well-v1.0.0">release notes</a></p>
+    </div>
+  </div>
+
+  <p>These tools are especially useful for learners who are enthusiastic about the story and the art but less confident with the technical side. They give everyone a way to contribute something real to a team's quest.</p>
+</section>
+
+<section id="resources">
+  <h2>Resources</h2><div class="rule"></div>
+
+  <h3>Facilitator playbooks</h3>
+  <ul>
+    <li>Explore: <em>Threadbare</em>, <a href="https://endlessm.github.io/program-guides/explore-threadbare-playbook/">English</a> · <a href="https://endlessm.github.io/program-guides/explore-threadbare-playbook/?lang=es">Spanish</a></li>
+    <li>Explore: Godot, <a href="https://endlessm.github.io/program-guides/explore-godot-playbook/">English</a> · <a href="https://endlessm.github.io/program-guides/explore-godot-playbook/?lang=es">Spanish</a></li>
+    <li>Core: <em>Threadbare</em>, <a href="https://endlessm.github.io/program-guides/core-threadbare-playbook/">English</a> · <a href="https://endlessm.github.io/program-guides/core-threadbare-playbook/?lang=es">Spanish</a></li>
+    <li>More: <em>Threadbare</em>, <a href="https://docs.google.com/document/d/1xxD725zT2--Z5RVde822X_uDkt2p0VUVFgPQuq_9Hdc/edit">English</a> · <a href="https://docs.google.com/document/d/1kg8FY3SN0igYpZRrwfDs81uiGIpbWKeUNrQtWd0_ur0/edit">Spanish</a></li>
+  </ul>
+
+  <h3>Program and platform</h3>
+  <ul>
+    <li><a href="https://endlessm.github.io/program-guides">Programs overview</a>, covering every program and how it works</li>
+    <li><a href="https://endlessm.github.io/program-guides/explore-setup/">Cohort setup guide</a>, for creating cohorts and learner codes</li>
+    <li><a href="https://www.youtube.com/watch?v=T_dEUrMrW7Q">Platform walkthrough video</a></li>
+    <li>All slide decks live on the platform, under your program, then Topics, then Sessions or Workshops</li>
+  </ul>
+
+  <h3><em>Threadbare</em></h3>
+  <ul>
+    <li><a href="https://play.threadbare.game/">Play the game</a></li>
+    <li><a href="https://github.com/endlessm/threadbare">Source code and wiki</a></li>
+    <li><a href="https://drive.google.com/drive/folders/1CnwbsrOjjk9-C6BWuOxrtxWy_mogoKiG">Game assets</a></li>
+    <li><a href="https://drive.google.com/drive/folders/1h2EYKCEkfK8jPL2ODiY4HxpgxSOJ3m8M">Virtual backgrounds</a></li>
+  </ul>
+
+  <h3>Printable and promotional</h3>
+  <ul>
+    <li><a href="https://docs.google.com/presentation/d/1UlFJaLwi9l67fhrwwi9jIpR2dzKwdRPQbn4z6xCrRJA/edit">Explore: <em>Threadbare</em> poster</a></li>
+    <li><a href="https://docs.google.com/presentation/d/1nTToblCwbB-9Ys7rZsdjtoK5k3NbkckTx3Cz_c3_-as/edit">Core: <em>Threadbare</em> poster</a></li>
+  </ul>
+</section>
+
+<section id="brand">
+  <h2>Brand and co-branding</h2><div class="rule"></div>
+  <ul>
+    <li><a href="https://drive.google.com/drive/folders/1F2461MvKIRSLD3arKzO-SqgWZNhbdznS">Official Endless logos</a></li>
+    <li><a href="https://docs.google.com/presentation/d/10N5ICPQcvWtcpB1QBBWLzmNnGh24u2zsqqg5hRpAWxo/edit">Brand guidelines</a></li>
+  </ul>
+  <p>You are welcome to use our logo when promoting your program and describing the partnership. Please use the supplied files without recoloring, stretching or redrawing them, and leave clear space around them as the guidelines show.</p>
+  <p>When describing our credentials, please say they are offered <strong>in collaboration with</strong> ASU, and avoid wording that implies academic accreditation.</p>
+  <p>If you would like to announce the partnership publicly, let us know. We would usually like to amplify it, and we may be able to offer quotes, images or learner stories.</p>
+</section>
+
+<section id="community">
+  <h2>Community and conduct</h2><div class="rule"></div>
+  <p>Our <a href="https://discord.gg/XNvVA659rJ">community Discord</a> is where learners from every partner share work, ask questions and help each other. Facilitators, mentors and partner staff have their own <a href="https://discord.gg/YvrqcDk6Dn">educator Discord</a>, where facilitators help each other out. It is the fastest route to an answer, so join early. If we have set up a private channel for your organization, use that instead.</p>
+  <p>On the platform, a learner's work is visible to their own cohort and facilitator, not to anyone outside the cohort. Nothing a learner submits is published publicly unless they and their educator choose to share it.</p>
+  <p>Everyone in our spaces agrees to our <a href="https://github.com/Endless-Access-Community/.github/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>. To report a violation, email <a href="mailto:community+conduct@endlessos.org">community+conduct@endlessos.org</a> with details and our team will review it.</p>
+</section>
+
+<section id="safeguarding">
+  <h2>Safeguarding and data</h2><div class="rule"></div>
+  <ul>
+    <li><strong>Age.</strong> Learner accounts are for ages 13 and over. Younger learners take part through their facilitator's educator account. See <a href="#setup">Getting learners set up</a>.</li>
+    <li><strong>Learner data and privacy agreements.</strong> Collect only what you need to run the program. Learner email addresses are required for microcredential issuance. We are members of the Student Data Privacy Consortium (SDPC) and ready to sign the National Data Privacy Agreement (NDPA) with your school or district; if you use your own agreement, or need to make a FERPA request, email <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a>. Raise any agreement before the program starts, not after. The <a href="https://endlessm.github.io/program-guides/explore-setup/">Program Setup guide</a> answers the questions schools ask most often.</li>
+    <li><strong>Who sees whose work.</strong> By default facilitators see the learners in their cohorts. If you need each facilitator to see only their own learners, tell us at setup and we will configure it.</li>
+    <li><strong>Shared spaces.</strong> Learners under your care participate in community spaces alongside others. Facilitators should be present in those spaces during sessions.</li>
+    <li><strong>Session links.</strong> Close recurring meeting invites once your program ends, so learners do not keep access to an unsupervised space.</li>
+    <li><strong>Photos and stories.</strong> If we would like to feature your learners' work publicly, we will ask you first, and you are responsible for holding the consents your own organization requires. For some programs we may also invite a few learners to a short, optional interview about their game and how the program could improve, always with your agreement.</li>
+  </ul>
+</section>
+
+<section id="help">
+  <h2>Getting help</h2><div class="rule"></div>
+  <p>Three tiers, for three audiences. Start at the top and work down.</p>
+
+  <h3>Learners</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Tier</th><th>Where to go</th><th>Good for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Self-service</strong></td><td>The help center FAQ</td><td>Logging in, installing Godot, changing account details</td></tr>
+      <tr><td><strong>2. Peer support</strong></td><td>Post a question in the program feed, or the Discord help channel</td><td>Creative feedback, code that will not work, where to post something</td></tr>
+      <tr><td><strong>3. Help desk</strong></td><td>Discord ticket, or <a href="mailto:help@endlessstudios.com">help@endlessstudios.com</a></td><td>Broken projects, error messages, anything that looks like a platform fault</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Facilitators and mentors</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Tier</th><th>Where to go</th><th>Good for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Self-service</strong></td><td>The help center FAQ, the <a href="https://endlessm.github.io/program-guides/explore-setup/">Program Setup guide</a>, or search the <a href="https://discord.gg/YvrqcDk6Dn">educator Discord</a></td><td>Common questions, software requirements</td></tr>
+      <tr><td><strong>2. Peer support</strong></td><td>The <a href="https://discord.gg/YvrqcDk6Dn">educator Discord</a></td><td>Finding materials, codes, meeting links, covering a session</td></tr>
+      <tr><td><strong>3. Help desk</strong></td><td>Discord ticket, or <a href="mailto:help@endlessstudios.com">help@endlessstudios.com</a></td><td>Lost learner work, broken projects, platform faults</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>For content errors, typos or pedagogical gaps, email <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a>.</p>
+
+  <h3>Partners</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Tier</th><th>Where to go</th><th>Good for</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Self-service</strong></td><td>This toolkit and the help center FAQ</td><td>Most day-to-day questions</td></tr>
+      <tr><td><strong>2. Your Endless contact</strong></td><td>Named in your kickoff email</td><td>Scheduling, codes, logistics, anything about your program</td></tr>
+      <tr><td><strong>3. Help desk</strong></td><td>Discord ticket, or <a href="mailto:help@endlessstudios.com">help@endlessstudios.com</a></td><td>Firewall and whitelisting, platform faults, account problems</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><strong>When you raise a ticket</strong>, include your cohort name and code, the program name, the username affected, the device and browser, and a screenshot if you have one. It roughly halves the time to a fix.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <h2>Frequently asked questions</h2><div class="rule"></div>
+
+  <div class="faq"><p class="q">What if learners fall behind or miss sessions?</p>
+  <p>Most content stays available on the platform for learners to catch up in their own time, and facilitators can point them to the right place. It is worth asking why they missed it. Quite often learners stop attending because they are afraid to ask a question rather than because they have lost interest, and reviewing the topic with the whole group fixes it without singling anyone out.</p></div>
+
+  <div class="faq"><p class="q">What if a learner's team goes inactive?</p>
+  <p>The first move is for the learner to talk to their teammates directly and find out what is going on. If that feels uncomfortable or does not work, they should go to a facilitator or mentor, who can speak with each team member individually. In the worst case a learner can be moved into another team that has room for them.</p></div>
+
+  <div class="faq"><p class="q">Can under-13 learners take part?</p>
+  <p>Yes. Learner accounts are for ages 13 and over, but younger learners can take part with their facilitator delivering the sessions and submitting their work through an educator account. See <a href="#setup">Getting learners set up</a>. Core: <em>Threadbare</em> is recommended for 15 and over.</p></div>
+
+  <div class="faq"><p class="q">Can we co-brand certificates?</p>
+  <p>Absolutely. The platform issues a certificate of completion automatically. If you would like to give learners an additional certificate with your own branding, please do.</p></div>
+
+  <div class="faq"><p class="q">Does any of this cost anything?</p>
+  <p>No. The curriculum, the platform, the training and the credentials are all free.</p></div>
+
+  <div class="faq"><p class="q">Do facilitators need to be able to code?</p>
+  <p>No. Curiosity and willingness to learn alongside learners matter far more. The materials are built so that someone can pick up a session and run it.</p></div>
+
+  <div class="faq"><p class="q">Can we run this in Spanish?</p>
+  <p>Yes. Our programs, playbooks and surveys are available in Spanish, and Arabic for some materials. Tell us at setup which language you need so everything is ready before day one.</p></div>
+
+  <div class="faq"><p class="q">Can we run the program again next year?</p>
+  <p>Yes, and we would like you to. After your debrief we send a next-steps email with what we agreed, and we talk about what a second run looks like, including whether your own facilitators can lead it with less support from us.</p></div>
+
+  <div class="faq"><p class="q">What happens to learner work?</p>
+  <p>It stays theirs. Work contributed to the <em>Threadbare</em> repository becomes part of an open source project under its license, which is exactly the point, and learners can point to it as their own.</p></div>
+</section>
+
+<section id="trouble">
+  <h2>Troubleshooting</h2><div class="rule"></div>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Problem</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>A learner cannot find where to enter the code</td><td>When signing up at studio.endlessstudios.com, choose "I have a code". Easier still, send the invite link next to the code, which signs learners straight into the right cohort.</td></tr>
+      <tr><td>A learner is missing from the cohort</td><td>They probably never finished signing up. Check the cohort's Users page before the first session and help anyone missing to complete sign-up.</td></tr>
+      <tr><td>A code stops working</td><td>It may have reached its maximum number of users. Raise the maximum on the code, or create a new one.</td></tr>
+      <tr><td>The enrollment link does not open</td><td>Copy the full address and paste it into the browser rather than tapping it. Some messaging apps truncate long links.</td></tr>
+      <tr><td>A learner is stuck waiting for email verification</td><td>Check the spam folder. Signing up with Google or GitHub instead skips verification entirely.</td></tr>
+      <tr><td>A learner posted work in the wrong place</td><td>Work should go in your cohort's own channel or the program feed. Have them repost it in the right place; nothing is lost.</td></tr>
+      <tr><td>Godot will not install, or a project will not import</td><td>Check with your IT team whether installation is permitted. For import problems, confirm whether the project should be unzipped first or dragged in as-is for that session.</td></tr>
+      <tr><td>Git or GitHub is blocking progress</td><td>This is the single most common technical blocker across all our programs. Raise it with us early rather than losing a session to it, and check that <code>github.com</code> is reachable on your network.</td></tr>
+      <tr><td>The platform will not load, or shows a permission error</td><td>Likely a network or filtering issue. See the whitelist questions in <a href="#tech">Devices and IT</a>, then raise a ticket with your cohort name, code and a screenshot.</td></tr>
+      <tr><td>A learner completed the program but has no certificate</td><td>Check that they completed the post-survey. That is the trigger. If they have and it still has not arrived, tell us and we will sort it out.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="glossary">
+  <h2>Glossary</h2><div class="rule"></div>
+  <div class="tablewrap">
+  <table>
+    <tbody>
+      <tr><td><strong>Session</strong></td><td>One hour of our content. Your classroom meeting may contain several.</td></tr>
+      <tr><td><strong>Cohort</strong></td><td>A group of learners going through a program together, with its own enrollment codes, dates and dashboard. In front of learners we usually just say "your group".</td></tr>
+      <tr><td><strong>Program Manager</strong></td><td>The person who sets up and runs the program on the platform: creates cohorts and codes, and sees progress.</td></tr>
+      <tr><td><strong>XP</strong></td><td>Points earned by completing work on the platform. Microcredentials are issued at XP thresholds.</td></tr>
+      <tr><td><strong>StoryQuest</strong></td><td>The team-built mini game at the heart of Core: <em>Threadbare</em>, submitted to the live game.</td></tr>
+      <tr><td><strong>LoreQuest</strong></td><td>An original story that expands the <em>Threadbare</em> world, built in Lore Jams.</td></tr>
+      <tr><td><strong>Godot</strong></td><td>The free, open source game engine <em>Threadbare</em> is built in.</td></tr>
+      <tr><td><strong>Repository, or repo</strong></td><td>Where the game's code and assets live, and where learner contributions are submitted.</td></tr>
+      <tr><td><strong>Pull request</strong></td><td>How a contribution is offered to the main game for review.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="contacts">
+  <h2>Your contacts</h2><div class="rule"></div>
+  <div class="tablewrap">
+  <table>
+    <tbody>
+      <tr><td><strong>Your Endless contact</strong></td><td>Named in your kickoff email</td></tr>
+      <tr><td><strong>Program questions</strong></td><td><a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a></td></tr>
+      <tr><td><strong>Platform and technical support</strong></td><td><a href="mailto:help@endlessstudios.com">help@endlessstudios.com</a></td></tr>
+      <tr><td><strong>Code of Conduct reports</strong></td><td><a href="mailto:community+conduct@endlessos.org">community+conduct@endlessos.org</a></td></tr>
+      <tr><td><strong>Facilitators and partner staff</strong></td><td><a href="https://discord.gg/YvrqcDk6Dn">Educator Discord</a></td></tr>
+      <tr><td><strong>Data privacy and legal</strong></td><td><a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a></td></tr>
+      <tr><td><strong>Community</strong></td><td><a href="https://discord.gg/XNvVA659rJ">Discord</a></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><strong>One last thing.</strong> If something is not working, tell us early. We would far rather hear about a problem in week two than read about it in a debrief. Nothing you raise will be held against you, and most of what we have improved came from a partner saying something was harder than it should be.</p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  Endless Access · Free, open-source game making · <em>Threadbare</em> is built in Godot and released open source
+</footer>
+
+
+</div>
+
+<div id="lang-es" hidden>
+<div class="top">
+  <div class="brand">ENDLESS <span>ACCESS</span></div>
+  <select onchange="if(this.value)location.hash=this.value">
+    <option value="">Ir a…</option>
+    <option value="es-welcome">Quiénes somos</option>
+    <option value="es-partnership">Ser socio</option>
+    <option value="es-programs">Tus programas</option>
+    <option value="es-before">Antes de empezar</option>
+    <option value="es-setup">Registrar a tus estudiantes</option>
+    <option value="es-tech">Dispositivos y TI</option>
+    <option value="es-people">Facilitadores y mentores</option>
+    <option value="es-running">Durante las sesiones</option>
+    <option value="es-surveys">Encuestas y certificados</option>
+    <option value="es-credentials">Microcredenciales</option>
+    <option value="es-adapt">Qué puedes adaptar</option>
+    <option value="es-tailor">Herramientas Threadbare Tailor</option>
+    <option value="es-resources">Recursos</option>
+    <option value="es-brand">Marca y co-branding</option>
+    <option value="es-community">Comunidad y conducta</option>
+    <option value="es-safeguarding">Protección y datos</option>
+    <option value="es-help">Cómo obtener ayuda</option>
+    <option value="es-faq">Preguntas frecuentes</option>
+    <option value="es-trouble">Solución de problemas</option>
+    <option value="es-glossary">Glosario</option>
+    <option value="es-contacts">Contactos</option>
+  </select>
+  <button class="langbtn" onclick="setLang('en')">ENGLISH</button>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">Kit para Socios</div>
+  <h1>Todo lo que necesitas para tu programa</h1>
+  <p>Bienvenido a Endless Access. Este kit cubre cómo preparar tu programa, qué esperar, dónde encontrar cada cosa y cómo pedir ayuda, desde la reunión inicial hasta que tus estudiantes obtengan sus credenciales.</p>
+</div>
+
+<div class="wrap">
+
+<section id="es-welcome">
+  <h2>Quiénes somos</h2><div class="rule"></div>
+  <p>Endless Access es una organización sin fines de lucro que trabaja para cerrar la brecha digital a través de la creación de videojuegos. Todo lo que hacemos es gratuito y de código abierto, y nunca cobramos a estudiantes ni a socios por nuestros programas.</p>
+  <p>Nuestros programas giran en torno a <em>Threadbare</em>, un juego narrativo de aventuras hecho con el motor Godot. Los estudiantes lo juegan y luego aprenden a crear sus propias aportaciones. Al terminar un programa completo, algunos han contribuido con trabajo real al juego que otras personas juegan en todo el mundo.</p>
+
+  <h3>¿Qué tan real es <em>Threadbare</em>?</h3>
+  <p>Totalmente real. Es un juego publicado para quienes disfrutan de las aventuras narrativas, y se ha presentado en conferencias de desarrollo como GodotCon. Lo que ocurre es que fue creado por docentes, diseñadores de aprendizaje e ingenieros senior, así que también funciona como herramienta de enseñanza. Puedes jugarlo ahora mismo en <a href="https://play.threadbare.game/">play.threadbare.game</a>, y el código fuente completo está en <a href="https://github.com/endlessm/threadbare">github.com/endlessm/threadbare</a>.</p>
+
+  <div class="note">
+    <p><strong>Juégalo antes de empezar.</strong> Lo más útil que tú y tus facilitadores pueden hacer antes de la primera sesión es dedicar veinte minutos a jugar <em>Threadbare</em>. Todo el programa hace referencia al juego.</p>
+  </div>
+
+  <h3>El recorrido del estudiante</h3>
+  <p>Todos los programas siguen el mismo camino: <strong>Consumidor</strong>, jugando con mirada crítica, a <strong>Creador</strong>, haciendo lo suyo, a <strong>Colaborador</strong>, entregando trabajo a un proyecto de código abierto activo, a <strong>Carrera</strong>, con credenciales y un portafolio que les sirven más adelante.</p>
+</section>
+
+<section id="es-partnership">
+  <h2>Qué significa ser socio de Endless Access</h2><div class="rule"></div>
+  <p>La alianza funciona en ambos sentidos. Esto es a lo que se compromete cada parte.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>Lo que aportamos nosotros</h4>
+      <ul>
+        <li>Todo el currículo, las presentaciones y los materiales para facilitadores, gratis</li>
+        <li>Acceso a la plataforma para cada estudiante y facilitador</li>
+        <li>Capacitación en vivo para facilitadores antes de empezar, con un certificado para cada facilitador que la complete</li>
+        <li>Apoyo para encontrar facilitadores y mentores si los necesitas</li>
+        <li>Un enlace de invitación como Gestor del Programa, para que crees tus cohortes y códigos de inscripción</li>
+        <li>Una persona de contacto en nuestro equipo durante todo el programa</li>
+        <li>Certificados de finalización y microcredenciales de ASU cuando corresponda</li>
+        <li>Apoyo de la comunidad a través de Discord y nuestra mesa de ayuda</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Lo que aportas tú</h4>
+      <ul>
+        <li>Facilitadores designados que completen nuestra capacitación, de tu propio equipo o buscados junto con nosotros, según lo acordado en tu convenio</li>
+        <li>Un calendario de sesiones confirmado antes de empezar</li>
+        <li>Dispositivos, conectividad y un espacio adecuado</li>
+        <li>Aprobación de TI para nuestra plataforma en tu red</li>
+        <li>La inscripción de los estudiantes en la plataforma, y tu lista final de estudiantes confirmada con nosotros antes de empezar</li>
+        <li>Tu logo (en alta resolución), algunas fotos de tu organización o tus estudiantes, y una persona de contacto principal</li>
+        <li>La realización de las encuestas inicial y final</li>
+        <li>Participación en una primera revisión poco después del inicio (normalmente por correo), una revisión a mitad de programa y un cierre final</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn">
+    <p><strong>Los dos que más se pasan por alto.</strong> La aprobación de TI, que en un distrito escolar puede tardar semanas y ha retrasado programas por meses, y las encuestas, que son la vía por la que tus estudiantes reciben su certificado. Empieza ambas con tiempo.</p>
+  </div>
+
+  <h3>Cómo funciona una alianza</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Etapa</th><th>Qué sucede</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Acordar</strong></td><td>Una llamada inicial; luego elegimos juntos tu programa y si puede obtener microcredenciales, y firmamos el convenio.</td></tr>
+      <tr><td><strong>Prepararse</strong></td><td>Nos envías tu logo, fotos y contacto principal; acordamos el calendario y el idioma; recibes en tu correo de inicio el enlace de Gestor del Programa y los enlaces de las encuestas, y creas tus cohortes y códigos; se confirman y capacitan los facilitadores; se confirma tu lista de estudiantes.</td></tr>
+      <tr><td><strong>Impartir</strong></td><td>Encuesta inicial el primer día, una primera revisión poco después del inicio, una revisión a mitad de programa y la encuesta final en la última sesión.</td></tr>
+      <tr><td><strong>Cerrar</strong></td><td>Se emiten certificados y microcredenciales, se recogen historias de estudiantes (opcional), hacemos juntos el cierre y te enviamos un correo con los próximos pasos, incluyendo cómo sería una segunda edición.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="es-programs">
+  <h2>Tus programas</h2><div class="rule"></div>
+  <p>Tu correo de inicio confirma qué programa vas a impartir, tus fechas y cuántos estudiantes y cohortes planificamos juntos.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Programa</th><th>Duración</th><th>Edades</th><th>Qué crean los estudiantes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Explore: <em>Threadbare</em></strong></td><td>13 talleres de una hora</td><td>13+</td><td>Modificaciones y trabajo creativo en todos los roles de la creación de videojuegos. Los talleres son independientes y funcionan en cualquier orden.</td></tr>
+      <tr><td><strong>Explore: Godot</strong></td><td>10 horas</td><td>13+</td><td>Un primer nivel jugable hecho en Godot, inspirado en el mundo de <em>Threadbare</em>.</td></tr>
+      <tr><td><strong>Core: <em>Threadbare</em></strong></td><td>18 sesiones de una hora, más unas 6 horas de trabajo independiente</td><td>15+</td><td>Un StoryQuest completo creado en equipo y entregado al repositorio de <em>Threadbare</em>.</td></tr>
+      <tr><td><strong>More: <em>Threadbare</em></strong></td><td>6 hitos, 12+ horas</td><td>15+</td><td>Trabajo extendido para quienes completaron Core, incluyendo game jams y LoreQuests.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><strong>Sobre la palabra "sesión".</strong> Para nosotros, una sesión equivale a una hora y a una unidad de contenido. Puede que tu encuentro en el aula cubra dos o tres de nuestras sesiones en un solo bloque. Cuando reportes avance, dinos cuántas de nuestras sesiones cubriste, no cuántas veces se reunió el grupo.</p>
+  </div>
+</section>
+
+<section id="es-before">
+  <h2>Antes de empezar</h2><div class="rule"></div>
+  <p>Trabaja esta lista en las semanas previas a tu primera sesión. La mayoría de los problemas que descarrilan un programa son cosas de esta lista que se dejaron para la última semana.</p>
+
+  <ol class="steps">
+    <li><strong>Acuerda el calendario con nosotros.</strong> Fechas, horarios y lugares, considerando vacaciones escolares, periodos de exámenes y días festivos locales. Las sesiones más cortas y espaciadas funcionan mucho mejor que los bloques largos.</li>
+    <li><strong>Consigue la aprobación de TI para la plataforma.</strong> Consulta <a href="#es-tech">Dispositivos y TI</a> para los detalles que te van a pedir. Este es el paso que más suele demorarse.</li>
+    <li><strong>Envíanos los datos de tu organización.</strong> Tu logo, algunas fotos, el nombre, cargo y correo de tu contacto principal, y las fechas de cualquier programa futuro que ya estés planificando.</li>
+    <li><strong>Cuéntanos qué idioma necesitas.</strong> Inglés, español, o árabe para algunos materiales, para que todo esté listo antes del primer día.</li>
+    <li><strong>Confirma tus facilitadores y mentores.</strong> Personas concretas, con disponibilidad real para cada sesión, no una lista que esperas llenar después. Si vamos a buscar facilitadores o mentores contigo, los confirmamos juntos antes de agendar la capacitación.</li>
+    <li><strong>Agenda la capacitación de facilitadores con nosotros.</strong> Es obligatoria para todos los que faciliten, con tiempo suficiente después para resolver dudas.</li>
+    <li><strong>Juega <em>Threadbare</em>.</strong> Tú y cada facilitador.</li>
+    <li><strong>Configura tus cohortes y códigos.</strong> Usa el enlace de Gestor del Programa de tu correo de inicio y sigue <a href="#es-setup">Registrar a tus estudiantes</a>.</li>
+    <li><strong>Confirma con nosotros tu lista final de estudiantes.</strong> Cuántos estudiantes están inscritos y en qué cohortes, antes de tu primera sesión.</li>
+    <li><strong>Confirma tu plan para la encuesta inicial.</strong> Debe completarse el primer día y no se puede recuperar después.</li>
+    <li><strong>Revisa el espacio y el equipo.</strong> Dispositivos cargados, inicios de sesión funcionando, conectividad probada, pantalla o proyector disponible.</li>
+  </ol>
+</section>
+
+<section id="es-setup">
+  <h2>Registrar a tus estudiantes</h2><div class="rule"></div>
+  <p>La inscripción es el punto donde más seguido se complica la primera sesión, y es casi totalmente evitable. La <a href="https://endlessm.github.io/program-guides/explore-setup/?lang=es">guía de Configuración del Programa</a> explica cada paso con capturas de pantalla. Esta es la versión corta.</p>
+
+  <h3>Tres roles</h3>
+  <ul>
+    <li><strong>Gestor del Programa</strong>: configura y dirige el programa, crea las cohortes, invita a estudiantes y facilitadores, y ve el progreso. Si eres un educador que dirige el programa con tus propios estudiantes, eres tú, y no necesitas añadir facilitadores.</li>
+    <li><strong>Facilitador</strong>: trabaja directamente con los estudiantes en las cohortes que tiene asignadas. Es opcional, sobre todo para equipos grandes.</li>
+    <li><strong>Estudiante</strong>: es quien crea los juegos; se une con un enlace o un código, avanza por las sesiones y sube su trabajo.</li>
+  </ul>
+
+  <h3>Configura tus cohortes y códigos</h3>
+  <ol class="steps">
+    <li><strong>Únete como Gestor del Programa</strong> con el enlace de invitación de tu correo de inicio.</li>
+    <li><strong>Crea tus cohortes.</strong> Una cohorte es una ejecución del programa, con sus propios estudiantes, fechas, facilitadores y panel. Nómbralas de forma que las reconozcas dentro de seis meses, como "Escuela Riverside, Grado 9, Otoño 2026" en lugar de "Cohorte 1".</li>
+    <li><strong>Añade facilitadores (opcional).</strong> Crea un código de inscripción con el rol Facilitator y envía a cada facilitador el código o su enlace de invitación. Hazlo antes de la capacitación, para que puedan explorar primero.</li>
+    <li><strong>Crea un código de estudiantes para cada cohorte.</strong> Los códigos no se generan automáticamente. Ajusta el número máximo de usuarios al tamaño de tu grupo, para que el código no llegue más lejos de lo previsto.</li>
+    <li><strong>Comprueba que todos estén dentro.</strong> Antes de la primera sesión, abre la página Users de cada cohorte y confirma que aparece cada estudiante. Quien no terminó el registro no puede entregar trabajo ni obtener una credencial.</li>
+  </ol>
+
+  <h3>Cómo se unen los estudiantes</h3>
+  <ul>
+    <li><strong>Con un enlace, lo más fácil.</strong> Copia el enlace de invitación junto al código de estudiantes y envíalo, o ponlo en una diapositiva como código QR. Registra a los estudiantes directamente en la cohorte correcta.</li>
+    <li><strong>Con un código.</strong> Los estudiantes entran a <a href="https://studio.endlessstudios.com">studio.endlessstudios.com</a>, se registran, eligen <strong>I have a code</strong> y lo escriben. Su programa aparece luego en <strong>My Programs</strong>.</li>
+  </ul>
+
+  <div class="note">
+    <p><strong>Tres hábitos que lo hacen fácil.</strong> Envía el enlace por escrito antes de la sesión. Proyéctalo o muestra un código QR en lugar de dictarlo en voz alta. Y haz que los estudiantes inicien sesión con Google u otra cuenta que ya tengan, lo cual evita crear otra contraseña y ahorra varios minutos por persona.</p>
+  </div>
+
+  <h3>Estudiantes menores de 13 años, o sin cuentas de estudiante</h3>
+  <p>Las cuentas de estudiante son para mayores de 13 años. Si tus estudiantes son menores, o tu escuela prefiere no registrarlos en una plataforma, igual puedes impartir el programa: los facilitadores dirigen las sesiones y entregan el trabajo de los estudiantes desde su propia cuenta de educador, sin crear cuentas de estudiante. Core: <em>Threadbare</em> se recomienda para 15 años en adelante.</p>
+  <p>Sin cuenta propia, los estudiantes no tienen perfil, XP, certificado a su nombre ni microcredencial. Eres libre de entregarles un certificado propio.</p>
+  <p>Acuerda esto por escrito con nosotros antes de que empiece tu programa, para que nadie improvise el día de la sesión.</p>
+</section>
+
+<section id="es-tech">
+  <h2>Dispositivos y TI</h2><div class="rule"></div>
+  <h3>Qué necesitan los estudiantes</h3>
+  <ul>
+    <li><strong>Explore: <em>Threadbare</em></strong> funciona en el navegador, así que sirven tanto laptops como Chromebooks.</li>
+    <li><strong>Explore: Godot, Core y More</strong> necesitan laptops donde se pueda instalar software.</li>
+    <li>Compartir dispositivos está bien y es común que trabajen en parejas, pero cada estudiante inicia sesión en su propia cuenta y entrega su propio trabajo, porque eso es lo que otorga XP.</li>
+    <li>Un navegador actualizado.</li>
+    <li>Conexión a internet confiable.</li>
+    <li>Una dirección de correo individual por estudiante, que además es la vía para emitir las microcredenciales.</li>
+    <li>Para Explore: Godot, Core y More, la posibilidad de instalar el motor Godot, o de ejecutarlo si tu política de TI lo permite. Instala la última versión estable desde <a href="https://godotengine.org/download">godotengine.org/download</a>, no la versión .NET.</li>
+  </ul>
+
+  <h3>Qué preguntarle a tu equipo de TI</h3>
+  <p>Entrégales esta lista con tiempo. Las preguntas que te van a hacer son predecibles, así que adelantarte ahorra semanas.</p>
+  <ul>
+    <li>¿Pueden los estudiantes acceder a <code>studio.endlessstudios.com</code> y crear cuentas?</li>
+    <li>¿Pueden acceder a <code>github.com</code>, necesario para cualquier programa con Git?</li>
+    <li>¿Se puede instalar el motor Godot, o existe una vía aprobada para ejecutarlo?</li>
+    <li>¿Se pueden instalar las herramientas Threadbare Tailor? Consulta <a href="#es-tailor">Herramientas Threadbare Tailor</a>.</li>
+    <li>¿Se permite descargar y subir archivos, ya que así se entrega el trabajo?</li>
+    <li>¿El filtrado bloquea dominios de videojuegos por categoría?</li>
+  </ul>
+
+  <div class="warn">
+    <p><strong>Asigna un responsable y una fecha límite para la aprobación de TI.</strong> La causa más común de un programa retrasado es que nadie, de ninguna de las dos partes, se encargó de encontrar al contacto correcto en TI. Si no sabes quién es en tu organización, dinos y te ayudamos a identificarlo.</p>
+  </div>
+</section>
+
+<section id="es-people">
+  <h2>Facilitadores y mentores</h2><div class="rule"></div>
+  <p>Los facilitadores influyen en el resultado de un programa más que cualquier otro factor, incluido el currículo. Esto es lo que siempre distingue a una sede sólida de una que batalla.</p>
+
+  <h3>Cómo debe ser un facilitador</h3>
+  <p>No necesita ser desarrollador de videojuegos ni programador. Necesita curiosidad, estar cómodo con no saber una respuesta y buscarla junto a los estudiantes, y disposición para llevar una sesión práctica en lugar de dar cátedra con diapositivas. Docentes, trabajadores juveniles y personal comunitario lo hacen muy bien.</p>
+
+  <h3>La capacitación es obligatoria</h3>
+  <p>Cada facilitador completa nuestra capacitación antes de que empiece el programa, sin excepciones. Cubre el recorrido del currículo, la plataforma y las notas del presentador.</p>
+  <p>También recomendamos que los facilitadores lean el programa completo antes de la capacitación, para que lleguen con preguntas reales en lugar de descubrir vacíos a mitad de la entrega. Los facilitadores que completan la capacitación reciben un certificado.</p>
+  <h3>De dónde vienen los facilitadores</h3>
+  <p>Normalmente de tu propio equipo. Si no cuentas con las personas adecuadas, podemos buscar facilitadores o mentores contigo, considerando idioma, región y experiencia en el programa. Tu convenio indica qué modelo se aplica.</p>
+
+  <h3>Cuántos facilitadores</h3>
+  <p>La referencia general es un facilitador por cada 50 estudiantes, aunque proporciones menores funcionan mejor con grupos jóvenes y con los programas más técnicos.</p>
+
+  <h3>Mentores</h3>
+  <p>Los mentores son opcionales y muy valiosos. Suelen ser voluntarios de la industria o estudiantes mayores que ya pasaron por el programa. Si los tienes, conéctalos pronto con tus facilitadores y manténlos al tanto del avance de cada grupo. Si no los tienes y te gustaría tenerlos, dinos.</p>
+
+  <div class="note">
+    <p><strong>Usa las notas del presentador.</strong> Ahí están las indicaciones que hacen que la sesión sea interactiva. Un facilitador que las omite termina leyendo diapositivas durante una hora, y los estudiantes nos lo dicen después.</p>
+  </div>
+</section>
+
+<section id="es-running">
+  <h2>Durante las sesiones</h2><div class="rule"></div>
+  <ul>
+    <li><strong>El registro en la plataforma se hace el primer día</strong>, no cuando los estudiantes necesiten entregar algo por primera vez.</li>
+    <li><strong>El trabajo se entrega durante la sesión</strong>, no después. El trabajo que se queda en una máquina local suele quedarse ahí.</li>
+    <li><strong>Protege el tiempo de práctica.</strong> Si tienes que elegir entre terminar las diapositivas y terminar la creación, termina la creación.</li>
+    <li><strong>Atiende a quien se queda callado.</strong> El abandono suele deberse al miedo a preguntar, no a la falta de interés. Una conversación temprana vale más que un plan de recuperación tardío.</li>
+    <li><strong>Espera que Git sea la parte difícil</strong> en cualquier programa que lo incluya. Prevé apoyo extra y prográmalo cuando el grupo ya tenga impulso.</li>
+    <li><strong>Distingue sesiones de encuentros</strong> al reportar avance. Consulta la nota en <a href="#es-programs">Tus programas</a>.</li>
+  </ul>
+
+  <h3>Si la modalidad es virtual</h3>
+  <p>Los estudiantes necesitan cámara y micrófono funcionando, y tú necesitas una forma de que los equipos colaboren en salas separadas.</p>
+  <h3>Si la modalidad es presencial</h3>
+  <p>Un espacio cómodo, una pantalla o pizarrón, y conectividad suficiente para que todos estén en la plataforma al mismo tiempo.</p>
+</section>
+
+<section id="es-surveys">
+  <h2>Encuestas y certificados</h2><div class="rule"></div>
+  <p>Dos encuestas enmarcan cada programa, y no son opcionales.</p>
+  <ul>
+    <li><strong>Encuesta inicial</strong>, el primer día. No se puede recuperar después, y sin ella no podemos mostrar lo que aprendieron tus estudiantes.</li>
+    <li><strong>Encuesta final</strong>, en la última sesión. <strong>Así es como los estudiantes reciben su certificado de finalización.</strong> Quien no la completa, no lo recibe.</li>
+  </ul>
+  <p><strong>Los enlaces de tus encuestas están en tu correo de inicio.</strong> Cada cohorte tiene los suyos, así que usa siempre los que te enviamos. Si no los encuentras, escribe a tu contacto de Endless o a <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a> y te los reenviamos.</p>
+  <p>Algunos programas incluyen además una reflexión muy breve en cada taller, enlazada desde la propia presentación.</p>
+
+  <div class="note">
+    <p><strong>Haz las encuestas en el aula.</strong> Todos los programas que han intentado perseguir las encuestas por correo después de la última sesión terminaron con estudiantes que nunca recibieron su certificado.</p>
+  </div>
+
+  <h3>Certificados con tu marca</h3>
+  <p>Los certificados de finalización se emiten automáticamente en la plataforma cuando el estudiante completa la encuesta final. Hacia el final del programa también confirmamos contigo la lista de estudiantes que califican, para que nadie que haya obtenido un certificado o una microcredencial quede fuera. Si quieres entregar además un certificado con tu propia marca, eres muy libre de hacerlo. Dinos durante la preparación si quieres que configuremos una versión con ambas marcas.</p>
+</section>
+
+<section id="es-credentials">
+  <h2>Microcredenciales</h2><div class="rule"></div>
+  <p>Los estudiantes y facilitadores pueden obtener microcredenciales emitidas en colaboración con el ASU Endless Games and Learning Lab, que reconocen trabajo real y verificable de creación de videojuegos. Se obtienen a través del XP en la plataforma, y por eso todo el trabajo debe entregarse ahí.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Credencial</th><th>Programa</th><th>Se obtiene con</th><th>Tiempo</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Intro to Game Making with Godot</strong></td><td>Explore: Godot</td><td>1500 XP</td><td>~15 horas</td></tr>
+      <tr><td><strong>Community Game Making</strong></td><td>Core: <em>Threadbare</em></td><td>2000 XP</td><td>~24 horas</td></tr>
+      <tr><td><strong>Applied Game Making: Backlog to Contribution</strong></td><td>More: <em>Threadbare</em></td><td>1000 XP</td><td>~12 horas</td></tr>
+      <tr><td><strong>Applied Game Making: Concept to Canon</strong></td><td>Lore Jam</td><td>1000 XP</td><td>~10 horas</td></tr>
+      <tr><td><strong>Intro to Game Making with AI</strong> <span class="chip hold">en borrador</span></td><td>Explore: fAIrytales</td><td>1500 XP (borrador)</td><td>~15 horas</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Explore: <em>Threadbare</em> no cuenta actualmente con microcredencial. Los estudiantes igualmente reciben su certificado de finalización.</p>
+  <p>Tu correo de inicio confirma si tu cohorte puede obtener microcredenciales. Antes de emitirlas, confirmamos contigo la lista de estudiantes que califican.</p>
+  <p><strong>En Core: <em>Threadbare</em>,</strong> los facilitadores nos envían el enlace al repositorio de GitHub del StoryQuest de cada equipo mediante un breve formulario que te compartiremos. Así se cuenta el trabajo del equipo para el XP y la credencial Community Game Making, por eso es importante enviar el enlace de todos los equipos.</p>
+
+  <h3>Para facilitadores y mentores</h3>
+  <p>Los facilitadores y mentores que hayan obtenido una de las credenciales anteriores pueden obtener la credencial equivalente de Mentor o Facilitador completando una capa adicional de formación. Existen para Godot, IA y Community Game Making. El proceso todavía es manual de nuestro lado, así que escríbenos para iniciarlo.</p>
+
+  <div class="warn">
+    <p>Estas microcredenciales no constituyen créditos académicos ni un programa académico formal de ASU.</p>
+  </div>
+</section>
+
+<section id="es-adapt">
+  <h2>Qué puedes adaptar y qué conviene mantener</h2><div class="rule"></div>
+  <p>Conoces a tus estudiantes mejor que nosotros, y preferimos que adaptes a que abandones. Dicho eso, hay cosas que sostienen el programa.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>Adapta con libertad</h4>
+      <ul>
+        <li>El ritmo, y cuántas de nuestras sesiones cubres en un encuentro</li>
+        <li>Qué talleres de Explore impartes, y en qué orden</li>
+        <li>Los ejemplos y el contexto, para hacerlos locales y relevantes</li>
+        <li>El tamaño de los grupos y la composición de los equipos</li>
+        <li>Agregar tus propias dinámicas de inicio, muestras o celebraciones</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Por favor mantén</h4>
+      <ul>
+        <li>Las encuestas inicial y final, sin cambios</li>
+        <li>La entrega del trabajo en la plataforma, que es como funcionan el XP y las credenciales</li>
+        <li>El tiempo de práctica en cada sesión</li>
+        <li>La secuencia de Core: <em>Threadbare</em>, que construye hacia el StoryQuest</li>
+        <li>La capacitación de facilitadores antes de impartir</li>
+      </ul>
+    </div>
+  </div>
+  <p>Si cambias algo importante, dinos. No es para supervisarte. Es para que, cuando revisemos juntos los resultados, podamos distinguir entre un problema del currículo y una diferencia en la implementación.</p>
+</section>
+
+<section id="es-tailor">
+  <h2>Herramientas Threadbare Tailor</h2><div class="rule"></div>
+  <p>Threadbare Tailor es un conjunto de herramientas de creación gratuitas pensadas para acompañar los programas. Permiten que los estudiantes creen recursos listos para el juego sin necesitar software profesional, y todo lo que produzcan puede usarse directamente en un StoryQuest o LoreQuest.</p>
+
+  <div class="note">
+    <p><strong>Las descargas están enlazadas en cada herramienta más abajo.</strong> Son aplicaciones de Windows (.exe). Confirma con tu equipo de TI que se pueden instalar en tus dispositivos antes de la primera sesión, junto con las demás verificaciones de <a href="#es-tech">Dispositivos y TI</a>.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h4>PatchWorkShop</h4>
+      <p>Construye escenas y estructuras a partir de componentes de arte ya diseñados, para que los estudiantes creen entornos cuidados sin dibujar desde cero.</p>
+      <ul>
+        <li>Biblioteca de componentes: estructuras base, puertas, ventanas, chimeneas, decoraciones</li>
+        <li>Búsqueda de recursos por nombre o color</li>
+        <li>Gestión de capas y control de imagen</li>
+        <li>Lienzo de 256x256, exporta en PNG listo para el juego</li>
+      </ul>
+      <p class="dl"><a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/download/patchwork-shop-v1.0.0/Threadbare-Patchwork-Shop.exe"><strong>Descargar para Windows</strong></a> · <a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/tag/patchwork-shop-v1.0.0">notas de la versión</a></p>
+    </div>
+    <div class="card">
+      <h4>Pixel Stitch</h4>
+      <p>Un kit de pixel art para crear recursos originales píxel a píxel, desde imágenes fijas hasta animaciones completas.</p>
+      <ul>
+        <li>Lienzos desde 8x8 hasta 512x512</li>
+        <li>Herramientas de dibujo estándar, selector de color y creador de paletas</li>
+        <li>Capas y fotogramas de animación ilimitados con vista previa</li>
+        <li>Exporta en PNG, spritesheet o GIF</li>
+      </ul>
+      <p class="dl"><a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/download/pixelstitch-v1.0.0/Threadbare-PixelStitch.exe"><strong>Descargar para Windows</strong></a> · <a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/tag/pixelstitch-v1.0.0">notas de la versión</a></p>
+    </div>
+    <div class="card">
+      <h4>Melody Loom</h4>
+      <p>Crea efectos de sonido y música para los StoryQuests, desde un efecto suelto hasta una melodía completa en bucle.</p>
+      <ul>
+        <li>Controles de BPM, volumen y reverberación</li>
+        <li>Rango completo de notas y una biblioteca de efectos de sonido</li>
+        <li>Editor de forma de onda con copiar, pegar y bucle</li>
+        <li>Exporta en WAV</li>
+      </ul>
+      <p class="dl"><a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/download/melody-loom-v1.0.0/Threadbare-Melody-Loom.exe"><strong>Descargar para Windows</strong></a> · <a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/tag/melody-loom-v1.0.0">notas de la versión</a></p>
+    </div>
+    <div class="card">
+      <h4>Whispering Well</h4>
+      <p>Un punto de partida narrativo para quienes se quedan en blanco. Un generador aleatorio temático define el quién, qué, cuándo y dónde de una historia, que luego desarrollan.</p>
+      <ul>
+        <li>Disparadores de historia para idear StoryQuests</li>
+        <li>Un modo temático de <em>Threadbare</em> para construir mundos en LoreQuests</li>
+        <li>Funciona muy bien como dinámica de inicio de sesión</li>
+      </ul>
+      <p class="dl"><a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/download/whispering-well-v1.0.0/Threadbare-Whispering-Well.exe"><strong>Descargar para Windows</strong></a> · <a href="https://github.com/StephenReidEdu/threadbare-downloads/releases/tag/whispering-well-v1.0.0">notas de la versión</a></p>
+    </div>
+  </div>
+
+  <p>Estas herramientas son especialmente útiles para estudiantes entusiastas de la historia y el arte pero con menos confianza en la parte técnica. Le dan a cada quien una forma de aportar algo real al proyecto de su equipo.</p>
+</section>
+
+<section id="es-resources">
+  <h2>Recursos</h2><div class="rule"></div>
+
+  <h3>Guías para facilitadores</h3>
+  <ul>
+    <li>Explore: <em>Threadbare</em>, <a href="https://endlessm.github.io/program-guides/explore-threadbare-playbook/?lang=es">Español</a> · <a href="https://endlessm.github.io/program-guides/explore-threadbare-playbook/">Inglés</a></li>
+    <li>Explore: Godot, <a href="https://endlessm.github.io/program-guides/explore-godot-playbook/?lang=es">Español</a> · <a href="https://endlessm.github.io/program-guides/explore-godot-playbook/">Inglés</a></li>
+    <li>Core: <em>Threadbare</em>, <a href="https://endlessm.github.io/program-guides/core-threadbare-playbook/?lang=es">Español</a> · <a href="https://endlessm.github.io/program-guides/core-threadbare-playbook/">Inglés</a></li>
+    <li>More: <em>Threadbare</em>, <a href="https://docs.google.com/document/d/1kg8FY3SN0igYpZRrwfDs81uiGIpbWKeUNrQtWd0_ur0/edit">Español</a> · <a href="https://docs.google.com/document/d/1xxD725zT2--Z5RVde822X_uDkt2p0VUVFgPQuq_9Hdc/edit">Inglés</a></li>
+  </ul>
+
+  <h3>Programa y plataforma</h3>
+  <ul>
+    <li><a href="https://endlessm.github.io/program-guides">Panorama de programas</a>, con todos los programas y cómo funcionan</li>
+    <li><a href="https://endlessm.github.io/program-guides/explore-setup/">Guía de configuración de cohortes</a>, para crear cohortes y códigos</li>
+    <li><a href="https://www.youtube.com/watch?v=T_dEUrMrW7Q">Video introductorio de la plataforma</a></li>
+    <li>Todas las presentaciones están en la plataforma, dentro de tu programa, en Temas y luego Sesiones o Talleres</li>
+  </ul>
+
+  <h3><em>Threadbare</em></h3>
+  <ul>
+    <li><a href="https://play.threadbare.game/">Jugar</a></li>
+    <li><a href="https://github.com/endlessm/threadbare">Código fuente y wiki</a></li>
+    <li><a href="https://drive.google.com/drive/folders/1CnwbsrOjjk9-C6BWuOxrtxWy_mogoKiG">Recursos gráficos del juego</a></li>
+    <li><a href="https://drive.google.com/drive/folders/1h2EYKCEkfK8jPL2ODiY4HxpgxSOJ3m8M">Fondos virtuales</a></li>
+  </ul>
+
+  <h3>Material imprimible y promocional</h3>
+  <ul>
+    <li><a href="https://docs.google.com/presentation/d/1UlFJaLwi9l67fhrwwi9jIpR2dzKwdRPQbn4z6xCrRJA/edit">Póster de Explore: <em>Threadbare</em></a></li>
+    <li><a href="https://docs.google.com/presentation/d/1nTToblCwbB-9Ys7rZsdjtoK5k3NbkckTx3Cz_c3_-as/edit">Póster de Core: <em>Threadbare</em></a></li>
+  </ul>
+</section>
+
+<section id="es-brand">
+  <h2>Marca y co-branding</h2><div class="rule"></div>
+  <ul>
+    <li><a href="https://drive.google.com/drive/folders/1F2461MvKIRSLD3arKzO-SqgWZNhbdznS">Logos oficiales de Endless</a></li>
+    <li><a href="https://docs.google.com/presentation/d/10N5ICPQcvWtcpB1QBBWLzmNnGh24u2zsqqg5hRpAWxo/edit">Guía de marca</a></li>
+  </ul>
+  <p>Puedes usar nuestro logo para promocionar tu programa y describir la alianza. Usa los archivos tal como se entregan, sin cambiarles el color, estirarlos ni redibujarlos, y deja el espacio libre a su alrededor que indica la guía.</p>
+  <p>Al describir nuestras credenciales, por favor di que se ofrecen <strong>en colaboración con</strong> ASU, y evita formulaciones que sugieran acreditación académica.</p>
+  <p>Si quieres anunciar la alianza públicamente, avísanos. Normalmente nos encantará amplificarla, y es posible que podamos aportar citas, imágenes o historias de estudiantes.</p>
+</section>
+
+<section id="es-community">
+  <h2>Comunidad y conducta</h2><div class="rule"></div>
+  <p>Nuestro <a href="https://discord.gg/XNvVA659rJ">Discord comunitario</a> es donde estudiantes de todos los socios comparten trabajo, hacen preguntas y se ayudan entre sí. Facilitadores, mentores y el personal de los socios tienen su propio <a href="https://discord.gg/YvrqcDk6Dn">Discord de educadores</a>, donde los facilitadores se ayudan entre sí. Es la vía más rápida para obtener respuesta, así que únete pronto. Si configuramos un canal privado para tu organización, usa ese.</p>
+  <p>En la plataforma, el trabajo de cada estudiante lo ven su cohorte y su facilitador, nadie fuera de la cohorte. Nada de lo que entrega un estudiante se publica públicamente a menos que el estudiante y su educador decidan compartirlo.</p>
+  <p>Todas las personas en nuestros espacios aceptan nuestro <a href="https://github.com/Endless-Access-Community/.github/blob/main/CODE_OF_CONDUCT.md">Código de Conducta</a>. Para reportar una infracción, escribe a <a href="mailto:community+conduct@endlessos.org">community+conduct@endlessos.org</a> con los detalles y nuestro equipo lo revisará.</p>
+</section>
+
+<section id="es-safeguarding">
+  <h2>Protección y datos</h2><div class="rule"></div>
+  <ul>
+    <li><strong>Edad.</strong> Las cuentas de estudiante son para mayores de 13 años. Los estudiantes más jóvenes participan a través de la cuenta de educador de su facilitador. Consulta <a href="#es-setup">Registrar a tus estudiantes</a>.</li>
+    <li><strong>Datos de estudiantes y acuerdos de privacidad.</strong> Recoge solo lo necesario para operar el programa. El correo de cada estudiante es necesario para emitir microcredenciales. Somos miembros del Student Data Privacy Consortium (SDPC) y estamos listos para firmar el National Data Privacy Agreement (NDPA) con tu escuela o distrito; si usan su propio acuerdo, o necesitan hacer una solicitud FERPA, escribe a <a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a>. Plantea cualquier acuerdo antes de que empiece el programa, no después. La <a href="https://endlessm.github.io/program-guides/explore-setup/?lang=es">guía de Configuración del Programa</a> responde las preguntas más frecuentes de las escuelas.</li>
+    <li><strong>Quién ve qué trabajo.</strong> Por defecto, los facilitadores ven a los estudiantes de sus cohortes. Si necesitas que cada facilitador vea solo a sus propios estudiantes, dínoslo durante la preparación y lo configuramos.</li>
+    <li><strong>Espacios compartidos.</strong> Los estudiantes a tu cargo participan en espacios comunitarios junto con otras personas. Los facilitadores deben estar presentes en esos espacios durante las sesiones.</li>
+    <li><strong>Enlaces de sesión.</strong> Cierra las invitaciones recurrentes cuando termine tu programa, para que los estudiantes no conserven acceso a un espacio sin supervisión.</li>
+    <li><strong>Fotos e historias.</strong> Si queremos difundir públicamente el trabajo de tus estudiantes, te lo pediremos antes, y tú eres responsable de contar con los consentimientos que tu organización requiera. En algunos programas también podemos invitar a algunos estudiantes a una breve entrevista opcional sobre su juego y cómo mejorar el programa, siempre con tu acuerdo.</li>
+  </ul>
+</section>
+
+<section id="es-help">
+  <h2>Cómo obtener ayuda</h2><div class="rule"></div>
+  <p>Tres niveles, para tres públicos. Empieza arriba y baja según haga falta.</p>
+
+  <h3>Estudiantes</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Nivel</th><th>A dónde ir</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Autoservicio</strong></td><td>Las preguntas frecuentes del centro de ayuda</td><td>Iniciar sesión, instalar Godot, cambiar datos de la cuenta</td></tr>
+      <tr><td><strong>2. Apoyo entre pares</strong></td><td>Publicar una pregunta en el feed del programa, o en el canal de ayuda de Discord</td><td>Retroalimentación creativa, código que no funciona, dónde publicar algo</td></tr>
+      <tr><td><strong>3. Mesa de ayuda</strong></td><td>Ticket en Discord o <a href="mailto:help@endlessstudios.com">help@endlessstudios.com</a></td><td>Proyectos dañados, mensajes de error, cualquier cosa que parezca una falla de la plataforma</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Facilitadores y mentores</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Nivel</th><th>A dónde ir</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Autoservicio</strong></td><td>Las preguntas frecuentes, la <a href="https://endlessm.github.io/program-guides/explore-setup/?lang=es">guía de Configuración del Programa</a>, o buscar en el <a href="https://discord.gg/YvrqcDk6Dn">Discord de educadores</a></td><td>Dudas comunes, requisitos de software</td></tr>
+      <tr><td><strong>2. Apoyo entre pares</strong></td><td>El <a href="https://discord.gg/YvrqcDk6Dn">Discord de educadores</a></td><td>Encontrar materiales, códigos, enlaces de reunión, cubrir una sesión</td></tr>
+      <tr><td><strong>3. Mesa de ayuda</strong></td><td>Ticket en Discord o <a href="mailto:help@endlessstudios.com">help@endlessstudios.com</a></td><td>Trabajo perdido, proyectos dañados, fallas de la plataforma</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Para errores de contenido, erratas o vacíos pedagógicos, escribe a <a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a>.</p>
+
+  <h3>Socios</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Nivel</th><th>A dónde ir</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Autoservicio</strong></td><td>Este kit y las preguntas frecuentes</td><td>La mayoría de las dudas del día a día</td></tr>
+      <tr><td><strong>2. Tu contacto en Endless</strong></td><td>Indicado en tu correo de inicio</td><td>Calendario, códigos, logística, cualquier cosa sobre tu programa</td></tr>
+      <tr><td><strong>3. Mesa de ayuda</strong></td><td>Ticket en Discord o <a href="mailto:help@endlessstudios.com">help@endlessstudios.com</a></td><td>Firewall y listas blancas, fallas de la plataforma, problemas de cuentas</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><strong>Cuando abras un ticket</strong>, incluye el nombre de tu cohorte y el código, el nombre del programa, el usuario afectado, el dispositivo y navegador, y una captura de pantalla si la tienes. Reduce casi a la mitad el tiempo de solución.</p>
+  </div>
+</section>
+
+<section id="es-faq">
+  <h2>Preguntas frecuentes</h2><div class="rule"></div>
+
+  <div class="faq"><p class="q">¿Qué pasa si un estudiante se atrasa o falta a sesiones?</p>
+  <p>La mayor parte del contenido queda disponible en la plataforma para que lo retomen a su ritmo, y los facilitadores pueden orientarlos. Vale la pena preguntar por qué faltaron. Muchas veces dejan de asistir por miedo a preguntar más que por falta de interés, y repasar el tema con todo el grupo lo resuelve sin señalar a nadie.</p></div>
+
+  <div class="faq"><p class="q">¿Qué pasa si el equipo de un estudiante se vuelve inactivo?</p>
+  <p>Lo primero es que hable directamente con sus compañeros y entienda qué está pasando. Si no se siente cómodo haciéndolo, o si ya lo intentó y no funcionó, puede acudir a un facilitador o mentor, que puede hablar individualmente con cada integrante. En el peor de los casos, se le puede mover a otro equipo que tenga espacio.</p></div>
+
+  <div class="faq"><p class="q">¿Pueden participar menores de 13 años?</p>
+  <p>Sí. Las cuentas de estudiante son para mayores de 13 años, pero los más jóvenes pueden participar con su facilitador dirigiendo las sesiones y entregando su trabajo desde una cuenta de educador. Consulta <a href="#es-setup">Registrar a tus estudiantes</a>. Core: <em>Threadbare</em> se recomienda para 15 años en adelante.</p></div>
+
+  <div class="faq"><p class="q">¿Podemos poner nuestra marca en los certificados?</p>
+  <p>Por supuesto. La plataforma emite el certificado de finalización automáticamente. Si quieres entregar además un certificado con tu propia marca, adelante.</p></div>
+
+  <div class="faq"><p class="q">¿Tiene algún costo?</p>
+  <p>No. El currículo, la plataforma, la capacitación y las credenciales son gratuitos.</p></div>
+
+  <div class="faq"><p class="q">¿Los facilitadores necesitan saber programar?</p>
+  <p>No. La curiosidad y la disposición a aprender junto a los estudiantes importan mucho más. Los materiales están hechos para que alguien pueda tomar una sesión e impartirla.</p></div>
+
+  <div class="faq"><p class="q">¿Podemos impartirlo en español?</p>
+  <p>Sí. Nuestros programas, guías y encuestas están disponibles en español, y algunos materiales en árabe. Dinos durante la preparación qué idioma necesitas para que todo esté listo antes del primer día.</p></div>
+
+  <div class="faq"><p class="q">¿Podemos repetir el programa el próximo año?</p>
+  <p>Sí, y nos gustaría que lo hicieran. Después del cierre te enviamos un correo con los próximos pasos acordados, y conversamos sobre cómo sería una segunda edición, incluyendo si tus propios facilitadores pueden liderarla con menos apoyo nuestro.</p></div>
+
+  <div class="faq"><p class="q">¿Qué pasa con el trabajo de los estudiantes?</p>
+  <p>Sigue siendo suyo. El trabajo aportado al repositorio de <em>Threadbare</em> pasa a formar parte de un proyecto de código abierto bajo su licencia, que es justamente el objetivo, y los estudiantes pueden mostrarlo como propio.</p></div>
+</section>
+
+<section id="es-trouble">
+  <h2>Solución de problemas</h2><div class="rule"></div>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Problema</th><th>Qué hacer</th></tr></thead>
+    <tbody>
+      <tr><td>Un estudiante no encuentra dónde poner el código</td><td>Al registrarse en studio.endlessstudios.com, debe elegir "I have a code". Más fácil aún: envía el enlace de invitación junto al código, que registra a los estudiantes directamente en la cohorte correcta.</td></tr>
+      <tr><td>Falta un estudiante en la cohorte</td><td>Probablemente no terminó el registro. Revisa la página Users de la cohorte antes de la primera sesión y ayuda a quien falte a completarlo.</td></tr>
+      <tr><td>Un código deja de funcionar</td><td>Puede haber alcanzado su número máximo de usuarios. Aumenta el máximo del código o crea uno nuevo.</td></tr>
+      <tr><td>El enlace de inscripción no abre</td><td>Copia la dirección completa y pégala en el navegador en lugar de tocarla. Algunas apps de mensajería cortan los enlaces largos.</td></tr>
+      <tr><td>Un estudiante está esperando la verificación por correo</td><td>Revisa la carpeta de spam. Registrarse con Google o GitHub evita la verificación por completo.</td></tr>
+      <tr><td>Un estudiante publicó su trabajo en el lugar equivocado</td><td>El trabajo va en el canal de tu cohorte o en el feed del programa. Pídele que lo vuelva a publicar en el lugar correcto; no se pierde nada.</td></tr>
+      <tr><td>Godot no se instala, o un proyecto no se importa</td><td>Confirma con TI si la instalación está permitida. Para problemas de importación, verifica si el proyecto debe descomprimirse primero o arrastrarse tal cual en esa sesión.</td></tr>
+      <tr><td>Git o GitHub están bloqueando el avance</td><td>Es el obstáculo técnico más común en todos nuestros programas. Plantéalo con nosotros pronto en lugar de perder una sesión, y verifica que <code>github.com</code> sea accesible en tu red.</td></tr>
+      <tr><td>La plataforma no carga o muestra un error de permisos</td><td>Probablemente sea un tema de red o filtrado. Revisa las preguntas de lista blanca en <a href="#es-tech">Dispositivos y TI</a> y luego abre un ticket con el nombre de tu cohorte, el código y una captura.</td></tr>
+      <tr><td>Un estudiante terminó el programa pero no tiene certificado</td><td>Verifica que haya completado la encuesta final. Ese es el disparador. Si ya la completó y aun así no llega, dinos y lo resolvemos.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="es-glossary">
+  <h2>Glosario</h2><div class="rule"></div>
+  <div class="tablewrap">
+  <table>
+    <tbody>
+      <tr><td><strong>Sesión</strong></td><td>Una hora de nuestro contenido. Tu encuentro en el aula puede incluir varias.</td></tr>
+      <tr><td><strong>Cohorte</strong></td><td>Un grupo de estudiantes que recorre un programa junto, con sus propios códigos de inscripción, fechas y panel. Frente a los estudiantes solemos decir simplemente "tu grupo".</td></tr>
+      <tr><td><strong>Gestor del Programa</strong></td><td>La persona que configura y dirige el programa en la plataforma: crea cohortes y códigos, y ve el progreso.</td></tr>
+      <tr><td><strong>XP</strong></td><td>Puntos que se obtienen al completar trabajo en la plataforma. Las microcredenciales se emiten al alcanzar ciertos umbrales de XP.</td></tr>
+      <tr><td><strong>StoryQuest</strong></td><td>El mini juego creado en equipo que es el centro de Core: <em>Threadbare</em>, y que se entrega al juego real.</td></tr>
+      <tr><td><strong>LoreQuest</strong></td><td>Una historia original que expande el mundo de <em>Threadbare</em>, creada en los Lore Jams.</td></tr>
+      <tr><td><strong>Godot</strong></td><td>El motor de videojuegos gratuito y de código abierto con el que está hecho <em>Threadbare</em>.</td></tr>
+      <tr><td><strong>Repositorio o repo</strong></td><td>Donde viven el código y los recursos del juego, y donde se entregan las aportaciones.</td></tr>
+      <tr><td><strong>Pull request</strong></td><td>La forma de proponer una aportación al juego principal para que sea revisada.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="es-contacts">
+  <h2>Tus contactos</h2><div class="rule"></div>
+  <div class="tablewrap">
+  <table>
+    <tbody>
+      <tr><td><strong>Tu contacto en Endless</strong></td><td>Indicado en tu correo de inicio</td></tr>
+      <tr><td><strong>Dudas del programa</strong></td><td><a href="mailto:learning@endlessaccess.org">learning@endlessaccess.org</a></td></tr>
+      <tr><td><strong>Soporte técnico y de plataforma</strong></td><td><a href="mailto:help@endlessstudios.com">help@endlessstudios.com</a></td></tr>
+      <tr><td><strong>Reportes de Código de Conducta</strong></td><td><a href="mailto:community+conduct@endlessos.org">community+conduct@endlessos.org</a></td></tr>
+      <tr><td><strong>Facilitadores y personal de socios</strong></td><td><a href="https://discord.gg/YvrqcDk6Dn">Discord de educadores</a></td></tr>
+      <tr><td><strong>Privacidad de datos y temas legales</strong></td><td><a href="mailto:legal@endlessaccess.org">legal@endlessaccess.org</a></td></tr>
+      <tr><td><strong>Comunidad</strong></td><td><a href="https://discord.gg/XNvVA659rJ">Discord</a></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note">
+    <p><strong>Una última cosa.</strong> Si algo no está funcionando, dínoslo pronto. Preferimos mucho más enterarnos de un problema en la segunda semana que leerlo en el informe de cierre. Nada de lo que plantees se usará en tu contra, y la mayoría de nuestras mejoras surgieron de un socio diciendo que algo era más difícil de lo que debería.</p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  Endless Access · Creación de videojuegos libre y de código abierto · <em>Threadbare</em> está hecho en Godot y publicado como código abierto
+</footer>
+
+</div>
+
+<script>
+function setLang(l){
+  document.getElementById('lang-en').hidden = (l !== 'en');
+  document.getElementById('lang-es').hidden = (l !== 'es');
+  document.documentElement.lang = l;
+  window.scrollTo(0,0);
+  try { localStorage.setItem('ea-toolkit-lang', l); } catch(e) {}
+}
+(function(){
+  var saved = null;
+  try { var q = new URLSearchParams(location.search).get('lang'); if (q === 'es' || q === 'en') saved = q; } catch(e) {}
+  if (!saved) { try { saved = localStorage.getItem('ea-toolkit-lang'); } catch(e) {} }
+  if (!saved) {
+    saved = (navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+  }
+  setLang(saved);
+})();
+</script>
+
+</body>
+</html>
