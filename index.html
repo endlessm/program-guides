@@ -512,7 +512,7 @@ function render(){
     `<div class="fready-cards">${FR.cards.map(c=>`<div class="fcard" style="--fc:${c.c}"><h3>${ital(c.n[lang])}</h3><p>${ital(c.d[lang])}</p></div>`).join('')}</div>`+
     `<div class="fready-stats">${FR.stats.map(s=>`<div class="fstat"><div class="fnum">${esc(s.num)}</div><div class="ftxt">${esc(s.label[lang])}</div><div class="fsrc">${ital(s.src[lang])}</div></div>`).join('')}</div>`+
     `<div class="fready-next">${ital(FR.next[lang])}</div>`+
-    `<a class="reportcta" href="2025-impact-report.pdf" target="_blank" rel="noopener">${lang==='es'?'Lee nuestro Informe de Impacto de Juegos y Aprendizaje 2025 (en inglés)':'Read our 2025 Game and Learning Impact Report'} &rarr;</a>`;
+    `<a class="reportcta" href="https://drive.google.com/file/d/17NppWW1rwtJWiK-8tNqHvaU3mQ9XAZzn/view" target="_blank" rel="noopener">${lang==='es'?'Lee nuestro Informe de Impacto de Juegos y Aprendizaje 2025 (en inglés)':'Read our 2025 Game and Learning Impact Report'} &rarr;</a>`;
   $('#apprTitle').textContent=t('approachTitle');
   $('#prnLabel').textContent=t('principlesTitle');
   $('#prnGrid').innerHTML=I.principles.map(pr=>`<div class="principle" style="--sc:${pr.c}"><span class="prndot"></span><div class="prntext"><div class="prnname">${esc(pr.n[lang])}</div><div class="prndesc">${ital(pr.d[lang])}</div></div></div>`).join('');
