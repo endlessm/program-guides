@@ -57,6 +57,8 @@ em{font-style:italic}img{max-width:100%}
 
 /* future-ready by design (panel) */
 #freadyBody .fready-lead{color:var(--muted);font-size:15px;max-width:80ch;margin:2px 0 16px;line-height:1.55}
+.reportcta{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:var(--accent);color:#fff;font-family:Figtree;font-weight:700;font-size:14.5px;text-decoration:none;padding:11px 18px;border-radius:10px}
+.reportcta:hover{background:#ff7d1f}
 .fready-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(max-width:720px){.fready-cards{grid-template-columns:1fr}}
 .fcard{background:var(--surface-2);border:1px solid var(--line);border-top:3px solid var(--fc,var(--accent));border-radius:12px;padding:15px 16px}
@@ -509,7 +511,8 @@ function render(){
   $('#freadyBody').innerHTML=`<p class="fready-lead">${ital(FR.lead[lang])}</p>`+
     `<div class="fready-cards">${FR.cards.map(c=>`<div class="fcard" style="--fc:${c.c}"><h3>${ital(c.n[lang])}</h3><p>${ital(c.d[lang])}</p></div>`).join('')}</div>`+
     `<div class="fready-stats">${FR.stats.map(s=>`<div class="fstat"><div class="fnum">${esc(s.num)}</div><div class="ftxt">${esc(s.label[lang])}</div><div class="fsrc">${ital(s.src[lang])}</div></div>`).join('')}</div>`+
-    `<div class="fready-next">${ital(FR.next[lang])}</div>`;
+    `<div class="fready-next">${ital(FR.next[lang])}</div>`+
+    `<a class="reportcta" href="2025-impact-report.pdf" target="_blank" rel="noopener">${lang==='es'?'Lee nuestro Informe de Impacto de Juegos y Aprendizaje 2025 (en inglés)':'Read our 2025 Game and Learning Impact Report'} &rarr;</a>`;
   $('#apprTitle').textContent=t('approachTitle');
   $('#prnLabel').textContent=t('principlesTitle');
   $('#prnGrid').innerHTML=I.principles.map(pr=>`<div class="principle" style="--sc:${pr.c}"><span class="prndot"></span><div class="prntext"><div class="prnname">${esc(pr.n[lang])}</div><div class="prndesc">${ital(pr.d[lang])}</div></div></div>`).join('');
