@@ -162,11 +162,13 @@ const V = {
   m11:  {id:'Fu4NzMmZvqU', dur:'3:11', t:'Episodio 11: Obtener Apoyo'},
   m12:  {id:'5nzZ4fCF9z0', dur:'4:46', t:'Episodio 12: Cierre del Programa'}
 };
-// The reflection tasks are the same platform tasks in both languages, so the
-// Spanish rows reuse the English reflect links, matched slot for slot.
+// The Spanish program (Capacitacion para Facilitadores, id 5386716) has its own
+// copy of the reflection tasks, so the Spanish rows point to that program's
+// Tasks tab rather than the English program's tasks.
+var REFLECT_ES = 'https://studio.endlessstudios.com/programs/5386716/?progTab=Tasks';
 function esTrack(keys, enVideos){
   return keys.map(function(k,i){
-    return {title:V[k].t, id:V[k].id, dur:V[k].dur, reflect:(enVideos[i]||{}).reflect||''};
+    return {title:V[k].t, id:V[k].id, dur:V[k].dur, reflect:REFLECT_ES};
   });
 }
 const VIDEOS_ES = {
