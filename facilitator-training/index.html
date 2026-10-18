@@ -163,17 +163,17 @@ const V = {
   m12:  {id:'5nzZ4fCF9z0', dur:'4:46', t:'Episodio 12: Cierre del Programa'}
 };
 // The Spanish program (Capacitacion para Facilitadores, id 5386716) has its own
-// copy of the reflection tasks, so the Spanish rows point to that program's
-// Tasks tab rather than the English program's tasks.
-var REFLECT_ES = 'https://studio.endlessstudios.com/programs/5386716/?progTab=Tasks';
-function esTrack(keys, enVideos){
+// copy of the reflection tasks. Each Spanish video row links directly to the
+// matching task in that program, by task id, slot for slot.
+var ES_REFLECT = 'https://studio.endlessstudios.com/programs/5386716/?progTab=Tasks&t=';
+function esTrack(keys, taskIds){
   return keys.map(function(k,i){
-    return {title:V[k].t, id:V[k].id, dur:V[k].dur, reflect:REFLECT_ES};
+    return {title:V[k].t, id:V[k].id, dur:V[k].dur, reflect:ES_REFLECT + taskIds[i] + '&ut=0'};
   });
 }
 const VIDEOS_ES = {
-  'explore-tb':    esTrack(['intro','m1','m2','m3a','m4','m5a','m6','m7','m8a','m11','m12'], PROGRAMS['explore-tb'].videos),
-  'explore-godot': esTrack(['intro','m1','m2','m3b','m4','m5b','m6','m7','m8b','m9','m10','m11','m12'], PROGRAMS['explore-godot'].videos),
+  'explore-tb':    esTrack(['intro','m1','m2','m3a','m4','m5a','m6','m7','m8a','m11','m12'], [5386738,5386721,5386723,5386724,5386722,5386727,5386730,5386731,5386732,5386735,5386736]),
+  'explore-godot': esTrack(['intro','m1','m2','m3b','m4','m5b','m6','m7','m8b','m9','m10','m11','m12'], [5386738,5386721,5386723,5386725,5386722,5386729,5386730,5386731,5386733,5386734,5386728,5386735,5386736]),
   'core-tb':       []
 };
 function vidsFor(key){
