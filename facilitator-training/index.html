@@ -69,7 +69,6 @@
 .seg button[aria-pressed="true"]{background:var(--orange);color:#fff}
 .seg button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
 .langbar{display:flex;justify-content:flex-end;padding:14px 20px 0}
-.esnote{margin:14px 0 0;padding:10px 13px;border-left:3px solid var(--orange);background:#FFF4EC;border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.5;color:var(--dark)}
 </style>
 </head>
 <body>
@@ -85,7 +84,7 @@
     </div>
     <div class="body">
       <p class="step" id="step1">Step 1 &middot; Select your program</p>
-      <p class="esnote" id="esnote" hidden></p>
+      
       <div class="progs" id="progs"></div>
       <div class="panel" id="panel"></div>
     </div>
@@ -126,7 +125,6 @@ const T = {
       soonCore:'Los videos de capacitación de Core: Threadbare aún no se han creado. Aparecerán aquí cuando estén listos.',
       soon:'Próximamente.'}
 };
-const ES_NOTE = 'Los videos están narrados en inglés por ahora, y los enlaces de reflexión y el formulario final también están en inglés. Estamos trabajando en las versiones en español.';
 const TITLE_ES = {
   'Who is Endless Access?':'¿Quiénes somos en Endless Access?',
   'The Endless Learning Model':'El Modelo de Aprendizaje de Endless',
@@ -145,6 +143,45 @@ const TITLE_ES = {
   'Getting Support':'Cómo obtener ayuda',
   'Wrap Up':'Cierre'
 };
+const PLAYLIST_ES = 'PLLQKouhHTXwI';
+const V = {
+  intro:{id:'Zf3a850AEAQ', dur:'5:21', t:'Introducción: ¿Qué es Endless Access?'},
+  m1:   {id:'ymymk4wA8lo', dur:'4:15', t:'Episodio 1: Modelo de Aprendizaje de Endless Access'},
+  m2:   {id:'tCyxu5dNYzw', dur:'3:38', t:'Episodio 2: ¿Qué es Threadbare?'},
+  m3a:  {id:'w82d1M4EK9A', dur:'5:31', t:'Episodio 3A: Explore: Threadbare Explicado'},
+  m3b:  {id:'C_Cv_-JAfLE', dur:'6:13', t:'Episodio 3B: Explore: Godot Explicado'},
+  m4:   {id:'x1yd_RJua9c', dur:'3:16', t:'Episodio 4: Recorrido por la Plataforma'},
+  m5a:  {id:'QWtHXcNkTB0', dur:'7:04', t:'Episodio 5A: Anatomía de Sesión de Explore: Threadbare'},
+  m5b:  {id:'hZihZswaHvI', dur:'6:06', t:'Episodio 5B: Anatomía de Sesión de Explore: Godot'},
+  m6:   {id:'eDjH_789L8E', dur:'3:15', t:'Episodio 6: Pedagogía en la Práctica'},
+  m7:   {id:'vWXGf4qJlFQ', dur:'4:15', t:'Episodio 7: XP, Entregables y Retroalimentación'},
+  m8a:  {id:'--Re91V8oFc', dur:'17:11', t:'Episodio 8A: Análisis Profundo de Explore: Threadbare'},
+  m8b:  {id:'mFZeB3N6Nn0', dur:'11:27', t:'Episodio 8B: Análisis Profundo de Explore: Godot'},
+  m9:   {id:'JOQg22bM7OE', dur:'8:52', t:'Episodio 9: Explicación de Godot'},
+  m10:  {id:'73XWxIzxWh4', dur:'3:57', t:'Episodio 10: El Objetivo de los Mentores'},
+  m11:  {id:'Fu4NzMmZvqU', dur:'3:11', t:'Episodio 11: Obtener Apoyo'},
+  m12:  {id:'5nzZ4fCF9z0', dur:'4:46', t:'Episodio 12: Cierre del Programa'}
+};
+// The reflection tasks are the same platform tasks in both languages, so the
+// Spanish rows reuse the English reflect links, matched slot for slot.
+function esTrack(keys, enVideos){
+  return keys.map(function(k,i){
+    return {title:V[k].t, id:V[k].id, dur:V[k].dur, reflect:(enVideos[i]||{}).reflect||''};
+  });
+}
+const VIDEOS_ES = {
+  'explore-tb':    esTrack(['intro','m1','m2','m3a','m4','m5a','m6','m7','m8a','m11','m12'], PROGRAMS['explore-tb'].videos),
+  'explore-godot': esTrack(['intro','m1','m2','m3b','m4','m5b','m6','m7','m8b','m9','m10','m11','m12'], PROGRAMS['explore-godot'].videos),
+  'core-tb':       []
+};
+function vidsFor(key){
+  var es = VIDEOS_ES[key];
+  return (LANG==='es' && es && es.length) ? es : PROGRAMS[key].videos;
+}
+function playlistFor(key){
+  var es = VIDEOS_ES[key];
+  return (LANG==='es' && es && es.length) ? PLAYLIST_ES : PROGRAMS[key].playlist;
+}
 let LANG = (function(){
   try{ var u=new URL(location.href); var q=u.searchParams.get('lang'); if(q==='es'||q==='en') return q; }catch(e){}
   try{ var s=localStorage.getItem('ealang'); if(s==='es'||s==='en') return s; }catch(e){}
@@ -177,17 +214,18 @@ function select(key){
 
 function render(key){
   const p = PROGRAMS[key];
+  const vids = vidsFor(key);
   const panel = document.getElementById('panel');
   let h = '<p class="step">'+t('step2')+'</p>';
-  if(!p.videos || p.videos.length===0){
+  if(!vids || vids.length===0){
     h += '<div class="soon"><div class="em">\uD83E\uDDF5</div><p>'+ (p.videos?t('soonCore'):t('soon')) +'</p></div>';
     panel.innerHTML=h; return;
   }
   const done = getDone(key);
-  h += '<div class="prog-count">'+t('ofComplete')('<span id="pc">'+done.length+'</span>', p.videos.length)+'</div>';
+  h += '<div class="prog-count">'+t('ofComplete')('<span id="pc">'+done.length+'</span>', vids.length)+'</div>';
   h += '<div class="bar"><span id="barfill"></span></div>';
   h += '<div class="videos">';
-  p.videos.forEach(v=>{
+  vids.forEach(v=>{
     const isDone = done.includes(v.id);
     h += '<div class="vid'+(isDone?' done':'')+'" data-id="'+v.id+'">'
       + '<div class="gutter"><div class="rail"></div><div class="dot" data-toggle="'+v.id+'" title="'+t('markDone')+'"></div></div>'
@@ -203,13 +241,13 @@ function render(key){
       + '</div>';
   });
   h += '</div>';
-  h += '<a class="pl-link" href="https://www.youtube.com/playlist?list='+p.playlist+'" target="_blank" rel="noopener">'+t('playlist')+'</a>';
+  h += '<a class="pl-link" href="https://www.youtube.com/playlist?list='+playlistFor(key)+'" target="_blank" rel="noopener">'+t('playlist')+'</a>';
   h += '<p class="step">'+t('step3')+'</p>';
   h += '<div class="finish"><h3>'+t('finishH')+'</h3><p>'+t('finishP')+'</p><a class="finish-btn" href="'+FINISH_URL+'" target="_blank" rel="noopener">'+t('finishB')+'</a></div>';
   panel.innerHTML = h;
   updateBar(key);
 
-  panel.querySelectorAll('.vwatch').forEach(btn=>{ btn.onclick=()=>{ openPlayer(btn.dataset.vid, p.playlist); markDone(key, btn.dataset.vid, true); }; });
+  panel.querySelectorAll('.vwatch').forEach(btn=>{ btn.onclick=()=>{ openPlayer(btn.dataset.vid, playlistFor(key)); markDone(key, btn.dataset.vid, true); }; });
   panel.querySelectorAll('.dot').forEach(dot=>{ dot.onclick=()=>{ const id=dot.dataset.toggle; const d=getDone(key); markDone(key, id, !d.includes(id)); }; });
 }
 
@@ -234,9 +272,9 @@ function markDone(key, id, done){
 }
 
 function updateBar(key){
-  const p = PROGRAMS[key];
-  const done = getDone(key).filter(id=>p.videos.some(v=>v.id===id));
-  const pct = p.videos.length? Math.round(done.length/p.videos.length*100):0;
+  const vids = vidsFor(key);
+  const done = getDone(key).filter(id=>vids.some(v=>v.id===id));
+  const pct = vids.length? Math.round(done.length/vids.length*100):0;
   const fill=document.getElementById('barfill'); if(fill) fill.style.width=pct+'%';
   const pc=document.getElementById('pc'); if(pc) pc.textContent=done.length;
 }
@@ -247,8 +285,6 @@ function paintChrome(){
   document.getElementById('h-title').textContent = t('title');
   document.getElementById('h-lede').textContent  = t('lede');
   document.getElementById('step1').innerHTML     = t('step1');
-  var note=document.getElementById('esnote');
-  note.textContent = ES_NOTE; note.hidden = (LANG!=='es');
   document.getElementById('lang-en').setAttribute('aria-pressed', LANG==='en'?'true':'false');
   document.getElementById('lang-es').setAttribute('aria-pressed', LANG==='es'?'true':'false');
   document.querySelectorAll('.prog').forEach(function(b){
