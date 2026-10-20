@@ -420,7 +420,7 @@ const T={
       tagFaq:"Preguntas frecuentes",tagPlat:"Plataforma",tagDates:"Fechas",dates:"Fechas clave",help:"Discord de educadores y soporte",
       day:n=>n+(n===1?" día":" días"),
       untilKick:n=>`${n.startsWith("1 ")?"Falta":"Faltan"} ${n} para el kickoff`,kickToday:"Hoy es el kickoff",untilStart:n=>`${n.startsWith("1 ")?"Falta":"Faltan"} ${n} para el inicio`,
-      week:(w,t,n)=>`Semana ${w} de ${t}, ${n.startsWith("1 ")?"falta":"faltan"} ${n} para el cierre`,endToday:"Hoy es el cierre del programa",ended:"El programa finalizó. ¡Gracias por acompañarnos!",
+      week:(w,t,n)=>`Semana ${w} de ${t}, ${n===1?"queda 1 sesión":"quedan "+n+" sesiones"} hasta el cierre`,endToday:"Hoy es el cierre del programa",ended:"El programa finalizó. ¡Gracias por acompañarnos!",
       cohortT:"Antes de cada sesión, elige la cohorte correcta",cohortP:c=>`En el programa <strong>Core: Threadbare (Español)</strong>, en <strong>Elegir cohorte</strong>, elige <strong>${c}</strong>. Solo ahí tienes acceso al trabajo de los estudiantes de este grupo, para mostrarlo o publicar en el feed (por ejemplo, en Brainstorming #1).`,also:"También en",shotAlt:"Selector Elegir cohorte del programa, con las cohortes UTP GL7 1 a 6",shotCap:c=>`Elige <strong>${c}</strong> en este selector.`,
       tabs:"Grupos",roles:"Roles",nav:"Secciones",results:"Resultados",
       z:{"Perú":"Perú","Argentina":"Argentina","Guatemala":"Guatemala"}},
@@ -432,23 +432,23 @@ const T={
       tagFaq:"FAQ",tagPlat:"Platform",tagDates:"Dates",dates:"Key dates",help:"Educator Discord and support",
       day:n=>n+(n===1?" day":" days"),
       untilKick:n=>`${n} until the kickoff`,kickToday:"The kickoff is today",untilStart:n=>`${n} until the program starts`,
-      week:(w,t,n)=>`Week ${w} of ${t}, ${n} until the end`,endToday:"Today is the last day of the program",ended:"The program has ended. Thanks for joining us!",
+      week:(w,t,n)=>`Week ${w} of ${t}, ${n===1?"1 session":n+" sessions"} left until the end`,endToday:"Today is the last day of the program",ended:"The program has ended. Thanks for joining us!",
       cohortT:"Before every session, pick the right cohort",cohortP:c=>`In the <strong>Core: Threadbare (Español)</strong> program, under <strong>Elegir cohorte</strong> (choose cohort), pick <strong>${c}</strong>. Only there do you have access to this group’s learners’ work, to demo it or post to the feed (for example, in Brainstorming #1).`,also:"Also in",shotAlt:"The Elegir cohorte selector in the program, listing cohorts UTP GL7 1 to 6",shotCap:c=>`Pick <strong>${c}</strong> in this selector.`,
       tabs:"Groups",roles:"Roles",nav:"Sections",results:"Results",
       z:{"Perú":"Peru","Argentina":"Argentina","Guatemala":"Guatemala"}}
 };
-const ROLE_EN={"Facilitadora y mentora de arte":"Facilitator and art mentor","Facilitador y mentor de arte":"Facilitator and art mentor","Facilitador y mentor de código":"Facilitator and code mentor","Mentor de código":"Code mentor","Mentora de código":"Code mentor","Mentor de arte":"Art mentor","Mentora de arte":"Art mentor","Mentor de game design":"Game design mentor","Mentor en formación":"Mentor in training","Mentora en formación":"Mentor in training"};
+const ROLE_EN={"Facilitadora y mentora de arte":"Facilitator and art mentor","Facilitador y mentor de arte":"Facilitator and art mentor","Facilitador y mentor de código":"Facilitator and code mentor","Mentor de código":"Code mentor","Mentora de código":"Code mentor","Mentor de arte":"Art mentor","Mentora de arte":"Art mentor","Mentor de game design":"Game design mentor","Facilitadora y mentora de código":"Facilitator and code mentor","Mentor en formación":"Mentor in training","Mentora en formación":"Mentor in training"};
 const roleT=(r,l)=>l==="en"?(ROLE_EN[r]||r):r;
 
 const EARLY=[{z:"Perú",t:"15:30"},{z:"Argentina",t:"17:30"},{z:"Guatemala",t:"14:30"}];
 const LATE=[{z:"Perú",t:"17:30"},{z:"Argentina",t:"19:30"},{z:"Guatemala",t:"16:30"}];
 const GROUPS=[
- {n:1,times:EARLY,meet:"meet.google.com/ahx-pybp-hwp",team:[["Victoria","Facilitadora y mentora de arte"],["Julián","Mentor de código"],["Carlos","Mentor de código"],["Augusto","Mentor de game design"],["Alvaro","Mentor en formación"],["Thamirys","Mentora en formación"]]},
- {n:2,times:EARLY,meet:"meet.google.com/nmx-nbvf-don",team:[["Tobías","Facilitador y mentor de código"],["Diego","Mentor de código"],["Julieta","Mentora de arte"],["Nicolás","Mentor de game design"],["Brandon","Mentor en formación"],["Jade","Mentora en formación"]]},
- {n:3,times:EARLY,meet:"meet.google.com/grk-shhp-eoj",team:[["José Andrés","Facilitador y mentor de arte"],["Marcos","Mentor de código"],["Carolina","Mentora de código"],["Gonzalo","Mentor de game design"],["Renato","Mentor en formación"],["Kevin","Mentor en formación"]]},
- {n:4,times:LATE,meet:"meet.google.com/cqd-wbgo-ejy",team:[["Victoria","Facilitadora y mentora de arte"],["Julián","Mentor de código"],["Carolina","Mentora de código"],["Augusto","Mentor de game design"],["Andrés","Mentor en formación"],["Carlos","Mentor en formación"],["Joseph","Mentor en formación"]]},
- {n:5,times:LATE,meet:"meet.google.com/dkx-dytd-qrj",team:[["Tobías","Facilitador y mentor de código"],["Diego","Mentor de código"],["Julieta","Mentora de arte"],["Nicolás","Mentor de game design"],["Leonardo","Mentor en formación"],["Stephanie","Mentora en formación"]]},
- {n:6,times:LATE,meet:"meet.google.com/nyn-cnrm-jit",team:[["Juan Ignacio","Facilitador y mentor de código"],["Carlos","Mentor de código"],["José Andrés","Mentor de arte"],["Gonzalo","Mentor de game design"],["Edward","Mentor en formación"],["Mateo","Mentor en formación"]]}
+ {n:1,times:EARLY,meet:"meet.google.com/ahx-pybp-hwp",team:[["Victoria","Facilitadora y mentora de arte"],["Julián","Mentor de código"],["Carlos","Mentor de código"],["Augusto","Mentor de game design"],["Alvaro","Mentor en formación"],["Thamirys","Mentora en formación"],["Omar","Engagement Agent"]]},
+ {n:2,times:EARLY,meet:"meet.google.com/nmx-nbvf-don",team:[["Tobías","Facilitador y mentor de código"],["Diego","Mentor de código"],["Julieta","Mentora de arte"],["Nicolás","Mentor de game design"],["Brandon","Mentor en formación"],["Jade","Mentora en formación"],["Diego","Engagement Agent"]]},
+ {n:3,times:EARLY,meet:"meet.google.com/grk-shhp-eoj",team:[["Carolina","Facilitadora y mentora de código"],["José Andrés","Mentor de arte"],["Marcos","Mentor de código"],["Gonzalo","Mentor de game design"],["Renato","Mentor en formación"],["Kevin","Mentor en formación"],["Sonia","Engagement Agent"]]},
+ {n:4,times:LATE,meet:"meet.google.com/cqd-wbgo-ejy",team:[["Victoria","Facilitadora y mentora de arte"],["Julián","Mentor de código"],["Carolina","Mentora de código"],["Augusto","Mentor de game design"],["Andrés","Mentor en formación"],["Carlos","Mentor en formación"],["Joseph","Mentor en formación"],["Sonia","Engagement Agent"]]},
+ {n:5,times:LATE,meet:"meet.google.com/dkx-dytd-qrj",team:[["Tobías","Facilitador y mentor de código"],["Diego","Mentor de código"],["Julieta","Mentora de arte"],["Nicolás","Mentor de game design"],["Leonardo","Mentor en formación"],["Stephanie","Mentora en formación"],["Omar","Engagement Agent"]]},
+ {n:6,times:LATE,meet:"meet.google.com/nyn-cnrm-jit",team:[["Juan Ignacio","Facilitador y mentor de código"],["Carlos","Mentor de código"],["José Andrés","Mentor de arte"],["Gonzalo","Mentor de game design"],["Edward","Mentor en formación"],["Mateo","Mentor en formación"],["Diego","Engagement Agent"]]}
 ];
 const SUPPORT="learning@endlessaccess.org";
 const tabsEl=$("#tabs"), panel=$("#panel");
@@ -551,7 +551,7 @@ function renderStatus(){
   else if(+today===+KICK) st.textContent=t.kickToday;
   else if(today<START) st.textContent=t.untilStart(t.day(diff(START)));
   else if(+today===+END) st.textContent=t.endToday;
-  else if(today<END){const total=Math.ceil((END-START+DAY)/(7*DAY)),w=Math.floor((today-START)/(7*DAY))+1;st.textContent=t.week(w,total,t.day(diff(END)));}
+  else if(today<END){const total=Math.ceil((END-START+DAY)/(7*DAY)),w=Math.floor((today-START)/(7*DAY))+1;let left=0;for(let d=new Date(today);d<=END;d.setDate(d.getDate()+1)){const k=d.getDay();if(k===1||k===3||k===5)left++;}st.textContent=t.week(w,total,left);}
   else st.textContent=t.ended;
 }
 
