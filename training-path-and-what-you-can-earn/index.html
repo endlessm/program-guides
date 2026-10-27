@@ -231,21 +231,15 @@ main.wrap{padding-block:8px 40px}
     </div>
   </section>
 
-  <div class="endcta">
-    <strong><span data-l="en">Ready to begin?</span><span data-l="es">¿Todo listo para comenzar?</span></strong>
-    <a class="cta" id="startlink" href="https://endlessm.github.io/program-guides/facilitator-training/" target="_blank" rel="noopener"><span data-l="en">Start your training →</span><span data-l="es">Comienza tu capacitación →</span></a>
-  </div>
 </main>
 </div>
 
 <script>
 (function(){
-  var page=document.getElementById('page'), en=document.getElementById('lang-en'), es=document.getElementById('lang-es'), start=document.getElementById('startlink');
-  var BASE='https://endlessm.github.io/program-guides/facilitator-training/';
+  var page=document.getElementById('page'), en=document.getElementById('lang-en'), es=document.getElementById('lang-es');
   function setLang(l){
     page.setAttribute('data-lang',l); document.documentElement.lang=l;
     en.setAttribute('aria-pressed',String(l==='en')); es.setAttribute('aria-pressed',String(l==='es'));
-    start.href = l==='es' ? BASE+'?lang=es' : BASE;
     try{ localStorage.setItem('ealang',l); }catch(e){}
   }
   var initial='en';
