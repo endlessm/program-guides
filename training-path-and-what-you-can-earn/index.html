@@ -69,6 +69,11 @@ main.wrap{padding-block:8px 40px}
 .box::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--ink)}
 .tag{font-family:var(--display);font-weight:700;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .box h3{font-size:19px;margin:4px 0 2px;font-weight:800}
+.box .tag{margin-bottom:6px}
+.tag.yours{color:var(--accent-ink)}
+.split{border:0;border-top:1px solid var(--line);margin:12px 0}
+.soonitem{color:var(--muted)}
+.soonitem .dur{font-size:13px;color:var(--faint);white-space:nowrap}
 .meta{font-size:13.5px;color:var(--muted);margin-bottom:10px}
 .dots{list-style:none;margin:0;padding:0;font-size:14.5px}
 .dots li{padding-left:16px;position:relative;margin:3px 0}
@@ -144,12 +149,12 @@ main.wrap{padding-block:8px 40px}
 
   <section class="sec">
     <h2><span data-l="en">How the training fits together</span><span data-l="es">Cómo se organiza la capacitación</span></h2>
-    <p class="secsub"><span data-l="en">Everyone starts with the same Introduction, then watches only the videos for the program they'll run, and finally finishes with the Wrap-Up. Every video comes with a short reflection you'll have to submit.</span><span data-l="es">Todos comienzan con la misma Introducción, luego solo ven los videos del programa que van a facilitar y, finalmente, terminan con el Cierre. Cada video incluye una breve reflexión que deberás entregar.</span></p>
+    <p class="secsub"><span data-l="en">Everyone starts with the same Introduction, then watches only the videos for the program they'll run, and finishes with the Closing. Every video comes with a short reflection you'll have to submit.</span><span data-l="es">Todos comienzan con la misma Introducción, luego solo ven los videos del programa que van a facilitar y terminan con el Cierre. Cada video incluye una breve reflexión que deberás entregar.</span></p>
     <div class="flow">
       <div class="box">
-        <div class="tag"><span data-l="en">Shared · watch once</span><span data-l="es">Común · se ve una vez</span></div>
         <h3><span data-l="en">Introduction</span><span data-l="es">Introducción</span></h3>
         <div class="meta"><span data-l="en">7 videos · ~27 min</span><span data-l="es">7 videos · ~29 min</span></div>
+        <div class="tag"><span data-l="en">Shared · watch once</span><span data-l="es">Común · se ve una vez</span></div>
         <ul class="dots">
           <li><span data-l="en">Who is Endless Access?</span><span data-l="es">¿Qué es Endless Access?</span></li>
           <li><span data-l="en">The Endless Learning Model</span><span data-l="es">Modelo de Aprendizaje de Endless Access</span></li>
@@ -187,12 +192,17 @@ main.wrap{padding-block:8px 40px}
       </div>
       <div class="arrow" aria-hidden="true">→</div>
       <div class="box">
-        <div class="tag"><span data-l="en">Shared · watch once</span><span data-l="es">Común · se ve una vez</span></div>
-        <h3><span data-l="en">Wrap-Up</span><span data-l="es">Cierre</span></h3>
+        <h3><span data-l="en">Closing</span><span data-l="es">Cierre</span></h3>
         <div class="meta"><span data-l="en">2 videos · ~7 min</span><span data-l="es">2 videos · ~8 min</span></div>
+        <div class="tag"><span data-l="en">Shared · watch once</span><span data-l="es">Común · se ve una vez</span></div>
         <ul class="dots">
           <li><span data-l="en">Getting Support</span><span data-l="es">Obtener Apoyo</span></li>
-          <li><span data-l="en">Wrap Up</span><span data-l="es">Cierre del Programa</span></li>
+        </ul>
+        <hr class="split">
+        <div class="tag yours"><span data-l="en">Your program</span><span data-l="es">Tu programa</span></div>
+        <ul class="dots">
+          <li><span data-l="en">Explore Wrap Up</span><span data-l="es">Cierre de Explore</span></li>
+          <li class="soonitem"><span data-l="en">Core Wrap Up</span><span data-l="es">Cierre de Core</span> <span class="dur"><span data-l="en">Coming soon</span><span data-l="es">Próximamente</span></span></li>
         </ul>
       </div>
     </div>
