@@ -93,9 +93,11 @@
 
 <script>
 // ===== Facilitator Training — sectioned model =====
-// Introduction (shared, watch once) -> each program's own videos -> Wrap-Up (shared).
-// Shared sections store progress under their own key, so a facilitator training on
-// more than one program never re-watches the Introduction or Wrap-Up.
+// Introduction (shared, watch once) -> each program's own videos -> Closing.
+// Closing = the program's own wrap-up, then Getting Support (shared, watch once).
+// Shared pieces store progress under their own key, so a facilitator training on
+// more than one program never re-watches the Introduction, the Explore Wrap Up
+// (shared by both Explore programs) or Getting Support.
 
 const FINISH_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSe15FXcDnJlfwFEIBuhKi6GSFHjHwcgSLfuAp3pLkPap8k-Uw/viewform';
 
@@ -131,8 +133,8 @@ const MOD = {
          es:{t:'Episodio 10: El Objetivo de los Mentores',    id:'73XWxIzxWh4', dur:'3:57', task:5386728}},
   m11:  {en:{t:'Getting Support',                             id:'PUexxfRh63c', dur:'2:35', task:5384340},
          es:{t:'Episodio 11: Obtener Apoyo',                  id:'Fu4NzMmZvqU', dur:'3:11', task:5386735}},
-  m12:  {en:{t:'Wrap Up',                                     id:'z6tvB-98P_A', dur:'4:41', task:5384341},
-         es:{t:'Episodio 12: Cierre del Programa',            id:'5nzZ4fCF9z0', dur:'4:46', task:5386736}}
+  m12:  {en:{t:'Explore Wrap Up',                             id:'z6tvB-98P_A', dur:'4:41', task:5384341},
+         es:{t:'Cierre de Explore',            id:'5nzZ4fCF9z0', dur:'4:46', task:5386736}}
 };
 
 // Mentors (m10) now lives in the Introduction: mentors may be used across programs
@@ -142,8 +144,12 @@ const SECTIONS = {
   'explore-tb':   ['m3a','m5a','m8a'],
   'explore-godot':['m3b','m5b','m8b','m9'],
   'core-tb':      [],
-  wrapup:         ['m11','m12']
+  'wrap-explore': ['m12'],
+  'wrap-core':    [],
+  support:        ['m11']
 };
+// Each program's wrap-up; both Explore programs share one.
+const PROGRAM_WRAP  = {'explore-tb':'wrap-explore','explore-godot':'wrap-explore','core-tb':'wrap-core'};
 const PROGRAM_ORDER = ['explore-tb','explore-godot','core-tb'];
 const PROGRAM_NAME  = {'explore-tb':'Explore: Threadbare','explore-godot':'Explore: Godot','core-tb':'Core: Threadbare'};
 const PLAYLIST      = {en:'PLPreEGKe1OCI', es:'PLLQKouhHTXwI'};
@@ -157,12 +163,12 @@ let LANG = (function(){
 
 const T = {
   en:{title:'Facilitator Training',
-      lede:'Pick your program. Watch the Introduction once, complete your program’s videos, then the Wrap-Up.',
+      lede:'Pick your program. Watch the Introduction once, complete your program’s videos, then the Closing.',
       step1:'Step 1 &middot; Select your program',
       step2:'Step 2 &middot; Work through your sections',
       reflectHint:'Each Reflect opens in a new tab - close that tab to come back here and keep your place.',
       step3:'Step 3 &middot; Let us know you finished',
-      introName:'Introduction', wrapName:'Wrap-Up',
+      introName:'Introduction', wrapName:'Closing',
       sharedTag:'Shared · watch once',
       ofComplete:(d,n)=>d+' of '+n+' complete',
       watch:'Watch', rewatch:'Rewatch', reflect:'Reflect', markDone:'Mark complete',
@@ -199,7 +205,8 @@ function vidsForSection(secKey){
 }
 function journeyLen(progKey){
   if(!SECTIONS[progKey] || SECTIONS[progKey].length===0) return null;
-  return SECTIONS.introduction.length + SECTIONS[progKey].length + SECTIONS.wrapup.length;
+  return SECTIONS.introduction.length + SECTIONS[progKey].length
+       + SECTIONS[PROGRAM_WRAP[progKey]].length + SECTIONS.support.length;
 }
 function storeKey(secKey){ return 'eatrain2_'+secKey; }
 function getDone(secKey){ try{ return JSON.parse(localStorage.getItem(storeKey(secKey))||'[]'); }catch(e){ return []; } }
@@ -244,8 +251,14 @@ function sectionHTML(secKey, label, shared){
     return h;
   }
   h += '<div class="bar"><span id="bar-'+secKey+'"></span></div><div class="videos">';
+  h += vidRows(secKey);
+  h += '</div></div>';
+  return h;
+}
+function vidRows(secKey){
+  var h = '';
   var done = getDone(secKey);
-  vids.forEach(function(v){
+  vidsForSection(secKey).forEach(function(v){
     var isDone = done.includes(v.id);
     h += '<div class="vid'+(isDone?' done':'')+'" data-id="'+v.id+'" data-sec="'+secKey+'">'
       + '<div class="gutter"><div class="rail"></div><div class="dot" data-toggle="'+v.id+'" title="'+t('markDone')+'"></div></div>'
@@ -256,8 +269,35 @@ function sectionHTML(secKey, label, shared){
       +   '<a class="vreflect" href="'+v.reflect+'" target="_blank" rel="noopener">'+t('reflect')+'</a>'
       + '</div><div class="player" data-player="'+v.id+'"><div class="frame"></div></div></div></div>';
   });
+  return h;
+}
+
+// Closing: the program's own wrap-up first, then Getting Support (shared, watch once) last.
+function closingKeys(progKey){
+  return [PROGRAM_WRAP[progKey], 'support'].filter(function(k){ return SECTIONS[k].length; });
+}
+function closingHTML(progKey){
+  var keys = closingKeys(progKey);
+  var n = keys.reduce(function(a,k){ return a+SECTIONS[k].length; },0);
+  var h = '<div class="sec"><div class="sec-head"><span class="sec-name">'+t('wrapName')+'</span>'
+        + '<span class="sec-count" id="pc-closing">0 / '+n+'</span></div>'
+        + '<div class="bar"><span id="bar-closing"></span></div><div class="videos">';
+  keys.forEach(function(k){
+    if(k==='support') h += '<div class="sub-head"><span class="sec-tag">'+t('sharedTag')+'</span></div>';
+    h += vidRows(k);
+  });
   h += '</div></div>';
   return h;
+}
+function updateClosing(){
+  if(!CURRENT) return;
+  var total=0, done=0;
+  closingKeys(CURRENT).forEach(function(k){
+    var vids=vidsForSection(k); total+=vids.length;
+    done+=getDone(k).filter(function(id){ return vids.some(function(v){ return v.id===id; }); }).length;
+  });
+  var fill=document.getElementById('bar-closing'); if(fill) fill.style.width=(total?Math.round(done/total*100):0)+'%';
+  var pc=document.getElementById('pc-closing'); if(pc) pc.textContent=done+' / '+total;
 }
 
 function render(progKey){
@@ -266,12 +306,13 @@ function render(progKey){
   h += '<p class="rhint">'+t('reflectHint')+'</p>';
   h += sectionHTML('introduction', t('introName'), true);
   h += sectionHTML(progKey, PROGRAM_NAME[progKey], false);
-  h += sectionHTML('wrapup', t('wrapName'), true);
+  h += closingHTML(progKey);
   h += '<a class="pl-link" href="https://www.youtube.com/playlist?list='+PLAYLIST[LANG]+'" target="_blank" rel="noopener">'+t('playlist')+'</a>';
   h += '<p class="step">'+t('step3')+'</p>';
   h += '<div class="finish"><h3>'+t('finishH')+'</h3><p>'+t('finishP')+'</p><a class="finish-btn" href="'+FINISH_URL+'" target="_blank" rel="noopener">'+t('finishB')+'</a></div>';
   panel.innerHTML = h;
-  ['introduction', progKey, 'wrapup'].forEach(updateBar);
+  ['introduction', progKey].forEach(updateBar);
+  updateClosing();
   panel.querySelectorAll('.vwatch').forEach(function(btn){
     btn.onclick=function(){ var row=btn.closest('.vid'); openPlayer(btn.dataset.vid); markDone(row.dataset.sec, btn.dataset.vid, true); };
   });
@@ -298,6 +339,7 @@ function markDone(secKey, id, done){
   var row=document.querySelector('.vid[data-id="'+id+'"][data-sec="'+secKey+'"]');
   if(row){ row.classList.toggle('done',done); var w=row.querySelector('.vwatch'); if(w){ w.classList.toggle('again',done); w.textContent=done?t('rewatch'):t('watch'); } }
   updateBar(secKey);
+  updateClosing();
 }
 function updateBar(secKey){
   var vids=vidsForSection(secKey);
@@ -334,6 +376,7 @@ document.getElementById('lang-es').addEventListener('click',function(){ setLang(
     +".sec-name{font-family:'Figtree';font-weight:700;font-size:16px;color:var(--dark)}"
     +".sec-tag{font-family:'Figtree';font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--muted);border:1px solid var(--line)}"
     +".sec-count{margin-left:auto;font-family:'Figtree';font-size:13px;font-weight:600;color:var(--muted)}"
+    +'.sub-head{margin:14px 0 6px}'
     +".rhint{font-family:'Inter';font-size:13px;color:var(--muted);margin:-2px 0 16px}";
   var s=document.createElement('style'); s.textContent=css; document.head.appendChild(s);
 })();
