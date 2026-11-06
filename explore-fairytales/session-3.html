@@ -318,6 +318,8 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
   function makeAI(scr,act){
     var A=act.ai, rail=scr.querySelector(".arc"), body=scr.querySelector(".stageBody"), beat=0;
     function setActive(side){var c=scr.querySelector(".pane.concept"),a=scr.querySelector(".pane.app");if(c)c.classList.toggle("active",side==="learn");if(a)a.classList.toggle("active",side==="do");}
+    function toolsHTML(){var h='';(A.tools||[]).forEach(function(t){if(t==="pixelstitch")h+='<div class="toolcard"><span class="tc-ic">'+ICO.pixel+'</span><span style="flex:1"><span class="tc-n">PixelStitch</span><span class="tc-d">Clean the background and stitch your frames into one sheet in PixelStitch, our tool. Opens in a new tab.</span><a class="tc-go" href="https://threadbare-pixelstitch.lovable.app" target="_blank" rel="noopener">Open PixelStitch ↗</a></span></div>';if(t==="copyprompt")h+='<div class="toolcard plain"><span class="tc-ic">'+ICO.export+'</span><span style="flex:1"><span class="tc-n">Take it to another tool</span><span class="tc-d">Copy your prompt and paste it into Gemini or any other maker to make it there instead.</span><button class="tc-go" data-go="copy">Copy my prompt</button></span></div>';});return h?('<div class="learn-h">Your options</div>'+h):'';}
+    function wireTools(getP){var cp=body.querySelector("[data-go=copy]");if(cp)cp.onclick=function(){var txt=getP()||"";function d(){cp.textContent="Copied";setTimeout(function(){cp.textContent="Copy my prompt";},1500);}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(d).catch(fb);}else fb();function fb(){var t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(t);d();}};}
     function renderRail(){rail.innerHTML=STAGES.map(function(s,i){var c=i<beat?"done":i===beat?"on":"";return '<div class="step '+c+'">'+s+'</div>';}).join("");}
     function renderTarget(p){var s=scorePrompt(p);var t=body.querySelector(".target");if(!t)return;t.innerHTML=A.crit.map(function(c){var hit=s[c.k];return '<div class="trow'+(hit?' hit':'')+'"><span class="tk">'+(hit?'&#10003;':'')+'</span><span class="lab">'+esc(c.lab)+'</span></div>';}).join("");}
     function drawGeneric(cv){var x=cv.getContext("2d"),W=cv.width,H=cv.height;x.fillStyle="#0b0b10";x.fillRect(0,0,W,H);function px(a,b,w,h,c){x.fillStyle=c;x.fillRect(Math.round(a),Math.round(b),Math.round(w),Math.round(h));}var u=W/16,cx=W*0.5-u*2,cy=H*0.22;for(var f=0;f<3;f++){var ox=(f-1)*u*0.4;x.globalAlpha=f===1?1:0.4;px(cx+ox,cy,u*2,u*2,"#9a9aa6");px(cx+ox+u*0.4,cy+u*0.6,u*1.2,u*0.5,"#2b2b33");px(cx+ox,cy+u*2,u*2,u*3,"#8b8b97");px(cx+ox-u*0.8,cy+u*2.4,u*0.9,u*2,"#7a7a86");px(cx+ox+u*2,cy+u*2.4,u*0.9,u*2,"#7a7a86");px(cx+ox+u*2.7,cy+u*0.6,u*0.5,u*4,"#c8c8d0");px(cx+ox+u*0.3,cy+u*5,u*0.8,u*2.2,"#6c6c78");px(cx+ox+u*1,cy+u*5,u*0.8,u*2.2,"#6c6c78");}x.globalAlpha=1;}
@@ -335,9 +337,11 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
       h+='<label class="fl" for="p1_'+act.id+'">Your prompt <span>— the scaffold below is a starting point</span></label>';
       h+='<textarea id="p1_'+act.id+'" rows="4">'+esc(A.scaffold)+'</textarea><div class="target"></div>';
       h+='<div class="btnrow"><button class="btn wide" data-go="judge">Send to '+MODE(act.teammate).n+'</button></div>';
+      h+=toolsHTML();
       body.innerHTML=h;renderTarget(A.scaffold);
       var ta=body.querySelector("#p1_"+act.id);ta.addEventListener("input",function(){renderTarget(ta.value);});
       body.querySelector("[data-go=judge]").onclick=function(){judge(ta.value);};
+      wireTools(function(){return ta.value;});
     }
     function resultBlock(kind,data,cap,genCanvasId){
       if(kind==="text")return '<div class="txtout">'+esc(data)+'</div>';
@@ -352,9 +356,11 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
       h+='<div class="gaplist">'+A.gaps.map(function(g){return '<span class="gaptag">'+esc(g)+'</span>';}).join("")+'</div>';
       h+='<div class="callout"><span class="ch">Judge it</span>'+esc(A.judgeNote)+'</div>';
       h+='<div class="btnrow"><button class="btn wide" data-go="refine">'+(A.refineBtn||"Refine the prompt")+'</button></div>';
+      h+=toolsHTML();
       body.innerHTML=h;
       if(A.firstKind!=="text"){var c=body.querySelector("#"+gid);if(c)drawGeneric(c);}
       body.querySelector("[data-go=refine]").onclick=function(){refine(prompt);};
+      wireTools(function(){return prompt;});
     }
     function refine(prev){
       beat=3;renderRail();setActive("learn");
@@ -362,10 +368,12 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
       h+='<label class="fl" for="p2_'+act.id+'">Your revised prompt</label><textarea id="p2_'+act.id+'" rows="5">'+esc(prev)+'</textarea>';
       h+='<div class="btnrow"><button class="btn ghost sm" data-go="useex">Use the worked example</button></div><div class="target"></div>';
       h+='<div class="btnrow"><button class="btn wide" data-go="show">Send to '+MODE(act.teammate).n+'</button></div>';
+      h+=toolsHTML();
       body.innerHTML=h;
       var ta=body.querySelector("#p2_"+act.id);renderTarget(ta.value);ta.addEventListener("input",function(){renderTarget(ta.value);});
       body.querySelector("[data-go=useex]").onclick=function(){ta.value=A.hint;renderTarget(ta.value);ta.focus();};
       body.querySelector("[data-go=show]").onclick=function(){show(ta.value);};
+      wireTools(function(){return ta.value;});
     }
     function show(prompt){
       beat=4;renderRail();setActive("do");
@@ -373,15 +381,11 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
       h+=resultBlock(A.out==="text"?"text":"img",A.out==="text"?A.result.text:A.result.img,A.result.cap,"");
       h+='<div class="gaplist">'+A.cover.map(function(c){return '<span class="covtag">'+esc(c)+'</span>';}).join("")+'</div>';
       if(A.afterNote)h+='<div class="callout"><span class="ch">'+esc(A.afterNote.h)+'</span>'+esc(A.afterNote.p)+'</div>';
-      (A.tools||[]).forEach(function(t){
-        if(t==="pixelstitch")h+='<div class="toolcard"><span class="tc-ic">'+ICO.pixel+'</span><span style="flex:1"><span class="tc-n">PixelStitch</span><span class="tc-d">Your art still sits on a black box. Cut the background and stitch your frames into one sheet in PixelStitch, our tool.</span><a class="tc-go" href="https://threadbare-pixelstitch.lovable.app" target="_blank" rel="noopener">Open PixelStitch ↗</a></span></div>';
-        if(t==="copyprompt")h+='<div class="toolcard plain"><span class="tc-ic">'+ICO.export+'</span><span style="flex:1"><span class="tc-n">Not happy with it?</span><span class="tc-d">Copy your prompt and take it to Gemini or any image maker. The work starts here; where you finish it is up to you.</span><button class="tc-go" data-go="copy">Copy my prompt</button></span></div>';
-      });
+      h+=toolsHTML();
       if(A.submit)h+='<div class="submit"><h4>Show your work</h4><p>'+esc(A.submit.text)+'</p><button class="btn wide" data-go="submit">Submit to the Session '+SESSION.n+' task</button><div class="fallback">This submit is how your XP is captured. Pilot: if it is not wired yet, paste your work and note into the task directly.</div></div>';
       if(act.coach)h+=coachHTML(act.coach);
       body.innerHTML=h;
-      var cp=body.querySelector("[data-go=copy]");
-      if(cp)cp.onclick=function(){var txt=prompt;function d(){cp.textContent="Copied";setTimeout(function(){cp.textContent="Copy my prompt";},1500);}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(d).catch(fb);}else fb();function fb(){var t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(t);d();}};
+      wireTools(function(){return prompt;});
       var sb=body.querySelector("[data-go=submit]");
       if(sb)sb.onclick=function(){ if(SESSION.submitUrl){window.open(SESSION.submitUrl,"_blank","noopener");} sb.textContent="Opened the task ↗";};
     }
