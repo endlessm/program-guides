@@ -1,0 +1,472 @@
+<title>Creating and Placing Your Boss</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+<style>
+/* Explore: fAIrytales session, built on the Endless AI training-ground chassis.
+   Same :root tokens, teammate colors, pane labels and class names, so training-ground tweaks port over as a copy.
+   Session = activity screens (Make/Set up, Share, Reflect). Right pane = Do (the AI teammate, or a Godot/play panel). */
+:root{
+  --bg:#ffffff; --paper:#ffffff; --paper-2:#f3f2f8; --field:#fbfbfe;
+  --ink:#17161f; --ink-soft:#6b6880; --rule:#e6e4ef;
+  --accent:#ff6b00; --accent-ink:#ffffff; --accent-soft:#ffe6cf;
+  --ginger:#ff6b00; --ginger-ink:#ffffff;
+  --cinnamon:#2F2D3C; --cinnamon-ink:#ffffff; --brandgrey:#2F2D3C;
+  --ok:#2e7d5b; --ok-soft:#e1efe7; --warn:#a9690f; --warn-soft:#f4e8cf; --bad:#bc3f2a; --bad-soft:#f6ded6;
+  --shadow:0 1px 2px rgba(23,22,31,.06),0 1px 3px rgba(23,22,31,.05);
+  --display:"Figtree",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --maxw:980px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141320; --paper:#1d1b2b; --paper-2:#262338; --field:#2b2840;
+  --ink:#f2f1fa; --ink-soft:#a6a2bd; --rule:#332f49;
+  --accent:#ff8a3d; --accent-ink:#1b1206; --accent-soft:#3a2615;
+  --ginger:#ff8a3d; --ginger-ink:#1b1206;
+  --cinnamon:#9b98ad; --cinnamon-ink:#160f2e; --brandgrey:#9b98ad;
+  --ok:#53c493; --ok-soft:#1e2e28; --warn:#e2a64f; --warn-soft:#2e2619; --bad:#e2715c; --bad-soft:#2e1f1c;
+  --shadow:0 1px 3px rgba(0,0,0,.5);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#141320; --paper:#1d1b2b; --paper-2:#262338; --field:#2b2840;
+  --ink:#f2f1fa; --ink-soft:#a6a2bd; --rule:#332f49;
+  --accent:#ff8a3d; --accent-ink:#1b1206; --accent-soft:#3a2615;
+  --ginger:#ff8a3d; --ginger-ink:#1b1206;
+  --cinnamon:#9b98ad; --cinnamon-ink:#160f2e; --brandgrey:#9b98ad;
+  --ok:#53c493; --ok-soft:#1e2e28; --warn:#e2a64f; --warn-soft:#2e2619; --bad:#e2715c; --bad-soft:#2e1f1c;
+  --shadow:0 1px 3px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+[data-m=spark]{--m:#c76a00}[data-m=ask]{--m:#7c5cd6}[data-m=explain]{--m:#0a76ba}[data-m=feedback]{--m:#2e8540}[data-m=role]{--m:#c4087a}[data-m=teach]{--m:#0f8a85}[data-m=make]{--m:#ff6b00}
+[data-m]{--m-ink:#ffffff;--m-soft:color-mix(in srgb,var(--m) 14%,var(--paper))}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) [data-m=spark]{--m:#f3a640}:root:not([data-theme="light"]) [data-m=ask]{--m:#a78bf0}:root:not([data-theme="light"]) [data-m=explain]{--m:#3ea7e6}:root:not([data-theme="light"]) [data-m=feedback]{--m:#6cc777}:root:not([data-theme="light"]) [data-m=role]{--m:#ef5bb0}:root:not([data-theme="light"]) [data-m=teach]{--m:#3cc6bf}:root:not([data-theme="light"]) [data-m=make]{--m:#ff8a3d}:root:not([data-theme="light"]) [data-m]{--m-ink:#141320;--m-soft:color-mix(in srgb,var(--m) 18%,var(--paper))}}
+:root[data-theme="dark"] [data-m=spark]{--m:#f3a640}:root[data-theme="dark"] [data-m=ask]{--m:#a78bf0}:root[data-theme="dark"] [data-m=explain]{--m:#3ea7e6}:root[data-theme="dark"] [data-m=feedback]{--m:#6cc777}:root[data-theme="dark"] [data-m=role]{--m:#ef5bb0}:root[data-theme="dark"] [data-m=teach]{--m:#3cc6bf}:root[data-theme="dark"] [data-m=make]{--m:#ff8a3d}:root[data-theme="dark"] [data-m]{--m-ink:#141320;--m-soft:color-mix(in srgb,var(--m) 18%,var(--paper))}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased;margin:0}
+h1,h2,h3,h4{font-family:var(--display);margin:0}
+p{margin:0}
+button{font-family:var(--body);cursor:pointer}
+[hidden]{display:none!important}
+img{max-width:100%}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--rule)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.topbar-in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:11px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));padding-block:12px}
+.wordmark{font-family:var(--display);font-weight:900;font-size:1.05rem;letter-spacing:-.01em;color:var(--brandgrey)}
+.wordmark b{color:var(--accent)}
+.sp{flex:1}
+.tbtn{background:transparent;border:1px solid var(--rule);color:var(--ink-soft);border-radius:999px;padding:6px 12px;font-size:.76rem;font-weight:700;text-decoration:none;display:inline-block;line-height:1.5}
+.tbtn.maplink{border-color:var(--cinnamon);color:var(--cinnamon)}
+
+.hero{margin-top:24px}
+.kick{font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--cinnamon);font-family:var(--display)}
+.h1{font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,6vw,3rem);letter-spacing:-.01em;line-height:1.03;margin:8px 0 0;color:var(--ink);text-wrap:balance}
+.subhead{font-family:var(--display);font-weight:700;font-size:clamp(1.05rem,2.6vw,1.3rem);color:var(--ink);line-height:1.3;margin:12px 0 0;max-width:40ch;text-wrap:balance}
+.goal{color:var(--ink-soft);font-size:.95rem;margin-top:10px;max-width:64ch}
+.msbanner{margin-top:16px;display:flex;align-items:center;gap:10px;background:var(--cinnamon);color:var(--cinnamon-ink);border-radius:10px;padding:11px 14px;font-size:.84rem}
+.msbanner .mb-k{font-family:var(--display);font-weight:800;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;background:color-mix(in srgb,var(--cinnamon-ink) 22%,transparent);padding:3px 8px;border-radius:5px;flex:0 0 auto}
+.msbanner b{font-weight:800}
+
+.actnav{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.actnav-item{display:flex;align-items:center;gap:9px;background:var(--paper);border:1px solid var(--rule);border-radius:999px;padding:7px 15px 7px 7px;font-family:var(--display);font-weight:800;font-size:.82rem;color:var(--ink-soft)}
+.actnav-item .an-n{width:21px;height:21px;border-radius:999px;background:var(--paper-2);color:var(--ink-soft);display:grid;place-items:center;font-size:.72rem;flex:0 0 auto}
+.actnav-item:hover{border-color:var(--cinnamon);color:var(--ink)}
+.actnav-item[aria-current=true]{background:var(--cinnamon);color:var(--cinnamon-ink);border-color:var(--cinnamon)}
+.actnav-item[aria-current=true] .an-n{background:color-mix(in srgb,var(--cinnamon-ink) 22%,transparent);color:var(--cinnamon-ink)}
+
+.actbar{display:flex;align-items:center;gap:12px;margin:20px 0 0;flex-wrap:wrap}
+.arc{display:flex;gap:5px;flex-wrap:wrap}
+.step{font-size:.66rem;font-weight:700;color:var(--ink-soft);background:var(--paper-2);border-radius:999px;padding:5px 12px;font-family:var(--display);letter-spacing:.02em}
+.step.done{color:var(--ink)}
+.step.on{color:var(--accent-ink);background:var(--accent)}
+.screen[data-m] .step.on{background:var(--m);color:var(--m-ink)}
+
+.canvas2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch;margin-top:14px}
+@media(max-width:720px){.canvas2{grid-template-columns:1fr}}
+.pane{padding:0;min-width:0;display:flex;flex-direction:column;overflow:hidden;background:var(--paper);border:1px solid var(--rule);border-radius:12px;box-shadow:var(--shadow);border-top:3px solid var(--rule)}
+.pane.concept{border-top-color:var(--cinnamon)}
+.pane.app{border-top-color:var(--ginger);--accent:var(--ginger);--accent-ink:var(--ginger-ink);--accent-soft:var(--accent-soft)}
+.pane.app.playpane{border-top-color:var(--cinnamon);--accent:var(--cinnamon);--accent-ink:var(--cinnamon-ink);--accent-soft:var(--paper-2)}
+.screen[data-m] .pane.app{--accent:var(--m);--accent-ink:var(--m-ink);--accent-soft:var(--m-soft);border-top-color:var(--m)}
+.pane .hd{display:flex;align-items:center;gap:9px;padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--paper)}
+.pane.concept .hd .ico,.pane.concept .hd .nm{color:var(--cinnamon)}
+.pane.app .hd .ico,.pane.app .hd .nm{color:var(--ginger)}
+.pane.app.playpane .hd .ico,.pane.app.playpane .hd .nm{color:var(--cinnamon)}
+.screen[data-m] .pane.app .hd .ico,.screen[data-m] .pane.app .hd .nm{color:var(--m)}
+.pane .hd .ico{width:20px;height:20px;flex:0 0 auto}
+.pane .hd .nm{font-family:var(--display);font-weight:800;font-size:.95rem;line-height:1.1}
+.pane .hd .sub{font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:1px}
+.pane .bd{padding:16px;display:flex;flex-direction:column;flex:1 1 auto;min-width:0}
+
+.ctx{background:var(--paper-2);border-radius:11px;padding:13px 14px;margin-bottom:14px}
+.ctx .ctxk{font-family:var(--display);font-size:.62rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--cinnamon);margin-bottom:5px}
+.ctx p{font-size:.88rem;color:var(--ink);line-height:1.5}
+.learn-h{font-family:var(--display);font-size:.62rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft);margin:16px 0 6px}
+.lpara{font-size:.89rem;color:var(--ink);line-height:1.55;margin-bottom:9px}
+.lpara b{font-weight:700}
+.five{list-style:none;padding:0;margin:4px 0 10px;display:grid;gap:6px;counter-reset:fv}
+.five li{font-size:.86rem;color:var(--ink);line-height:1.45;padding-left:30px;position:relative;counter-increment:fv}
+.five li::before{content:counter(fv);position:absolute;left:0;top:0;width:21px;height:21px;border-radius:999px;background:var(--paper-2);color:var(--cinnamon);font-family:var(--display);font-weight:800;font-size:.72rem;display:grid;place-items:center}
+.five li b{font-family:var(--display);font-weight:800;color:var(--ink)}
+.think{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:7px}
+.think li{font-size:.86rem;color:var(--ink);padding-left:16px;position:relative;line-height:1.45}
+.think li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--cinnamon)}
+.think li b{font-weight:700}
+
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 2px}
+@media(max-width:420px){.modes{grid-template-columns:1fr}}
+.mcard{display:flex;flex-direction:column;gap:3px;text-align:left;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:10px 11px;color:var(--ink)}
+.mcard.full{grid-column:1/-1}
+.mcard[data-m]{border-left:4px solid var(--m)}
+.mcard[data-m] .mn{color:var(--m)}
+.mcard[data-m]:hover{border-color:var(--m)}
+.mcard .mn{font-family:var(--display);font-weight:800;font-size:.9rem}
+.mcard .md{font-size:.76rem;color:var(--ink-soft);line-height:1.35}
+.mcard .mo{font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--m,var(--accent));margin-top:3px}
+.mcard.muted{opacity:.5}.mcard.muted:hover{opacity:1}
+.rec{display:inline-block;vertical-align:middle;font-size:.52rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--m,var(--cinnamon));color:var(--m-ink,var(--cinnamon-ink));border-radius:5px;padding:2px 6px;margin-left:4px}
+.pickhint{font-size:.78rem;color:var(--ink-soft);margin-top:9px;line-height:1.45}
+
+label.fl{display:block;font-weight:600;font-size:.84rem;margin:12px 0 5px;color:var(--ink)}
+label.fl span{font-weight:400;color:var(--ink-soft)}
+textarea{width:100%;background:var(--field);color:var(--ink);border:1px solid var(--rule);border-radius:9px;padding:10px 11px;font-family:var(--body);font-size:.88rem;resize:vertical;line-height:1.5}
+textarea:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.btn{border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.86rem;border-radius:9px;padding:10px 15px;font-family:var(--body)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:var(--paper-2);color:var(--ink)}
+.btn.sm{padding:7px 12px;font-size:.78rem}
+.btn.wide{width:100%;justify-content:center}
+
+.target{margin:10px 0 2px;display:grid;gap:6px}
+.trow{display:flex;align-items:center;gap:8px;font-size:.83rem}
+.tk{width:17px;height:17px;border-radius:5px;background:var(--paper-2);flex:0 0 auto;display:grid;place-items:center;font-size:.62rem;color:transparent}
+.trow.hit .tk{background:var(--ok);color:#fff}
+.trow .lab{color:var(--ink-soft)}.trow.hit .lab{color:var(--ink);font-weight:600}
+
+.chatlog{display:flex;flex-direction:column;gap:9px;margin:4px 0 2px}
+.bub{max-width:94%;padding:9px 12px;border-radius:13px;font-size:.86rem;white-space:pre-wrap;line-height:1.45}
+.bub.user{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.bub.ai{align-self:flex-start;background:var(--paper-2);color:var(--ink);border-bottom-left-radius:4px;border-left:3px solid var(--accent)}
+.bub .who{font-size:.56rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px;font-family:var(--display)}
+.bub.ai .who{color:var(--accent);opacity:1}.bub.user .who{opacity:.65}
+.imgframe{background:var(--paper-2);border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:10px}
+.imgframe .cap{font-size:.74rem;color:var(--ink-soft);font-style:italic}
+.imgframe img,.imgframe canvas{image-rendering:pixelated;image-rendering:crisp-edges;width:100%;max-width:340px;height:auto;border-radius:4px;background:#0b0b10}
+.txtout{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:12px 13px;margin-top:10px;font-size:.86rem;line-height:1.55;color:var(--ink);white-space:pre-wrap}
+.gaplist{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.gaptag{font-size:.72rem;font-weight:700;color:var(--warn);background:var(--warn-soft);border-radius:6px;padding:3px 9px}
+.covtag{font-size:.72rem;font-weight:700;color:var(--ok);background:var(--ok-soft);border-radius:6px;padding:3px 9px}
+
+.callout{background:var(--paper-2);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:.87rem;color:var(--ink);line-height:1.5}
+.callout .ch{font-weight:800;font-family:var(--display);color:var(--ink);display:block;margin-bottom:3px}
+
+.dosteps{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:9px;counter-reset:ds}
+.dosteps li{position:relative;padding-left:32px;counter-increment:ds}
+.dosteps li::before{content:counter(ds);position:absolute;left:0;top:0;width:22px;height:22px;border-radius:999px;background:var(--cinnamon);color:var(--cinnamon-ink);font-family:var(--display);font-weight:800;font-size:.72rem;display:grid;place-items:center}
+.dosteps .dt{font-family:var(--display);font-weight:700;font-size:.88rem;color:var(--ink);margin-bottom:1px}
+.dosteps .dd{font-size:.83rem;color:var(--ink-soft);line-height:1.45}
+.media{display:flex;gap:10px;align-items:center;border:1.5px dashed var(--rule);border-radius:11px;padding:11px 13px;margin-top:11px;font-size:.82rem;color:var(--ink-soft);font-style:italic;background:var(--paper-2)}
+.media .mi{flex:0 0 auto;color:var(--cinnamon)}
+.media b{font-family:var(--display);font-style:normal;font-weight:800;color:var(--ink)}
+
+.toolcard{display:flex;gap:12px;align-items:flex-start;background:var(--paper);border:1px dashed var(--accent);border-radius:11px;padding:13px 14px;margin-top:12px}
+.toolcard.plain{border-style:solid;border-color:var(--rule)}
+.toolcard .tc-ic{width:30px;height:30px;flex:0 0 auto;border-radius:8px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent)}
+.toolcard .tc-n{font-family:var(--display);font-weight:800;font-size:.9rem;color:var(--ink)}
+.toolcard .tc-d{font-size:.8rem;color:var(--ink-soft);margin-top:2px;line-height:1.45}
+.toolcard .tc-go{display:inline-block;margin-top:8px;font-size:.78rem;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:999px;padding:5px 12px;background:none}
+.promptcard{background:var(--paper-2);border-radius:10px;padding:11px 13px;margin-top:10px}
+.promptcard .pl{font-family:var(--display);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--cinnamon);margin-bottom:5px}
+.promptcard .pt{font-size:.82rem;color:var(--ink);line-height:1.5;background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:9px 10px}
+.promptcard .cpy{margin-top:7px;font-size:.74rem;font-weight:700;color:var(--cinnamon);background:none;border:1px solid var(--rule);border-radius:999px;padding:4px 11px}
+
+.submit{margin-top:14px;background:var(--cinnamon);color:var(--cinnamon-ink);border-radius:12px;padding:15px 16px}
+.submit h4{font-family:var(--display);font-size:.98rem;font-weight:800;margin-bottom:4px;color:var(--cinnamon-ink)}
+.submit p{font-size:.82rem;opacity:.85;line-height:1.45}
+.submit .btn{margin-top:12px;background:var(--ginger);color:var(--ginger-ink)}
+.submit .fallback{font-size:.72rem;opacity:.7;margin-top:9px}
+
+.coachread{margin-top:14px;background:var(--paper-2);border-radius:12px;padding:14px 15px;border-left:3px solid var(--accent)}
+.coachread h4{font-family:var(--display);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.coachread .crline{display:flex;align-items:center;gap:10px;font-size:.83rem;margin:5px 0;color:var(--ink)}
+.coachread .crline .sk{flex:1}
+.coachread .lvl{font-family:var(--display);font-weight:800;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:6px}
+.lvl.min{background:var(--paper);color:var(--ink-soft);border:1px solid var(--rule)}
+.lvl.mod{background:var(--accent-soft);color:var(--warn)}
+.coachread .sub{font-size:.76rem;color:var(--ink-soft);margin-top:4px}
+.coachread .note{font-size:.78rem;color:var(--ink);background:var(--paper);border-radius:9px;padding:10px 12px;margin-top:11px;line-height:1.5}
+.coachread .note b{font-weight:700}
+
+.actcard{background:var(--paper);border:1px solid var(--rule);border-radius:12px;box-shadow:var(--shadow);border-top:3px solid var(--cinnamon);overflow:hidden;margin-top:14px}
+.actcard .hd{display:flex;align-items:center;gap:9px;padding:12px 16px;border-bottom:1px solid var(--rule);background:var(--paper)}
+.actcard .hd .ico{width:20px;height:20px;flex:0 0 auto;color:var(--cinnamon)}
+.actcard .hd .nm{font-family:var(--display);font-weight:800;font-size:.95rem;color:var(--cinnamon)}
+.actcard .bd{padding:18px 16px}
+.actcard h2{font-family:var(--display);font-size:1.2rem;font-weight:800;letter-spacing:-.01em;color:var(--ink);margin-bottom:7px;text-wrap:balance}
+.actcard p{font-size:.9rem;color:var(--ink-soft);line-height:1.55;max-width:62ch}
+.actcard .steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.actcard .steps li{font-size:.88rem;color:var(--ink);padding-left:16px;position:relative;line-height:1.5}
+.actcard .steps li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--cinnamon)}
+.actcard label.fl{margin-top:16px}
+
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.pager .btn.ghost{border:1px solid var(--rule)}
+
+.patternnote{margin-top:22px;font-size:.78rem;color:var(--ink-soft);background:var(--paper-2);border-radius:9px;padding:11px 13px;line-height:1.5}
+.patternnote b{color:var(--ink);font-weight:700}
+</style>
+
+<div class="topbar"><div class="topbar-in">
+  <span class="wordmark">Endless Access <b>AI</b></span>
+  <span class="sp"></span>
+  <a class="tbtn maplink" href="#">Explore: fAIrytales</a>
+</div></div>
+
+<div class="wrap" id="wrap"></div>
+
+<script>
+/*SESSION_START*/
+var SESSION = {
+  n:8, title:"Creating and Placing Your Boss",
+  eq:"How does a game stay interesting from the first second to the last?",
+  goal:"Create a boss, a bigger challenge, and place it in your scene. A boss is really just a more important enemy, so you already know most of this.",
+  activities:[
+    { id:"make", nav:"Make your boss", type:"ai", teammate:"make",
+      learn:{ ctx:"A boss is a more important enemy. If you want a distinct one, it should feel bigger and more significant than your regular enemy. At a minimum it needs two moments: what it does while it waits (idle), and what it looks like when the player finally beats it (defeated).",
+        blocks:[{h:"Generate, then pressure-test",p:"Use Maker to generate, then switch to the Critic and ask whether it is distinctive and threatening enough to be a real final challenge, before you commit. Describe the shape concretely: comparing it to a real object, like a rounded pod, helps the AI far more than a name alone."}] },
+      ai:{ out:"image", open:"Describe your boss. Make it distinctive: it is the final challenge, so it should feel like one.",
+        scaffold:"16-bit pixel art game sprite, a boss, transparent background, PNG, square image, simple pixel art style",
+        hint:"16-bit pixel art game sprite, a single giant pea-pod boss, rounded green pod shape with a cracked menacing grin, darker on the edges and a lighter highlight in the center, facing left, transparent background, PNG, square image, character fills the frame, simple pixel art style, low detail, chunky pixels, retro game boss",
+        crit:[{k:"pose",lab:"Facing left"},{k:"skin",lab:"Its color and shading"},{k:"build",lab:"A distinctive shape"},{k:"armor",lab:"Reads as a real challenge"},{k:"hair",lab:"A memorable feature"},{k:"weapon",lab:"What it does to the player"},{k:"style",lab:"16-bit, chunky, with shading"}],
+        firstMsg:"Here is a boss. I filled in everything you left open.", firstKind:"fig", firstCap:"Maker’s first pass",
+        gaps:["Flat, one color","Not distinctive","Looks like a regular enemy","No weight"],
+        judgeNote:"A flat, generic boss does not feel like a final challenge. Name the shading and the shape you want, hand it to the Critic to pressure-test, then run it again.",
+        resultMsg:"Now it feels like something to beat. Here is your boss.", result:{img:"art.jpg", cap:"Your boss — idle, during the fight"},
+        cover:["Shaded, not flat","Distinctive shape","Reads as a boss","Fits your world","Memorable"],
+        afterNote:{h:"At least two states",p:"Your boss needs an idle (during the fight) and a defeated (the player's reward for winning). Generate each in the same chat so they match."},
+        tools:["pixelstitch","copyprompt"],
+        submit:{num:3, text:"Submit your boss placed in the scene to this session’s task."} },
+      coach:{ rows:[{sk:"Problem Solving",lvl:"mod"},{sk:"Creativity & Design Thinking",lvl:"mod"},{sk:"Technical Literacy",lvl:"min"}], tags:"Art — Aesthetics & Visual Design, Animation & Effects", note:"<b>This is process XP.</b> A separate, smaller currency that feeds the AI-tagged credential, not the craft credential. You used two teammates on purpose, Maker to build and Critic to pressure-test: directing them well is what is scored." }
+    },
+    { id:"place", nav:"Place it", type:"play",
+      learn:{ ctx:"A boss is placed the same way as any character, with one catch: bosses usually come out very large. You will scale it down to sit right next to your hero.",
+        blocks:[{h:"Size first, then facing",p:"Select the boss node, open Transform, and try small equal numbers like 0.3 and 0.3. Play the scene before fixing facing; the game often corrects direction automatically. Never flip with a negative scale."}] },
+      play:{ sub:"In Godot",
+        lead:"Bring the boss in and place it like you placed the enemy.",
+        steps:[
+          {t:"Bring boss files into the components folder",d:"Copy your boss images in, the same way as before."},
+          {t:"Swap the Sprite Frames",d:"On the boss node, find Visuals, Make Unique, Edit, and fill the slots with your boss images at a 1x1 grid."},
+          {t:"Scale it to fit",d:"Open Transform and adjust Scale evenly until the boss feels right next to your hero."}
+        ],
+        media:[{kind:"video",cap:"Placing the boss and scaling it down to sit beside the hero."}]
+      }
+    },
+    { id:"reflect", nav:"Reflect", type:"reflect", title:"Where does your game build or escalate, and where does it fall flat?",
+      body:"Now that the whole cast exists, where does the challenge rise, and where does it sag?", ph:"Jot your reflection here..." }
+  ]
+};
+SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab=Tasks&t=5422335";
+
+/*SESSION_END*/
+
+(function(){
+  "use strict";
+  var wrap=document.getElementById("wrap");
+  var STAGES=["Choose","Describe","Judge","Refine","Show"];
+  var TEAM=[
+    {k:"make",n:"Maker",d:"A tool. Builds exactly what you describe, and can link you to PixelStitch or your own image maker.",out:"the thing itself"},
+    {k:"spark",n:"Brainstormer",d:"A brainstorm partner. Gives you a few very different ideas, then asks which to grow.",out:"a shortlist of your favorite ideas"},
+    {k:"ask",n:"Interviewer",d:"Asks one question at a time to draw your idea out, then turns your answers into a brief.",out:"a brief built from your answers"},
+    {k:"feedback",n:"Critic",d:"A mentor. Names what works and the one fix that would help most.",out:"strengths and a clear next step"},
+    {k:"explain",n:"Tutor",d:"Explains something in plain words, then checks you have got it.",out:"a short summary of what you learned"},
+    {k:"role",n:"Actor",d:"Plays a player or character so you can test your idea.",out:"what the role-play showed"},
+    {k:"teach",n:"Rookie",d:"Plays a curious beginner. You explain; it asks what a newcomer would.",out:"what you explained well, and what was fuzzy"}
+  ];
+  function MODE(k){for(var i=0;i<TEAM.length;i++)if(TEAM[i].k===k)return TEAM[i];return TEAM[0];}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  var ICO={
+    concept:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.1V17h6v-1.4c0-.8.4-1.5 1-2.1A6 6 0 0 0 12 3Z"/><path d="M9 21h6"/></svg>',
+    ai:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg>',
+    play:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m11 9 3 2-3 2z"/></svg>',
+    share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="7" r="2.3"/><path d="M15.5 13.5A5 5 0 0 1 21 18"/></svg>',
+    reflect:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v4h-4"/></svg>',
+    pixel:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18M18 3v18M3 7.5 21 7.5M3 16.5 21 16.5"/></svg>',
+    export:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h10v10H9zM5 15V5h10"/></svg>',
+    coach:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v4a1 1 0 0 0 1 1h2l9 4V5L7 9H5a1 1 0 0 0-1 0Z"/><path d="M8 14v3a2 2 0 0 0 4 0v-1"/></svg>'
+  };
+
+  // ---------- header ----------
+  function headerHTML(){
+    var h='<div class="hero"><div class="kick">Explore: fAIrytales · Session '+SESSION.n+' of 12</div>';
+    h+='<h1 class="h1">'+esc(SESSION.title)+'</h1>';
+    h+='<p class="subhead">'+esc(SESSION.eq)+'</p>';
+    h+='<p class="goal">'+SESSION.goal+'</p>';
+    h+='</div>';
+    return h;
+  }
+  function navHTML(){
+    return '<nav class="actnav" id="actnav">'+SESSION.activities.map(function(a,i){
+      return '<button class="actnav-item" data-s="'+i+'"><span class="an-n">'+(i+1)+'</span>'+esc(a.nav)+'</button>';
+    }).join("")+'</nav>';
+  }
+
+  // ---------- learn pane ----------
+  function learnHTML(L){
+    var h='<section class="pane concept"><div class="hd"><span class="ico">'+ICO.concept+'</span><div><div class="nm">Learn</div><div class="sub">Think it through</div></div></div><div class="bd">';
+    if(L.ctx)h+='<div class="ctx"><div class="ctxk">Where you are</div><p>'+L.ctx+'</p></div>';
+    if(L.steps5)h+='<div class="learn-h">The five steps</div><ol class="five"><li><b>Choose</b> a teammate for the job.</li><li><b>Describe</b> what you want, in detail.</li><li><b>Judge</b> what comes back against your brief.</li><li><b>Refine</b> the prompt and run it again.</li><li><b>Show</b> your work and move it into the game.</li></ol><p class="lpara">Your first prompt is rarely your best. The first result is a draft: judge what is missing, put those specifics into the next prompt, and run it again. Three to five rounds is normal.</p>';
+    (L.blocks||[]).forEach(function(b){h+='<div class="learn-h">'+esc(b.h)+'</div><p class="lpara">'+b.p+'</p>';});
+    if(L.decide){h+='<div class="learn-h">'+(L.decideH||"Decide before you prompt")+'</div><ul class="think">'+L.decide.map(function(d){return '<li><b>'+esc(d.b)+'</b> '+esc(d.t)+'</li>';}).join("")+'</ul>';}
+    h+='</div></section>';
+    return h;
+  }
+
+  // ---------- AI activity ----------
+  function scorePrompt(p){p=(p||"").toLowerCase();return {pose:/attack|strike|side view|action pose|facing/.test(p),skin:/skin|brown|black|white|tan|dark skin|pale|olive|green|red|colou?r/.test(p),hair:/hair|braid|curls|afro|ponytail|bald|leaves|stalk/.test(p),build:/build|athletic|tall|short|stocky|slim|muscular|lean|round|small/.test(p),armor:/armor|armour|cloak|robe|dress|tunic|plated|leather|clothing|shell|skin|peel/.test(p),weapon:/sword|spear|staff|bow|axe|dagger|hammer|weapon|blade|throw/.test(p),style:/16-bit|pixel/.test(p)};}
+
+  function makeAI(scr,act){
+    var A=act.ai, rail=scr.querySelector(".arc"), body=scr.querySelector(".stageBody"), beat=0;
+    function renderRail(){rail.innerHTML=STAGES.map(function(s,i){var c=i<beat?"done":i===beat?"on":"";return '<div class="step '+c+'">'+s+'</div>';}).join("");}
+    function renderTarget(p){var s=scorePrompt(p);var t=body.querySelector(".target");if(!t)return;t.innerHTML=A.crit.map(function(c){var hit=s[c.k];return '<div class="trow'+(hit?' hit':'')+'"><span class="tk">'+(hit?'&#10003;':'')+'</span><span class="lab">'+esc(c.lab)+'</span></div>';}).join("");}
+    function drawGeneric(cv){var x=cv.getContext("2d"),W=cv.width,H=cv.height;x.fillStyle="#0b0b10";x.fillRect(0,0,W,H);function px(a,b,w,h,c){x.fillStyle=c;x.fillRect(Math.round(a),Math.round(b),Math.round(w),Math.round(h));}var u=W/16,cx=W*0.5-u*2,cy=H*0.22;for(var f=0;f<3;f++){var ox=(f-1)*u*0.4;x.globalAlpha=f===1?1:0.4;px(cx+ox,cy,u*2,u*2,"#9a9aa6");px(cx+ox+u*0.4,cy+u*0.6,u*1.2,u*0.5,"#2b2b33");px(cx+ox,cy+u*2,u*2,u*3,"#8b8b97");px(cx+ox-u*0.8,cy+u*2.4,u*0.9,u*2,"#7a7a86");px(cx+ox+u*2,cy+u*2.4,u*0.9,u*2,"#7a7a86");px(cx+ox+u*2.7,cy+u*0.6,u*0.5,u*4,"#c8c8d0");px(cx+ox+u*0.3,cy+u*5,u*0.8,u*2.2,"#6c6c78");px(cx+ox+u*1,cy+u*5,u*0.8,u*2.2,"#6c6c78");}x.globalAlpha=1;}
+    function choose(){
+      scr.removeAttribute("data-m");renderRail();
+      var rk=act.teammate;
+      var h='<div class="callout"><span class="ch">Choose your teammate</span>'+(A.chooseNote||'This is a making task: you want the AI to build the thing itself. <b>'+MODE(rk).n+'</b> is the fit. The others are here so you can see the range.')+'</div>';
+      h+='<div class="modes">'+TEAM.slice().sort(function(a,b){return (a.k===rk?-1:0)-(b.k===rk?-1:0);}).map(function(t){var isr=t.k===rk;return '<button class="mcard'+(isr?' full':' muted')+'" data-k="'+t.k+'" data-m="'+t.k+'"><span class="mn">'+t.n+(isr?' <span class="rec">Recommended</span>':'')+'</span><span class="md">'+t.d+'</span><span class="mo">You get: '+t.out+'</span></button>';}).join("")+'</div><p class="pickhint" id="ph"></p>';
+      body.innerHTML=h;
+      Array.prototype.forEach.call(body.querySelectorAll(".mcard"),function(b){b.onclick=function(){if(b.getAttribute("data-k")===rk){beat=1;describe();}else{body.querySelector("#ph").textContent=b.querySelector(".mn").textContent.replace("Recommended","").trim()+" is a good teammate, but it is not the fit for this task. Go with "+MODE(rk).n+".";}};});
+    }
+    function describe(){
+      scr.setAttribute("data-m",act.teammate);renderRail();
+      var h='<div class="chatlog"><div class="bub ai"><span class="who">'+MODE(act.teammate).n+'</span>'+esc(A.open)+'</div></div>';
+      h+='<label class="fl" for="p1_'+act.id+'">Your prompt <span>— the scaffold below is a starting point</span></label>';
+      h+='<textarea id="p1_'+act.id+'" rows="4">'+esc(A.scaffold)+'</textarea><div class="target"></div>';
+      h+='<div class="btnrow"><button class="btn wide" data-go="judge">Send to '+MODE(act.teammate).n+'</button></div>';
+      body.innerHTML=h;renderTarget(A.scaffold);
+      var ta=body.querySelector("#p1_"+act.id);ta.addEventListener("input",function(){renderTarget(ta.value);});
+      body.querySelector("[data-go=judge]").onclick=function(){judge(ta.value);};
+    }
+    function resultBlock(kind,data,cap,genCanvasId){
+      if(kind==="text")return '<div class="txtout">'+esc(data)+'</div>';
+      if(kind==="img")return '<div class="imgframe"><img src="'+esc(data)+'" alt="result"><span class="cap">'+esc(cap)+'</span></div>';
+      return '<div class="imgframe"><canvas id="'+genCanvasId+'" width="384" height="128"></canvas><span class="cap">'+esc(cap)+'</span></div>';
+    }
+    function judge(prompt){
+      beat=2;renderRail();
+      var h='<div class="chatlog"><div class="bub user"><span class="who">You</span>'+esc(prompt)+'</div><div class="bub ai"><span class="who">'+MODE(act.teammate).n+'</span>'+esc(A.firstMsg)+'</div></div>';
+      var gid="gen_"+act.id;
+      h+=resultBlock(A.firstKind==="text"?"text":"fig",A.firstText||"",A.firstCap||"First pass",gid);
+      h+='<div class="gaplist">'+A.gaps.map(function(g){return '<span class="gaptag">'+esc(g)+'</span>';}).join("")+'</div>';
+      h+='<div class="callout"><span class="ch">Judge it</span>'+esc(A.judgeNote)+'</div>';
+      h+='<div class="btnrow"><button class="btn wide" data-go="refine">'+(A.refineBtn||"Refine the prompt")+'</button></div>';
+      body.innerHTML=h;
+      if(A.firstKind!=="text"){var c=body.querySelector("#"+gid);if(c)drawGeneric(c);}
+      body.querySelector("[data-go=refine]").onclick=function(){refine(prompt);};
+    }
+    function refine(prev){
+      beat=3;renderRail();
+      var h='<div class="callout"><span class="ch">Refine</span>'+esc(A.refineNote||"Add the specifics that were missing. The more specific you are, the more it looks like yours and not a stock one.")+'</div>';
+      h+='<label class="fl" for="p2_'+act.id+'">Your revised prompt</label><textarea id="p2_'+act.id+'" rows="5">'+esc(prev)+'</textarea>';
+      h+='<div class="btnrow"><button class="btn ghost sm" data-go="useex">Use the worked example</button></div><div class="target"></div>';
+      h+='<div class="btnrow"><button class="btn wide" data-go="show">Send to '+MODE(act.teammate).n+'</button></div>';
+      body.innerHTML=h;
+      var ta=body.querySelector("#p2_"+act.id);renderTarget(ta.value);ta.addEventListener("input",function(){renderTarget(ta.value);});
+      body.querySelector("[data-go=useex]").onclick=function(){ta.value=A.hint;renderTarget(ta.value);ta.focus();};
+      body.querySelector("[data-go=show]").onclick=function(){show(ta.value);};
+    }
+    function show(prompt){
+      beat=4;renderRail();
+      var h='<div class="chatlog"><div class="bub user"><span class="who">You</span>'+esc(prompt)+'</div><div class="bub ai"><span class="who">'+MODE(act.teammate).n+'</span>'+esc(A.resultMsg)+'</div></div>';
+      h+=resultBlock(A.out==="text"?"text":"img",A.out==="text"?A.result.text:A.result.img,A.result.cap,"");
+      h+='<div class="gaplist">'+A.cover.map(function(c){return '<span class="covtag">'+esc(c)+'</span>';}).join("")+'</div>';
+      if(A.afterNote)h+='<div class="callout"><span class="ch">'+esc(A.afterNote.h)+'</span>'+esc(A.afterNote.p)+'</div>';
+      (A.tools||[]).forEach(function(t){
+        if(t==="pixelstitch")h+='<div class="toolcard"><span class="tc-ic">'+ICO.pixel+'</span><span style="flex:1"><span class="tc-n">PixelStitch</span><span class="tc-d">Your art still sits on a black box. Cut the background and stitch your frames into one sheet in PixelStitch, our tool.</span><a class="tc-go" href="https://threadbare-pixelstitch.lovable.app" target="_blank" rel="noopener">Open PixelStitch ↗</a></span></div>';
+        if(t==="copyprompt")h+='<div class="toolcard plain"><span class="tc-ic">'+ICO.export+'</span><span style="flex:1"><span class="tc-n">Not happy with it?</span><span class="tc-d">Copy your prompt and take it to Gemini or any image maker. The work starts here; where you finish it is up to you.</span><button class="tc-go" data-go="copy">Copy my prompt</button></span></div>';
+      });
+      if(A.submit)h+='<div class="submit"><h4>Show your work</h4><p>'+esc(A.submit.text)+'</p><button class="btn wide" data-go="submit">Submit to the Session '+SESSION.n+' task</button><div class="fallback">This submit is how your XP is captured. Pilot: if it is not wired yet, paste your work and note into the task directly.</div></div>';
+      if(act.coach)h+=coachHTML(act.coach);
+      body.innerHTML=h;
+      var cp=body.querySelector("[data-go=copy]");
+      if(cp)cp.onclick=function(){var txt=prompt;function d(){cp.textContent="Copied";setTimeout(function(){cp.textContent="Copy my prompt";},1500);}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(d).catch(fb);}else fb();function fb(){var t=document.createElement("textarea");t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(t);d();}};
+      var sb=body.querySelector("[data-go=submit]");
+      if(sb)sb.onclick=function(){ if(SESSION.submitUrl){window.open(SESSION.submitUrl,"_blank","noopener");} sb.textContent="Opened the task ↗";};
+    }
+    renderRail();choose();
+  }
+
+  function coachHTML(C){
+    return '<div class="coachread"><h4>'+ICO.coach+'Coach’s read — AI-assisted</h4>'+
+      C.rows.map(function(r){return '<div class="crline"><span class="sk">'+esc(r.sk)+'</span><span class="lvl '+r.lvl+'">'+(r.lvl==="mod"?"Moderate":r.lvl==="ext"?"Extensive":"Minimum")+'</span></div>';}).join("")+
+      '<div class="sub">Tagged to '+esc(C.tags)+'.</div><div class="note">'+C.note+'</div></div>';
+  }
+
+  // ---------- play activity ----------
+  function playHTML(scr,act){
+    var P=act.play;
+    var h='<div class="canvas2">'+learnHTML(act.learn);
+    h+='<section class="pane app playpane"><div class="hd"><span class="ico">'+ICO.play+'</span><div><div class="nm">Do</div><div class="sub">'+esc(P.sub||"In Godot")+'</div></div></div><div class="bd">';
+    if(P.lead)h+='<p class="lpara">'+P.lead+'</p>';
+    if(P.steps)h+='<ol class="dosteps">'+P.steps.map(function(s){return '<li><div class="dt">'+esc(s.t)+'</div><div class="dd">'+s.d+'</div></li>';}).join("")+'</ol>';
+    (P.media||[]).forEach(function(m){var ic=m.kind==="video"?'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg>':'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m3 16 5-4 4 3 3-2 6 4"/></svg>';h+='<div class="media"><span class="mi">'+ic+'</span><span><b>'+(m.kind==="video"?"Short video":"Screenshot")+'.</b> '+esc(m.cap)+'</span></div>';});
+    (P.calls||[]).forEach(function(c){h+='<div class="callout"><span class="ch">'+esc(c.h)+'</span>'+c.p+'</div>';});
+    (P.prompts||[]).forEach(function(pr,i){h+='<div class="promptcard"><div class="pl">'+esc(pr.label)+'</div><div class="pt" id="pc_'+act.id+'_'+i+'">'+esc(pr.text)+'</div><button class="cpy" data-pc="pc_'+act.id+'_'+i+'">Copy prompt</button></div>';});
+    if(P.submit)h+='<div class="submit"><h4>Show your work</h4><p>'+esc(P.submit.text)+'</p><button class="btn wide" data-go="submit">Submit to the Session '+SESSION.n+' task</button><div class="fallback">This submit is how your XP is captured. Pilot: if it is not wired yet, paste your work and note into the task directly.</div></div>';
+    if(act.coach)h+=coachHTML(act.coach);
+    h+='</div></section></div>';
+    scr.querySelector(".screen-in").innerHTML=h;
+    Array.prototype.forEach.call(scr.querySelectorAll("[data-pc]"),function(b){b.onclick=function(){var txt=document.getElementById(b.getAttribute("data-pc")).textContent;function d(){b.textContent="Copied";setTimeout(function(){b.textContent="Copy prompt";},1500);}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(d).catch(function(){d();});}else d();};});
+    var sb=scr.querySelector("[data-go=submit]");if(sb)sb.onclick=function(){ if(SESSION.submitUrl){window.open(SESSION.submitUrl,"_blank","noopener");} sb.textContent="Opened the task ↗";};
+  }
+
+  // ---------- share / reflect ----------
+  function shareHTML(act){
+    var h='<div class="actcard"><div class="hd"><span class="ico">'+ICO.share+'</span><div class="nm">Share · Peer feedback</div></div><div class="bd"><h2>'+esc(act.title)+'</h2><p>'+act.body+'</p>';
+    if(act.steps)h+='<ul class="steps">'+act.steps.map(function(s){return '<li>'+esc(s)+'</li>';}).join("")+'</ul>';
+    if(act.note)h+='<label class="fl" for="peer_'+act.id+'">'+act.note.label+'</label><textarea id="peer_'+act.id+'" rows="3" placeholder="'+esc(act.note.ph)+'"></textarea>';
+    h+='</div></div>';return h;
+  }
+  function reflectHTML(act){
+    return '<div class="actcard"><div class="hd"><span class="ico">'+ICO.reflect+'</span><div class="nm">Reflect · Closing</div></div><div class="bd"><h2>'+esc(act.title)+'</h2><p>'+act.body+'</p><label class="fl" for="ref_'+act.id+'">Your reflection</label><textarea id="ref_'+act.id+'" rows="4" placeholder="'+esc(act.ph)+'"></textarea></div></div>';
+  }
+
+  // ---------- build ----------
+  function pagerHTML(i){
+    var last=SESSION.activities.length-1;
+    var left=i>0?'<button class="btn ghost" data-go-s="'+(i-1)+'">← Back</button>':'<span></span>';
+    var right=i<last?'<button class="btn" data-go-s="'+(i+1)+'">Next: '+esc(SESSION.activities[i+1].nav)+' →</button>':'<span></span>';
+    return '<div class="pager">'+left+right+'</div>';
+  }
+  function buildScreens(){
+    var html='';
+    SESSION.activities.forEach(function(act,i){
+      var inner='';
+      if(act.type==="ai"){
+        inner='<div class="actbar"><div class="arc"></div></div><div class="canvas2">'+learnHTML(act.learn)+
+          '<section class="pane app"><div class="hd"><span class="ico">'+ICO.ai+'</span><div><div class="nm">Do</div><div class="sub">Use the AI</div></div></div><div class="bd"><div class="stageBody"></div></div></section></div>';
+      } else if(act.type==="play"){
+        inner='<div class="screen-in"></div>';
+      } else if(act.type==="share"){ inner=shareHTML(act); }
+      else if(act.type==="reflect"){ inner=reflectHTML(act); }
+      html+='<section class="screen" id="scr'+i+'"'+(i?' hidden':'')+'>'+inner+pagerHTML(i)+'</section>';
+    });
+    return html;
+  }
+
+  wrap.innerHTML=headerHTML()+navHTML()+buildScreens()+'<div class="patternnote"><b>Pattern preview.</b> Built on the Endless AI training-ground chassis. Any teammate window here runs a scripted version of the real tool so the shape is reviewable; in the live program that window is the real Endless AI teammate. Tokens, teammate colors and class names match the training ground, so your style changes there pull straight into this.</div>';
+
+  // init activities
+  SESSION.activities.forEach(function(act,i){
+    var scr=document.getElementById("scr"+i);
+    if(act.type==="ai")makeAI(scr,act);
+    else if(act.type==="play")playHTML(scr,act);
+  });
+
+  // nav
+  function showScreen(n){SESSION.activities.forEach(function(_,i){document.getElementById("scr"+i).hidden=(i!==n);});Array.prototype.forEach.call(document.querySelectorAll(".actnav-item"),function(b){b.setAttribute("aria-current",b.dataset.s===String(n)?"true":"false");});window.scrollTo(0,0);}
+  document.getElementById("actnav").addEventListener("click",function(e){var b=e.target.closest(".actnav-item");if(b)showScreen(+b.dataset.s);});
+  document.addEventListener("click",function(e){var b=e.target.closest("[data-go-s]");if(b)showScreen(+b.getAttribute("data-go-s"));});
+  showScreen(0);
+})();
+</script>
