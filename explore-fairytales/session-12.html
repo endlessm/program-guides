@@ -96,6 +96,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pane .hd .nm{font-family:var(--display);font-weight:800;font-size:.95rem;line-height:1.1}
 .pane .hd .sub{font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:1px}
 .pane .bd{padding:16px;display:flex;flex-direction:column;flex:1 1 auto;min-width:0}
+.pane.active{animation:activepulse 5.5s ease-in-out infinite}
+@keyframes activepulse{0%,100%{box-shadow:0 0 0 3px var(--accent-soft)}50%{box-shadow:0 0 0 9px var(--accent-soft)}}
+@media (prefers-reduced-motion:reduce){.pane.active{animation:none;box-shadow:0 0 0 7px var(--accent-soft)}}
 
 .ctx{background:var(--paper-2);border-radius:11px;padding:13px 14px;margin-bottom:14px}
 .ctx .ctxk{font-family:var(--display);font-size:.62rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--cinnamon);margin-bottom:5px}
@@ -330,11 +333,12 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
 
   function makeAI(scr,act){
     var A=act.ai, rail=scr.querySelector(".arc"), body=scr.querySelector(".stageBody"), beat=0;
+    function setActive(side){var c=scr.querySelector(".pane.concept"),a=scr.querySelector(".pane.app");if(c)c.classList.toggle("active",side==="learn");if(a)a.classList.toggle("active",side==="do");}
     function renderRail(){rail.innerHTML=STAGES.map(function(s,i){var c=i<beat?"done":i===beat?"on":"";return '<div class="step '+c+'">'+s+'</div>';}).join("");}
     function renderTarget(p){var s=scorePrompt(p);var t=body.querySelector(".target");if(!t)return;t.innerHTML=A.crit.map(function(c){var hit=s[c.k];return '<div class="trow'+(hit?' hit':'')+'"><span class="tk">'+(hit?'&#10003;':'')+'</span><span class="lab">'+esc(c.lab)+'</span></div>';}).join("");}
     function drawGeneric(cv){var x=cv.getContext("2d"),W=cv.width,H=cv.height;x.fillStyle="#0b0b10";x.fillRect(0,0,W,H);function px(a,b,w,h,c){x.fillStyle=c;x.fillRect(Math.round(a),Math.round(b),Math.round(w),Math.round(h));}var u=W/16,cx=W*0.5-u*2,cy=H*0.22;for(var f=0;f<3;f++){var ox=(f-1)*u*0.4;x.globalAlpha=f===1?1:0.4;px(cx+ox,cy,u*2,u*2,"#9a9aa6");px(cx+ox+u*0.4,cy+u*0.6,u*1.2,u*0.5,"#2b2b33");px(cx+ox,cy+u*2,u*2,u*3,"#8b8b97");px(cx+ox-u*0.8,cy+u*2.4,u*0.9,u*2,"#7a7a86");px(cx+ox+u*2,cy+u*2.4,u*0.9,u*2,"#7a7a86");px(cx+ox+u*2.7,cy+u*0.6,u*0.5,u*4,"#c8c8d0");px(cx+ox+u*0.3,cy+u*5,u*0.8,u*2.2,"#6c6c78");px(cx+ox+u*1,cy+u*5,u*0.8,u*2.2,"#6c6c78");}x.globalAlpha=1;}
     function choose(){
-      scr.removeAttribute("data-m");renderRail();
+      scr.removeAttribute("data-m");renderRail();setActive("do");
       var rk=act.teammate;
       var h='<div class="callout"><span class="ch">Choose your teammate</span>'+(A.chooseNote||'This is a making task: you want the AI to build the thing itself. <b>'+MODE(rk).n+'</b> is the fit. The others are here so you can see the range.')+'</div>';
       h+='<div class="modes">'+TEAM.slice().sort(function(a,b){return (a.k===rk?-1:0)-(b.k===rk?-1:0);}).map(function(t){var isr=t.k===rk;return '<button class="mcard'+(isr?' full':' muted')+'" data-k="'+t.k+'" data-m="'+t.k+'"><span class="mn">'+t.n+(isr?' <span class="rec">Recommended</span>':'')+'</span><span class="md">'+t.d+'</span><span class="mo">You get: '+t.out+'</span></button>';}).join("")+'</div><p class="pickhint" id="ph"></p>';
@@ -342,7 +346,7 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
       Array.prototype.forEach.call(body.querySelectorAll(".mcard"),function(b){b.onclick=function(){if(b.getAttribute("data-k")===rk){beat=1;describe();}else{body.querySelector("#ph").textContent=b.querySelector(".mn").textContent.replace("Recommended","").trim()+" is a good teammate, but it is not the fit for this task. Go with "+MODE(rk).n+".";}};});
     }
     function describe(){
-      scr.setAttribute("data-m",act.teammate);renderRail();
+      scr.setAttribute("data-m",act.teammate);renderRail();setActive("do");
       var h='<div class="chatlog"><div class="bub ai"><span class="who">'+MODE(act.teammate).n+'</span>'+esc(A.open)+'</div></div>';
       h+='<label class="fl" for="p1_'+act.id+'">Your prompt <span>— the scaffold below is a starting point</span></label>';
       h+='<textarea id="p1_'+act.id+'" rows="4">'+esc(A.scaffold)+'</textarea><div class="target"></div>';
@@ -357,7 +361,7 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
       return '<div class="imgframe"><canvas id="'+genCanvasId+'" width="384" height="128"></canvas><span class="cap">'+esc(cap)+'</span></div>';
     }
     function judge(prompt){
-      beat=2;renderRail();
+      beat=2;renderRail();setActive("learn");
       var h='<div class="chatlog"><div class="bub user"><span class="who">You</span>'+esc(prompt)+'</div><div class="bub ai"><span class="who">'+MODE(act.teammate).n+'</span>'+esc(A.firstMsg)+'</div></div>';
       var gid="gen_"+act.id;
       h+=resultBlock(A.firstKind==="text"?"text":"fig",A.firstText||"",A.firstCap||"First pass",gid);
@@ -369,7 +373,7 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
       body.querySelector("[data-go=refine]").onclick=function(){refine(prompt);};
     }
     function refine(prev){
-      beat=3;renderRail();
+      beat=3;renderRail();setActive("learn");
       var h='<div class="callout"><span class="ch">Refine</span>'+esc(A.refineNote||"Add the specifics that were missing. The more specific you are, the more it looks like yours and not a stock one.")+'</div>';
       h+='<label class="fl" for="p2_'+act.id+'">Your revised prompt</label><textarea id="p2_'+act.id+'" rows="5">'+esc(prev)+'</textarea>';
       h+='<div class="btnrow"><button class="btn ghost sm" data-go="useex">Use the worked example</button></div><div class="target"></div>';
@@ -380,7 +384,7 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
       body.querySelector("[data-go=show]").onclick=function(){show(ta.value);};
     }
     function show(prompt){
-      beat=4;renderRail();
+      beat=4;renderRail();setActive("do");
       var h='<div class="chatlog"><div class="bub user"><span class="who">You</span>'+esc(prompt)+'</div><div class="bub ai"><span class="who">'+MODE(act.teammate).n+'</span>'+esc(A.resultMsg)+'</div></div>';
       h+=resultBlock(A.out==="text"?"text":"img",A.out==="text"?A.result.text:A.result.img,A.result.cap,"");
       h+='<div class="gaplist">'+A.cover.map(function(c){return '<span class="covtag">'+esc(c)+'</span>';}).join("")+'</div>';
@@ -410,7 +414,7 @@ SESSION.submitUrl = "https://studio.endlessstudios.com/programs/5422327/?progTab
   function playHTML(scr,act){
     var P=act.play;
     var h='<div class="canvas2">'+learnHTML(act.learn);
-    h+='<section class="pane app playpane"><div class="hd"><span class="ico">'+ICO.play+'</span><div><div class="nm">Do</div><div class="sub">'+esc(P.sub||"In Godot")+'</div></div></div><div class="bd">';
+    h+='<section class="pane app playpane active"><div class="hd"><span class="ico">'+ICO.play+'</span><div><div class="nm">Do</div><div class="sub">'+esc(P.sub||"In Godot")+'</div></div></div><div class="bd">';
     if(P.lead)h+='<p class="lpara">'+P.lead+'</p>';
     if(P.steps)h+='<ol class="dosteps">'+P.steps.map(function(s){return '<li><div class="dt">'+esc(s.t)+'</div><div class="dd">'+s.d+'</div></li>';}).join("")+'</ol>';
     (P.media||[]).forEach(function(m){var ic=m.kind==="video"?'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg>':'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="m3 16 5-4 4 3 3-2 6 4"/></svg>';h+='<div class="media"><span class="mi">'+ic+'</span><span><b>'+(m.kind==="video"?"Short video":"Screenshot")+'.</b> '+esc(m.cap)+'</span></div>';});
