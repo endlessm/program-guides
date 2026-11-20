@@ -1,0 +1,354 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Learning Experience Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: three lines (Game design / Engine / AI) run left to right through Explore -> Core -> More. AI is its own pathway line; other lines stay AI-free or pick up AI only at specific deep dives. Core: <em>Threadbare</em> spans game design + engine. Palette matched to the program overview. */
+:root{
+  --bg:#F7F9FC; --surface:#FFFFFF; --surface-2:#FBFBFE;
+  --ink:#2F2D3C; --ink-soft:#65637A; --faint:#8A8899;
+  --rule:#E6E8F0; --line:#D3D6E2;
+  --accent:#FF6B00; --accent-ink:#FFFFFF; --accent-soft:#FFE9D7; --accent-text:#B84D00;
+  --t-explore:#FF6B00; --t-core:#3B6FE0; --t-more:#8A3FFC;
+  --shadow:0 1px 2px rgba(47,45,60,.05),0 6px 20px rgba(47,45,60,.06);
+  --display:'Figtree',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif;
+  --ll:122px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#17161F; --surface:#242231; --surface-2:#2B2938;
+  --ink:#F2F2F8; --ink-soft:#B2B0C2; --faint:#918FA3;
+  --rule:#353344; --line:#45435A;
+  --accent:#FF7A1A; --accent-ink:#17161F; --accent-soft:#3A2A1C; --accent-text:#FFB27A;
+  --t-explore:#FF7A1A; --t-core:#6E97F2; --t-more:#B49BF0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#17161F; --surface:#242231; --surface-2:#2B2938;
+  --ink:#F2F2F8; --ink-soft:#B2B0C2; --faint:#918FA3;
+  --rule:#353344; --line:#45435A;
+  --accent:#FF7A1A; --accent-ink:#17161F; --accent-soft:#3A2A1C; --accent-text:#FFB27A;
+  --t-explore:#FF7A1A; --t-core:#6E97F2; --t-more:#B49BF0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.5;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:26px 44px}
+em{font-style:italic}
+h1,h2,h3,.nm{font-family:var(--display)}
+
+.head{border-bottom:3px solid var(--accent);padding-bottom:16px}
+.kick{font-family:var(--display);font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;margin:.12em 0 0;text-wrap:balance}
+.sub{color:var(--ink-soft);font-size:.92rem;max-width:62ch;margin-top:6px}
+.toggle{display:inline-flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:7px 13px 7px 15px;box-shadow:var(--shadow);cursor:pointer;font-family:var(--display);font-weight:700;font-size:.82rem;color:var(--ink)}
+.toggle .sw{width:34px;height:20px;border-radius:999px;background:var(--rule);position:relative;transition:background .2s}
+.toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3);transition:transform .2s}
+body.ai-on .toggle .sw{background:var(--accent)}
+body.ai-on .toggle .sw::after{transform:translateX(14px)}
+
+.frame{font-size:.84rem;color:var(--ink-soft);margin:16px 0 4px;max-width:74ch}
+.frame b{color:var(--ink);font-weight:700;font-family:var(--display)}
+
+/* transit grid */
+.tracks{position:relative;display:grid;grid-template-columns:var(--ll) repeat(3,minmax(0,1fr));gap:14px 8px;align-items:stretch;margin-top:20px}
+.zh{grid-row:1;font-family:var(--display);font-weight:800;font-size:.92rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink);padding:0 6px 7px;border-bottom:2px solid var(--rule);display:flex;align-items:baseline;gap:7px}
+.zh small{font-weight:600;font-size:.64rem;letter-spacing:.02em;text-transform:none;color:var(--ink-soft)}
+.rail{grid-column:2/5;align-self:center;height:3px;border-radius:2px;background:var(--line);z-index:0}
+.rail.ai{background:var(--line)}
+.lanelabel{grid-column:1;align-self:center;padding:4px 2px;z-index:1}
+.lanelabel .ln{font-family:var(--display);font-weight:800;font-size:1rem}
+.lanelabel .ld{font-size:.72rem;color:var(--ink-soft);line-height:1.3}
+.lanelabel.ai .ln{color:var(--ink)}
+.stop{position:relative;z-index:1;padding:0 6px;display:flex;flex-direction:column;gap:8px;align-self:stretch}
+.lanetag,.zonetag{display:none}
+
+.card{width:100%;flex:1 1 auto;text-align:left;background:var(--surface);border:1.5px solid var(--rule);border-radius:13px;padding:12px 13px;cursor:pointer;box-shadow:var(--shadow);color:inherit;display:flex;flex-direction:column;gap:6px;min-width:0;transition:opacity .2s,border-color .2s,transform .08s}
+.card:hover{transform:translateY(-1px)}
+.card.sel{outline:2px solid var(--ink);outline-offset:1px}
+.card.tier-explore{border-color:var(--t-explore);--tc:var(--t-explore)}
+.card.tier-core{border-color:var(--t-core);--tc:var(--t-core)}
+.card.tier-more{border-color:var(--t-more);--tc:var(--t-more)}
+.card.big{padding:15px 15px}
+.card.big .nm{font-size:1.06rem}
+.card.deep{padding:10px 11px;border-radius:11px;box-shadow:none;background:var(--surface-2)}
+.card.deep .nm{font-size:.86rem}
+.spanmark{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);background:var(--surface-2);border-radius:6px;padding:3px 8px;align-self:flex-start}
+.card .nm{font-size:.94rem;font-weight:700;letter-spacing:-.01em;line-height:1.22}
+.card .fmt{font-size:.72rem;color:var(--ink-soft)}
+.card .foot{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:4px}
+.aib{font-family:var(--display);font-size:.56rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.aib.native{background:var(--ink);color:var(--bg)}
+.aib.touch{background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--line)}
+.prop-pill{font-family:var(--display);font-size:.54rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--tc,var(--accent-text));border:1px solid var(--tc,var(--accent));border-radius:5px;padding:1px 5px}
+.deeplabel{font-family:var(--display);font-size:.58rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin-top:2px;padding-left:2px}
+.ddsec{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line)}
+.ddhead{display:flex;flex-wrap:wrap;align-items:center;gap:7px;font-family:var(--display);font-size:.75rem;font-weight:700;color:var(--ink)}
+.ddchips{font-size:.74rem;color:var(--ink-soft);margin-top:4px;line-height:1.35}
+
+body.ai-on .card[data-aiv="none"]{opacity:.34}
+body.ai-on .rail:not(.ai){opacity:.4}
+body.ai-on .lanelabel:not(.ai){opacity:.5}
+body.ai-on .card[data-aiv="native"]{box-shadow:0 0 0 1.5px var(--accent),var(--shadow)}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:26px;padding-top:16px;border-top:1px solid var(--rule);font-size:.78rem;color:var(--ink-soft)}
+.legend .li{display:inline-flex;align-items:center;gap:6px}
+.sw-native{width:12px;height:12px;border-radius:999px;background:var(--ink)}
+.sw-touch{width:12px;height:12px;border-radius:999px;background:var(--accent-soft);border:1px solid var(--accent)}
+.sw-none{width:12px;height:12px;border-radius:999px;border:1px solid var(--line)}
+.journeys{margin-top:28px;padding-top:18px;border-top:1px solid var(--rule)}
+.journeys h2{font-family:var(--display);font-size:1.1rem;font-weight:800;letter-spacing:-.01em;margin:0 0 4px}
+.journeys .jl{font-size:.86rem;color:var(--ink-soft);margin:0 0 12px}
+.jrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:10px}
+.jcard{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:13px 14px;box-shadow:var(--shadow);font-size:.85rem;color:var(--ink);line-height:1.46}
+.jcard b{font-weight:700;font-family:var(--display)}
+.ju{display:block;font-family:var(--display);font-weight:800;font-size:.76rem;color:var(--ink);margin-bottom:5px}
+.jsw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.xover{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+.devpill{font-family:var(--display);font-size:.54rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--tc,var(--ink-soft));background:transparent;border:1px solid var(--tc,var(--line));border-radius:5px;padding:1px 6px}
+.defs,.ovwsec{margin-top:26px;padding-top:16px;border-top:1px solid var(--rule)}
+.defs h2,.ovwsec h2{font-family:var(--display);font-size:1.1rem;font-weight:800;letter-spacing:-.01em;margin:0 0 12px}
+.defrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.defcard{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:13px 14px;box-shadow:var(--shadow)}
+.defcard p{font-size:.85rem;color:var(--ink-soft);margin:8px 0 0;line-height:1.5}
+.defnote{font-size:.85rem;color:var(--ink-soft);margin:0;line-height:1.55}
+.defnote b{color:var(--ink);font-family:var(--display);font-weight:700}
+.ovw{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.ovwcard{border:1px solid var(--rule);border-radius:12px;padding:13px 14px;background:var(--surface);box-shadow:var(--shadow);border-top-width:3px}
+.ovwcard.tier-explore{border-top-color:var(--t-explore)}
+.ovwcard.tier-core{border-top-color:var(--t-core)}
+.ovwcard.tier-more{border-top-color:var(--t-more)}
+.ovwcard .on{font-family:var(--display);font-weight:800;font-size:.95rem}
+.ovwcard p{font-size:.83rem;color:var(--ink-soft);margin:6px 0 0;line-height:1.5}
+@media(max-width:760px){.xover{display:none}}
+
+@media(max-width:760px){
+  .tracks{display:flex;flex-direction:column;gap:10px}
+  .zh,.rail,.lanelabel{display:none}
+  .stop{padding:0}
+  .card{width:100%}
+  .lanetag,.zonetag{display:inline-block;font-family:var(--display);font-size:.56rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+  .lanetag.ai{color:var(--accent)}
+  .taglane{display:flex;gap:8px;flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.backdrop{position:fixed;inset:0;background:rgba(20,19,26,.4);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.backdrop.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(390px,92%);background:var(--surface);border-left:1px solid var(--rule);box-shadow:-10px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .24s ease;z-index:21;display:flex;flex-direction:column;
+  padding:max(20px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) 20px}
+.drawer.on{transform:none}
+.drawer .x{align-self:flex-end;background:var(--surface-2);border:1px solid var(--rule);border-radius:8px;width:32px;height:32px;cursor:pointer;color:var(--ink);font-size:1.1rem;line-height:1}
+.drawer .dtier{font-family:var(--display);font-size:.64rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-top:4px}
+.drawer h3{font-size:1.3rem;font-weight:800;letter-spacing:-.015em;margin:.2em 0 0;text-wrap:balance}
+.drawer .body{overflow-y:auto;margin-top:12px;display:flex;flex-direction:column;gap:14px}
+.field .fl{font-family:var(--display);font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+.field .fv{font-size:.92rem}
+.airole{background:var(--surface-2);border-radius:11px;padding:13px 14px}
+.airole.has{background:var(--accent-soft)}
+.airole .fl{color:var(--ink-soft)}
+.airole.has .fl{color:var(--accent-text)}
+.airole .fv{color:var(--ink)}
+.dovw{font-size:.9rem;color:var(--ink);line-height:1.55;margin:2px 0 6px}
+.pblink{display:inline-block;margin-top:6px;font-family:var(--display);font-weight:700;font-size:.85rem;color:var(--accent-text);text-decoration:none;border:1.5px solid var(--accent);border-radius:9px;padding:8px 13px}
+.pblink:hover{background:var(--accent-soft)}
+.tool{margin-top:26px;padding-top:16px;border-top:1px solid var(--rule)}
+.tool h2{font-family:var(--display);font-size:1.1rem;font-weight:800;letter-spacing:-.01em;margin:0 0 4px}
+.toolgrid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:start;margin-top:10px}
+.tooltext p{font-size:.88rem;color:var(--ink-soft);line-height:1.55;margin:0 0 10px;max-width:62ch}
+.tooltext p b{color:var(--ink);font-family:var(--display);font-weight:700}
+.toolpreview{display:flex;flex-direction:column;gap:6px}
+.tpwin{border:1px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);background:var(--surface)}
+.tpbar{display:flex;gap:5px;padding:8px 10px;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.tpbar span{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.tppanes{display:grid;grid-template-columns:1fr 1fr;min-height:150px}
+.tppane{padding:11px 12px;display:flex;flex-direction:column;gap:7px}
+.tppane.learn{border-right:1px solid var(--rule)}
+.tplabel{font-family:var(--display);font-size:.56rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.tpline{height:7px;border-radius:4px;background:var(--surface-2)}
+.tpline.short{width:60%}
+.tphead{height:10px;width:66%;border-radius:5px;background:var(--t-more)}
+.tpbox{height:34px;border-radius:7px;background:rgba(138,60,252,.14);border:1px solid rgba(138,60,252,.32)}
+.tptitle{font-family:var(--display);font-size:.66rem;font-weight:800;color:var(--t-more);margin:2px 0 0}
+.tptxt{font-size:.62rem;line-height:1.4;color:var(--ink-soft);margin:0}
+.tpbub{font-size:.68rem;border-radius:9px;padding:6px 8px;line-height:1.35;max-width:92%}
+.tpbub.user{align-self:flex-end;background:var(--accent-soft);color:var(--accent-text)}
+.tpbub.ai{align-self:flex-start;background:var(--surface-2);color:var(--ink-soft)}
+.tpinput{margin-top:auto;font-size:.62rem;color:var(--faint);border:1px solid var(--rule);border-radius:7px;padding:5px 7px}
+.tpcap{font-size:.72rem;color:var(--faint);text-align:center}
+@media(max-width:640px){.toolgrid{grid-template-columns:1fr}}
+.tblogo{height:14px;width:auto;display:block;margin-bottom:3px}
+.tbnote{display:flex;gap:14px;align-items:flex-start;margin-top:12px}
+.tbnotelogo{height:46px;width:auto;flex:0 0 auto;margin-top:2px}
+@media(max-width:480px){.tbnote{flex-direction:column;gap:8px}}
+.src{margin-top:22px;padding-top:14px;border-top:1px solid var(--rule);font-size:.8rem;color:var(--ink-soft);line-height:1.5;max-width:80ch}
+.src a{color:var(--accent-text)}
+</style>
+
+<div class="wrap">
+  <div class="head">
+    <div class="kick">Endless Access</div>
+    <h1>Learning Experience Map</h1>
+  </div>
+
+  <div class="tracks" id="tracks"></div>
+
+  <div class="journeys">
+    <h2>Learning is not linear</h2>
+    <p class="jl">Our learners are proof of it. All kinds of entry points and desires, some want AI, some do not, so the tracks are built to be as flexible as possible.</p>
+    <div class="jrow">
+      <div class="jcard"><span class="ju">@sootwing</span>Did the <b>Explore: <em>Threadbare</em></b> workshops, got hooked on building with AI, and jumped to <b>Core: mosAIc</b> to make a whole game with it.</div>
+      <div class="jcard"><span class="ju">@quietcomet</span>Came in through <b>Explore: fAIrytales</b> for the AI, then moved into <b>Core: <em>Threadbare</em></b>, the flagship collaborative build.</div>
+      <div class="jcard"><span class="ju">@pixelmoss</span>Is not that into AI and just wanted to build in the engine, so went from <b>Explore: Godot</b> straight to <b>More: Godot</b>.</div>
+    </div>
+  </div>
+
+  <div class="defs">
+    <h2>What the tags mean</h2>
+    <div class="defrow">
+      <div class="defcard"><span class="aib native">AI native</span><p>The program is built to teach AI itself. Making with AI is the whole point, and the work is judged on how well the learner prompts, evaluates, and refines.</p></div>
+      <div class="defcard"><span class="aib touch">AI touchpoint</span><p>AI shows up in part of the work, usually as a workflow helper, not as the point of the program. The learner can lean on it or skip it.</p></div>
+    </div>
+    <div class="tbnote"><img class="tbnotelogo" src="threadbare-logo.png" alt="Threadbare"><p class="defnote"><b>A note on <em>Threadbare</em> and AI.</b> The <em>Threadbare</em> game stays human-made by design: the large majority of contributions are not AI-created, which keeps the world authentic. AI is welcome in support of the workflow, but it does not make the game's assets.</p></div>
+  </div>
+
+  <div class="tool">
+    <h2>The AI skills tool we are building</h2>
+    <div class="toolgrid">
+      <div class="tooltext">
+        <p><b>We are building a prototype of an interactive tool</b> that behaves like a real AI on one side and teaches on the other. Learners prompt it, judge what comes back, and refine, while it quietly captures every prompt, revision, and decision. It assesses the <b>process</b> of using AI, how well a learner prompts, iterates, and evaluates, not just the output.</p>
+        <p><b>It is grounded in Ethan and Lilach Mollick's framework.</b> Their "Assigning AI: Seven Approaches for Students" lays out roles for AI in learning, tutor, coach, tool, and more, with the student kept as the human in the loop who directs and critiques the machine. The tool puts the learner in that seat: AI is the instrument, the learner is the author, and the skill we grade is their judgment over it. That follows Mollick's wider case in Co-Intelligence that the goal is to work with AI well, not to avoid it.</p>
+        <p>It gives a defensible answer to the question everyone asks: how do we know a learner can actually use AI? We can show their process against a recognized framework, not just a finished artifact.</p>
+        <a class="pblink" href="https://claude.ai/artifact/1sP8BPW4ryYk4RaXngCP5x" target="_blank" rel="noopener">Open the prototype</a>
+      </div>
+      <div class="toolpreview">
+        <div class="tpwin">
+          <div class="tpbar"><span></span><span></span><span></span></div>
+          <div class="tppanes">
+            <div class="tppane learn"><div class="tplabel">Learn</div><p class="tptitle">Your challenge</p><p class="tptxt">Prompt the AI to retell Little Red Riding Hood with the wolf as the hero. Read what comes back, then refine your prompt.</p><div class="tpbox"></div></div>
+            <div class="tppane do"><div class="tplabel">AI</div><div class="tpbub user">make a wolf enemy</div><div class="tpbub ai">Here is a basic wolf. Want to add...</div><div class="tpinput">Refine your prompt...</div></div>
+          </div>
+        </div>
+        <div class="tpcap">A peek at the prototype</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="src">Built on our <a href="https://docs.google.com/document/d/1vsAC6FhrrmcEAe2vrB-IO8SDdjQ0bz3Rt65W-KW_AGM/edit" target="_blank" rel="noopener">AI Integration Strategy [2026]</a>, now the earlier version. A refreshed strategy is still to come, and it should wait until we have met with the ecosystem task force's AI stakeholder group and Rubayat.</p>
+
+</div>
+
+<div class="backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <button class="x" id="drawerX" aria-label="Close">&times;</button>
+  <div class="dtier" id="dTier"></div>
+  <h3 id="dName"></h3>
+  <div class="body" id="dBody"></div>
+</aside>
+
+<script>
+const ZONES={explore:"Explore",core:"Core",more:"More"};
+const ZCOL={explore:2,core:3,more:4};
+const LANES={design:{ln:"Learn game making",ld:"the domains of game making",row:2},engine:{ln:"Learn the engine",ld:"the tool you build in",row:3},ai:{ln:"Learn AI",ld:"the AI pathway",row:4}};
+const AIMETA={native:{label:"AI native",cls:"native"},touch:{label:"AI touchpoint",cls:"touch"},none:{label:"",cls:""}};
+const PB={"ex-tb":"https://endlessm.github.io/program-guides/explore-threadbare-playbook/","ex-godot":"https://endlessm.github.io/program-guides/explore-godot-playbook/","co-tb":"https://endlessm.github.io/program-guides/core-threadbare-playbook/","mo-tb":"https://endlessm.github.io/program-guides/more-threadbare-playbook/"};
+const P=[
+  {id:"ex-tb",tier:"explore",pillar:"design",tb:true,name:"Explore: <em>Threadbare</em>",fmt:"13 workshops",eq:"How does a story become a game others can play?",cred:"Certificate of completion",ai:"touch",
+   role:"The 13 workshops walk through every domain of game making, one discipline at a time. An AI touchpoint can live here."},
+  {id:"ex-godot",tier:"explore",pillar:"engine",name:"Explore: Godot",fmt:"10 sessions",eq:"How do I turn an idea into a game from scratch?",cred:"Certificate of completion · Intro to Game Making with Godot microcredential (1500 XP)",ai:"touch",
+   role:"The engine on-ramp. Build a level in a <em>Threadbare</em>-themed platformer. AI can show up as a workflow touchpoint."},
+  {id:"ex-fairy",tier:"explore",pillar:"ai",name:"Explore: fAIrytales",fmt:"AI-assisted mini games",eq:"How do I get an AI to make what I actually pictured?",cred:"Certificate of completion · microcredential TBD",ai:"native",dev:true,
+   role:"The AI pathway's entry, loosely tied to <em>Threadbare</em>: a fairy-tale retelling that can live in the fairy tale forest. It also works as an on-ramp into Core: <em>Threadbare</em>. A learner who wants to build an entire game with AI instead continues to Core: mosAIc."},
+  {id:"co-tb",tier:"core",pillar:"design",span:true,tb:true,name:"Core: <em>Threadbare</em>",fmt:"18 sessions · 5 milestones · cohort",eq:"How do I design, build, and ship a game with a team?",cred:"Certificate of completion · Community Game Making microcredential (2000 XP)",ai:"touch",
+   role:"A facilitated cohort that covers game design and the engine: teams build their StoryQuest in Godot. AI shows up as a workflow touchpoint, helping with the work rather than building the game's assets."},
+  {id:"co-ai",tier:"core",pillar:"ai",name:"Core: mosAIc",fmt:"Cohort · 18 sessions, 5 milestones",eq:"How do I build a whole game with AI, together?",cred:"Certificate of completion · Community Game Making with AI microcredential (proposed)",ai:"native",prop:true,
+   role:"Tile-based and collaborative: everyone builds a piece, maybe a platformer, and the pieces form one game. Not a big game like <em>Threadbare</em>, and unrelated to it. Its dedicated job is teaching AI by making an entire game with AI. A learner who wants the full AI build stays here rather than moving to Core: <em>Threadbare</em>."},
+  {id:"mo-tb",tier:"more",pillar:"design",name:"More: <em>Threadbare</em>",fmt:"Collaborative game making",eq:"How do I contribute real work to a live game?",cred:"Certificate of completion · domain-specific microcredentials",ai:"touch",
+   role:"Collaborative game making from the real issue backlog. Domain deep dives sit underneath it, also working from the actual backlog, and that is where AI touchpoints live."},
+  {id:"mo-godot",tier:"more",pillar:"engine",name:"More: Godot",fmt:"6 milestones · grid logic puzzle",eq:"How do I build a game from zero, on my own?",cred:"Certificate of completion · new microcredential (in development)",ai:"touch",dev:true,
+   role:"Build a game from zero in Godot, self-guided. AI can show up as a workflow touchpoint."},
+  {id:"mo-ai",tier:"more",pillar:"ai",name:"More: domAIns",fmt:"AI deep dives, self-guided",eq:"How does AI change how I work in my specialty?",cred:"Certificate of completion · domain microcredentials",ai:"native",prop:true,
+   role:"Domain-specific AI deep dives, self-guided. The AI-native version of the deep dives: take one domain deep with AI at the center."}
+];
+const byId=id=>P.find(p=>p.id===id);
+
+function cardHTML(p){
+  const a=AIMETA[p.ai]||AIMETA.none;
+  const badge=a.label?`<span class="aib ${a.cls}">${a.label}</span>`:'';
+  const prop=p.prop?'<span class="prop-pill">Proposed</span>':'';
+  const dev=p.dev?'<span class="devpill">In development</span>':'';
+  const tags=`<div class="taglane"><span class="lanetag ${p.pillar==='ai'?'ai':''}">${LANES[p.pillar].ln}</span><span class="zonetag">${ZONES[p.tier]}</span></div>`;
+  return `<button class="card tier-${p.tier} ${p.span?'big':''} ${p.deep?'deep':''}" data-id="${p.id}" data-aiv="${p.ai}">${tags}<div class="nm">${p.name}</div><div class="fmt">${p.fmt}</div><div class="foot">${badge}${prop}${dev}</div></button>`;
+}
+function moreBox(){
+  return `<div class="stop" style="grid-row:2;grid-column:4"><button class="card tier-more" data-id="mo-tb" data-aiv="touch">
+    <div class="nm">More: <em>Threadbare</em></div><div class="fmt">Collaborative game making, plus domain deep dives</div>
+    <div class="foot"><span class="aib touch">AI touchpoint</span></div>
+  </button></div>`;
+}
+function render(){
+  const t=document.getElementById("tracks");
+  let html=`<div class="zh" style="grid-column:2">Explore <small>try it</small></div>
+    <div class="zh" style="grid-column:3">Core <small>go deep</small></div>
+    <div class="zh" style="grid-column:4">More <small>specialize</small></div>`;
+  for(const key in LANES){const L=LANES[key];
+    html+=`<div class="lanelabel ${key==='ai'?'ai':''}" style="grid-row:${L.row}"><div class="ln">${L.ln}</div><div class="ld">${L.ld}</div></div>`;
+  }
+  // span card (Core: <em>Threadbare</em>) rendered on its own
+  const spanP=P.find(p=>p.span);
+  html+=`<div class="stop" style="grid-row:2/4;grid-column:3;align-self:stretch">${cardHTML(spanP)}</div>`;
+  // every other cell
+  for(const key in LANES){
+    for(const z in ZONES){
+      if(key==='engine'&&z==='core') continue; // covered by the span
+      if(key==='design'&&z==='more'){ html+=moreBox(); continue; }
+      const group=P.filter(p=>p.pillar===key&&p.tier===z&&!p.span);
+      if(!group.length) continue;
+      html+=`<div class="stop" style="grid-row:${LANES[key].row};grid-column:${ZCOL[z]}">${group.map(cardHTML).join('')}</div>`;
+    }
+  }
+  t.innerHTML=html;
+}
+
+const drawer=document.getElementById("drawer"),backdrop=document.getElementById("backdrop");
+function openDetail(id){
+  const p=byId(id);if(!p)return;
+  document.querySelectorAll('.card').forEach(c=>c.classList.toggle('sel',c.dataset.id===id));
+  const laneName=p.span?'Learn game making + Learn the engine':LANES[p.pillar].ln;
+  document.getElementById("dTier").textContent=`${ZONES[p.tier]} · ${laneName}${p.prop?' · proposed':''}`;
+  document.getElementById("dName").innerHTML=p.name;
+  const aLabel=(AIMETA[p.ai]||{}).label||'No AI';const aCls=(AIMETA[p.ai]||{}).cls||'';
+  const aiChip=p.ai==='none'?'<span class="aib" style="background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--line)">No AI</span>':'<span class="aib '+aCls+'">'+aLabel+'</span>';
+  const pb=PB[p.id]?`<a class="pblink" href="${PB[p.id]}" target="_blank" rel="noopener">Open the playbook</a>`:'';
+  document.getElementById("dBody").innerHTML=`
+    <p class="dovw">${OVW[p.id]||p.role||''}</p>
+    <div class="field"><div class="fl">Format</div><div class="fv">${p.fmt}</div></div>
+    <div class="field"><div class="fl">Essential question</div><div class="fv">${p.eq}</div></div>
+    <div class="field"><div class="fl">Credential</div><div class="fv">${p.cred}</div></div>
+    <div class="field"><div class="fl">AI</div><div class="fv">${aiChip}</div></div>
+    ${pb}`;
+  drawer.classList.add("on");drawer.setAttribute("aria-hidden","false");backdrop.classList.add("on");
+}
+function closeDetail(){drawer.classList.remove("on");drawer.setAttribute("aria-hidden","true");backdrop.classList.remove("on");document.querySelectorAll('.card').forEach(c=>c.classList.remove('sel'));}
+document.getElementById("drawerX").onclick=closeDetail;
+backdrop.onclick=closeDetail;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDetail();});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-id]");if(b)openDetail(b.dataset.id);});
+const OVW={
+"ex-tb":"Thirteen one-hour workshops that walk through every domain of game making, one discipline at a time. Learners make a first contribution to the <em>Threadbare</em> community and get a feel for what to pursue next. An AI touchpoint can sit in the workflow; the game itself stays AI-free.",
+"ex-godot":"A ten-session, project-based on-ramp to the engine. Learners build a level in a <em>Threadbare</em>-themed platformer in Godot, from first mod to a pitched, playable level, and earn the Intro to Game Making with Godot microcredential. AI can help in the workflow.",
+"ex-fairy":"The entry to learning AI itself. Learners make AI-assisted mini games, a fairy-tale retelling that can slot into <em>Threadbare</em>'s fairy tale forest or sit outside it, and practice the prompt, judge, refine loop. It also works as an on-ramp into Core: <em>Threadbare</em>. In development.",
+"co-tb":"The flagship. An 18-session cohort where teams design, build, and ship a full StoryQuest in Godot together, covering game design and the engine in one project. AI is available as a workflow touchpoint, helping with the work rather than generating assets. Earns the Community Game Making microcredential.",
+"co-ai":"The collaborative AI build. A cohort of about 18 sessions and five milestones where every learner uses AI to make one tile, a single screen or room, and the tiles snap together into one shared game. Picture a big grid world you can explore: a connected-room adventure, or a side-scroller where the player crosses from one learner's tile into the next, so the whole cohort's work joins into a single playable map. The genre stays flexible (it could even be a gauntlet of tiny microgames), the constant is that each person owns a tile and AI is the tool they build it with. Broad and unrelated to <em>Threadbare</em>, its whole job is teaching AI by making an entire game with it. Learners who want the full make-it-with-AI path stay here.",
+"mo-tb":"Self-guided, collaborative game making straight from the real <em>Threadbare</em> issue backlog. Learners pick up actual open work and contribute merged changes to the live product. Alongside it, domain deep dives let a learner go deep in one subdomain and earn a domain-specific microcredential as they accumulate XP there. AI touchpoints live in the deep dives.",
+"mo-godot":"A self-guided, from-scratch Godot build across six milestones, a grid logic puzzle, for learners who want to make a game on their own from zero. It carries its own new microcredential. AI can support the workflow here, but the track works fully without it.",
+"mo-ai":"The deepest AI track: self-guided, domain-specific AI deep dives. A learner takes one domain, art, go-to-market, and so on, and goes deep with AI at the center of the craft. It is the AI-native counterpart to the domain deep dives in the More: <em>Threadbare</em> track."
+};
+function renderOverviews(){
+  const host=document.getElementById("ovw");if(!host)return;
+  host.innerHTML=P.map(p=>`<div class="ovwcard tier-${p.tier}"><div class="on">${p.name}</div><p>${OVW[p.id]||''}</p></div>`).join('');
+}
+render();
+</script>
+
+</body></html>
