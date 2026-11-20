@@ -206,17 +206,17 @@ body.ai-on .card[data-aiv="native"]{box-shadow:0 0 0 1.5px var(--accent),var(--s
   <div class="defs">
     <h2>What the tags mean</h2>
     <div class="defrow">
-      <div class="defcard"><span class="aib native">AI native</span><p>The program is built to teach AI itself. Making with AI is the whole point, and the work is judged on how well the learner prompts, evaluates, and refines.</p></div>
+      <div class="defcard"><span class="aib native">AI native</span><p>The program is built to teach AI itself. Making with AI is the whole point, and the work is judged against the 5Ds: delegation, description, discernment, diligence and data.</p></div>
       <div class="defcard"><span class="aib touch">AI touchpoint</span><p>AI shows up in part of the work, usually as a workflow helper, not as the point of the program. The learner can lean on it or skip it.</p></div>
     </div>
-    <div class="tbnote"><img class="tbnotelogo" src="threadbare-logo.png" alt="Threadbare"><p class="defnote"><b>A note on <em>Threadbare</em> and AI.</b> The <em>Threadbare</em> game stays human-made by design: the large majority of contributions are not AI-created, which keeps the world authentic. AI is welcome in support of the workflow, but it does not make the game's assets.</p></div>
+    <div class="tbnote"><p class="defnote"><b>A note on <em>Threadbare</em> and AI.</b> The <em>Threadbare</em> game stays human-made by design: the large majority of contributions are not AI-created, which keeps the world authentic. AI is welcome in support of the workflow, but it does not make the game's assets.</p></div>
   </div>
 
   <div class="tool">
     <h2>The AI skills tool we are building</h2>
     <div class="toolgrid">
       <div class="tooltext">
-        <p><b>We are building a prototype of an interactive tool</b> that behaves like a real AI on one side and teaches on the other. Learners prompt it, judge what comes back, and refine, while it quietly captures every prompt, revision, and decision. It assesses the <b>process</b> of using AI, how well a learner prompts, iterates, and evaluates, not just the output.</p>
+        <p><b>We are building a prototype of an interactive tool</b> that behaves like a real AI on one side and teaches on the other. Learners prompt it, judge what comes back, and refine, while it quietly captures every prompt, revision, and decision. It assesses the <b>process</b> of using AI against the 5Ds, delegation, description, discernment, diligence and data, not just the output.</p>
         <p><b>It is grounded in Ethan and Lilach Mollick's framework.</b> Their "Assigning AI: Seven Approaches for Students" lays out roles for AI in learning, tutor, coach, tool, and more, with the student kept as the human in the loop who directs and critiques the machine. The tool puts the learner in that seat: AI is the instrument, the learner is the author, and the skill we grade is their judgment over it. That follows Mollick's wider case in Co-Intelligence that the goal is to work with AI well, not to avoid it.</p>
         <p>It gives a defensible answer to the question everyone asks: how do we know a learner can actually use AI? We can show their process against a recognized framework, not just a finished artifact.</p>
         <a class="pblink" href="https://claude.ai/artifact/1sP8BPW4ryYk4RaXngCP5x" target="_blank" rel="noopener">Open the prototype</a>
@@ -234,7 +234,7 @@ body.ai-on .card[data-aiv="native"]{box-shadow:0 0 0 1.5px var(--accent),var(--s
     </div>
   </div>
 
-  <p class="src">Built on our <a href="https://docs.google.com/document/d/1vsAC6FhrrmcEAe2vrB-IO8SDdjQ0bz3Rt65W-KW_AGM/edit" target="_blank" rel="noopener">AI Integration Strategy [2026]</a>, now the earlier version. A refreshed strategy is still to come, and it should wait until we have met with the ecosystem task force's AI stakeholder group and Rubayat.</p>
+  <p class="src">Built on our <a href="https://docs.google.com/document/d/1vsAC6FhrrmcEAe2vrB-IO8SDdjQ0bz3Rt65W-KW_AGM/edit" target="_blank" rel="noopener">AI Integration Strategy [2026]</a>, now the earlier version.</p>
 
 </div>
 
@@ -257,12 +257,12 @@ const P=[
    role:"The 13 workshops walk through every domain of game making, one discipline at a time. An AI touchpoint can live here."},
   {id:"ex-godot",tier:"explore",pillar:"engine",name:"Explore: Godot",fmt:"10 sessions",eq:"How do I turn an idea into a game from scratch?",cred:"Certificate of completion · Intro to Game Making with Godot microcredential (1500 XP)",ai:"touch",
    role:"The engine on-ramp. Build a level in a <em>Threadbare</em>-themed platformer. AI can show up as a workflow touchpoint."},
-  {id:"ex-fairy",tier:"explore",pillar:"ai",name:"Explore: fAIrytales",fmt:"AI-assisted mini games",eq:"How do I get an AI to make what I actually pictured?",cred:"Certificate of completion · microcredential TBD",ai:"native",dev:true,
-   role:"The AI pathway's entry, loosely tied to <em>Threadbare</em>: a fairy-tale retelling that can live in the fairy tale forest. It also works as an on-ramp into Core: <em>Threadbare</em>. A learner who wants to build an entire game with AI instead continues to Core: mosAIc."},
+  {id:"ex-fairy",tier:"explore",pillar:"ai",name:"Explore: fAIrytales",fmt:"AI-assisted mini games",eq:"How do I get an AI to make what I actually pictured?",cred:"Certificate of completion · Intro to Game Making with AI microcredential (proposed)",ai:"native",dev:true,
+   role:"The AI pathway's entry: a fairy-tale retelling built AI-first. It is not going into <em>Threadbare</em>'s fairy tale forest for now. A learner who wants to build an entire game with AI continues to Core: mosAIc."},
   {id:"co-tb",tier:"core",pillar:"design",span:true,tb:true,name:"Core: <em>Threadbare</em>",fmt:"18 sessions · 5 milestones · cohort",eq:"How do I design, build, and ship a game with a team?",cred:"Certificate of completion · Community Game Making microcredential (2000 XP)",ai:"touch",
    role:"A facilitated cohort that covers game design and the engine: teams build their StoryQuest in Godot. AI shows up as a workflow touchpoint, helping with the work rather than building the game's assets."},
   {id:"co-ai",tier:"core",pillar:"ai",name:"Core: mosAIc",fmt:"Cohort · 18 sessions, 5 milestones",eq:"How do I build a whole game with AI, together?",cred:"Certificate of completion · Community Game Making with AI microcredential (proposed)",ai:"native",prop:true,
-   role:"Tile-based and collaborative: everyone builds a piece, maybe a platformer, and the pieces form one game. Not a big game like <em>Threadbare</em>, and unrelated to it. Its dedicated job is teaching AI by making an entire game with AI. A learner who wants the full AI build stays here rather than moving to Core: <em>Threadbare</em>."},
+   role:"Tile-based and collaborative: everyone builds a piece and the pieces form one game. Its dedicated job is teaching AI by making an entire game with AI."},
   {id:"mo-tb",tier:"more",pillar:"design",name:"More: <em>Threadbare</em>",fmt:"Collaborative game making",eq:"How do I contribute real work to a live game?",cred:"Certificate of completion · domain-specific microcredentials",ai:"touch",
    role:"Collaborative game making from the real issue backlog. Domain deep dives sit underneath it, also working from the actual backlog, and that is where AI touchpoints live."},
   {id:"mo-godot",tier:"more",pillar:"engine",name:"More: Godot",fmt:"6 milestones · grid logic puzzle",eq:"How do I build a game from zero, on my own?",cred:"Certificate of completion · new microcredential (in development)",ai:"touch",dev:true,
@@ -337,9 +337,9 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-id]");if(b
 const OVW={
 "ex-tb":"Thirteen one-hour workshops that walk through every domain of game making, one discipline at a time. Learners make a first contribution to the <em>Threadbare</em> community and get a feel for what to pursue next. An AI touchpoint can sit in the workflow; the game itself stays AI-free.",
 "ex-godot":"A ten-session, project-based on-ramp to the engine. Learners build a level in a <em>Threadbare</em>-themed platformer in Godot, from first mod to a pitched, playable level, and earn the Intro to Game Making with Godot microcredential. AI can help in the workflow.",
-"ex-fairy":"The entry to learning AI itself. Learners make AI-assisted mini games, a fairy-tale retelling that can slot into <em>Threadbare</em>'s fairy tale forest or sit outside it, and practice the prompt, judge, refine loop. It also works as an on-ramp into Core: <em>Threadbare</em>. In development.",
+"ex-fairy":"The entry to learning AI itself. Learners make AI-assisted mini games, including a fairy-tale retelling, and practice the 5Ds: delegation, description, discernment, diligence and data. The retelling is not going into <em>Threadbare</em>'s fairy tale forest for now. In development.",
 "co-tb":"The flagship. An 18-session cohort where teams design, build, and ship a full StoryQuest in Godot together, covering game design and the engine in one project. AI is available as a workflow touchpoint, helping with the work rather than generating assets. Earns the Community Game Making microcredential.",
-"co-ai":"The collaborative AI build. A cohort of about 18 sessions and five milestones where every learner uses AI to make one tile, a single screen or room, and the tiles snap together into one shared game. Picture a big grid world you can explore: a connected-room adventure, or a side-scroller where the player crosses from one learner's tile into the next, so the whole cohort's work joins into a single playable map. The genre stays flexible (it could even be a gauntlet of tiny microgames), the constant is that each person owns a tile and AI is the tool they build it with. Broad and unrelated to <em>Threadbare</em>, its whole job is teaching AI by making an entire game with it. Learners who want the full make-it-with-AI path stay here.",
+"co-ai":"The collaborative AI build. A cohort of about 18 sessions and five milestones where every learner uses AI to make one tile, a single screen or room, and the tiles snap together into one shared game. The genre stays flexible; the constant is that each person owns a tile and AI is the tool they build it with. Its whole job is teaching AI by making an entire game with it.",
 "mo-tb":"Self-guided, collaborative game making straight from the real <em>Threadbare</em> issue backlog. Learners pick up actual open work and contribute merged changes to the live product. Alongside it, domain deep dives let a learner go deep in one subdomain and earn a domain-specific microcredential as they accumulate XP there. AI touchpoints live in the deep dives.",
 "mo-godot":"A self-guided, from-scratch Godot build across six milestones, a grid logic puzzle, for learners who want to make a game on their own from zero. It carries its own new microcredential. AI can support the workflow here, but the track works fully without it.",
 "mo-ai":"The deepest AI track: self-guided, domain-specific AI deep dives. A learner takes one domain, art, go-to-market, and so on, and goes deep with AI at the center of the craft. It is the AI-native counterpart to the domain deep dives in the More: <em>Threadbare</em> track."
